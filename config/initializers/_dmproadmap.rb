@@ -28,7 +28,7 @@ module DMPRoadmap
     # ORGANISATION SETTINGS #
     # --------------------- #
 
-    # Your organisation name, used in various places throught the application
+    # Your organisation name, used in various places throughout the application
     config.x.organisation.name = Rails.configuration.x.dmproadmap.organisation_name
     # Your organisation's abbreviation
     config.x.organisation.abbreviation = Rails.configuration.x.dmproadmap.organisation_abbreviation

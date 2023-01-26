@@ -29,7 +29,7 @@ Doorkeeper.configure do
   #
   resource_owner_authenticator do
     # The user must be signed_in in to provide authorization for the ApiClient
-    # if they are not, send them to the oauth sign in page (retain the parms in the session)
+    # if they are not, send them to the oauth sign in page (retain the params in the session)
     unless current_user.present? && session['oauth-referer'].present?
       oauth_path = oauth_authorization_path(client_id: params.fetch('client_id', ''),
                                             redirect_uri: params.fetch(

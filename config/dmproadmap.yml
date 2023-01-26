@@ -249,7 +249,7 @@ default: &default
   # organisational contact/help page instead of using the built-in contact_us form
   # contact_us_url: "https//example.org/default_contact_us_page"
 
-  # Your organisation name, used in various places throught the application
+  # Your organisation name, used in various places throughout the application
   organisation_name: "My institution's name"
   # Your orgsanisation abbreviation
   organisation_abbreviation: "DMPTool"

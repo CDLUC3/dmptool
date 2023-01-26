@@ -110,7 +110,7 @@ RSpec.describe 'OrgAutocomplete' do
         fill_in 'Last Name', with: Faker::Movies::StarWars.character.split.last
         fill_in 'Password', with: SecureRandom.uuid
         # Need to use JS to set the accept terms label since dmptool-ui treats the
-        # whole thing as a label and theis particular label has a URL so 'clicking' it
+        # whole thing as a label and their particular label has a URL so 'clicking' it
         # via Capybara results in going to the URL behind that link :/
         page.execute_script("document.getElementById('user_accept_terms').checked = true;")
       end

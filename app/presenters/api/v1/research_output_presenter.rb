@@ -62,7 +62,7 @@ module Api
         ret = themes.map do |theme|
           qs = @plan.questions.select { |q| q.themes.collect(&:title).include?(theme) }
           descr = qs.map do |q|
-            a = @plan.answers.select { |ans| ans.question_id = q.id }.first
+            a = @plan.answers.select { |answer| answer.question_id = q.id }.first
             next unless a.present?
 
             "<strong>Question:</strong> #{q.text}<br><strong>Answer:</strong> #{a.text}"

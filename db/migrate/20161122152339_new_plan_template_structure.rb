@@ -230,7 +230,7 @@ class NewPlanTemplateStructure < ActiveRecord::Migration[4.2]
           # template/phases/sections/questions/question_options/question_themes
           # now need to init answers, notes, answers_options
           #new_plan.template.new_phases.each do |new_phase|
-          puts "transfering plan data"
+          puts "transferring plan data"
           project.project_groups.each do |group|
             role = initRole(group, new_plan)
             role.save!

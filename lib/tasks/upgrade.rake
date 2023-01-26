@@ -847,7 +847,7 @@ namespace :upgrade do
     end
 
     count = Identifier.where(identifiable_type: 'User').length
-    p "Transfer complete. Orginal user_identifier count #{identifiers.length}, new identifiers count #{count}"
+    p "Transfer complete. Original user_identifier count #{identifiers.length}, new identifiers count #{count}"
     if identifiers.length > count
       p ''
       p "#{identifiers.length - count} records could not be transferred."
@@ -884,7 +884,7 @@ namespace :upgrade do
                         identifiable: oi.org, value: oi.identifier)
     end
     count = Identifier.where(identifiable_type: 'Org').length
-    p "Transfer complete. Orginal org_identifier count #{identifiers.length}, new identifiers count #{count}"
+    p "Transfer complete. Original org_identifier count #{identifiers.length}, new identifiers count #{count}"
     # rubocop:disable Layout/LineLength
     if identifiers.length > count
       p ''

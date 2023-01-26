@@ -6,7 +6,7 @@ RSpec.describe User do
   context 'validations' do
     it { is_expected.to validate_presence_of(:email) }
 
-    it 'validates that email addres is unqique' do
+    it 'validates that email address is unqique' do
       subject.email = 'text-email@example.com'
       expect(subject).to validate_uniqueness_of(:email)
         .case_insensitive

@@ -24,7 +24,7 @@ module SuperAdmin
     def tooltip_for_scope(scope)
       case scope
       when 'read_dmps'
-        _("Access to all publicly visible plans and, if associated with an org, the organisationally visible plans. They can also access a user's plans through OAuth autorization.")
+        _("Access to all publicly visible plans and, if associated with an org, the organisationally visible plans. They can also access a user's plans through OAuth authorization.")
       when 'edit_dmps'
         _("Edit any plans created through the API and edit a user's plan after gaining OAuth authorization from the user")
       when 'create_dmps'

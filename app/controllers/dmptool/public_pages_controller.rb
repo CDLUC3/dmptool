@@ -108,7 +108,7 @@ module Dmptool
       end
     end
 
-    # Proces the search term
+    # Process the search term
     def process_search
       public_plans_params[:search].present? ? "%#{public_plans_params[:search]}%" : '%'
     end

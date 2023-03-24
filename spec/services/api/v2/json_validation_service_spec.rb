@@ -143,7 +143,7 @@ RSpec.describe Api::V2::JsonValidationService do
     end
 
     it 'returns `false` when json[:title] or json[:dataset_id] are not present' do
-      json = { desription: Faker::Lorem.paragraph }
+      json = { description: Faker::Lorem.paragraph }
       expect(described_class.dataset_valid?(json: json)).to be(false)
     end
 

@@ -62,7 +62,7 @@ module Api
             plan.ethical_issues_description = json[:ethical_issues_description]
             plan.ethical_issues_report = json[:ethical_issues_report]
 
-            # Process Project, Contributors and Data Contact and Datsets
+            # Process Project, Contributors and Data Contact and Datasets
             plan = deserialize_project(plan: plan, json: json)
             # The contact is handled from within the controller since the Plan.add_user! method
             # requires that the Plan has been persisted to the DB

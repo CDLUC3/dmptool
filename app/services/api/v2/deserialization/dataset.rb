@@ -110,7 +110,7 @@ module Api
             research_output
           end
 
-          # Find the dateset by ID or title + plan
+          # Find the dataset by ID or title + plan
           def find_or_initialize(plan:, json: {})
             return nil if json.blank?
 

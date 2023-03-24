@@ -15,7 +15,7 @@ class SsmConfigLoader < Anyway::Loaders::Base
     ssm = Uc3Ssm::ConfigResolver.new
     parameters = ssm.parameters_for_path(path: name, recursive: true)
     config = {}
-    # reverse processing order to ensure correct precidence based on ssm_root_path
+    # reverse processing order to ensure correct precedence based on ssm_root_path
     parameters.reverse_each do |param|
       # strip off ssm_root_path
       sub_path = name + param[:name].partition(name)[-1]

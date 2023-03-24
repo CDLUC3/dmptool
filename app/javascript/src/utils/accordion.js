@@ -9,7 +9,7 @@
  *      <a href="#" data-toggle-direction="hide"><%= _('collapse all') %></a>
  *    </div>
  *
- * Your accordion should follow the Boostrap 3.x layout:
+ * Your accordion should follow the Bootstrap 3.x layout:
  * ------------------------------------------------------------
  *    <div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
  *      <div class="panel panel-default">

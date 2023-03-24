@@ -23,7 +23,7 @@ module AuthenticationHelper
       # have the full name
       client = ApiClient.where(uid: @pre_auth.client.uid).first
 
-      # Stash the info into a session variable so that the info is retained accross the sign in
+      # Stash the info into a session variable so that the info is retained across the sign in
       # workflow
       session['oauth-referer'] = ApplicationService.encrypt(payload: { client_id: client.id,
                                                                        path: oauth_path })

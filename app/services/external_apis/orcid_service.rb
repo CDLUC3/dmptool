@@ -47,7 +47,7 @@ module ExternalApis
 
         # TODO: allow the user to reauth to get a token if they do not have one or theirs is expired/revoked
 
-        # Fail if the user doesn't have an orcid or an acess token
+        # Fail if the user doesn't have an orcid or an access token
         return false unless orcid.present? && token.present?
 
         target = "#{api_base_url}#{format(work_path, id: orcid.value.gsub(landing_page_url, ''))}"

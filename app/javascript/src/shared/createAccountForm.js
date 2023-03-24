@@ -16,7 +16,7 @@ $(() => {
 
         switch (field.attr('id')) {
         case 'org_index_name': {
-          // We need to detemine if the user selected an item from the Org autocomplete
+          // We need to determine if the user selected an item from the Org autocomplete
           // or provided a manually entered Org name
           const userEnteredField = form.find('#org_index_user_entered_name');
           const warningBlock = form.find('.autocomplete-warning');

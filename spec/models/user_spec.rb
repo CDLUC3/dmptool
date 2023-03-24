@@ -502,7 +502,7 @@ RSpec.describe User do
 
     let!(:key) { :email }
 
-    context "when the User doesn't have thier own Pref" do
+    context "when the User doesn't have their own Pref" do
       it 'returns the default value' do
         Pref.expects(:default_settings)
             .returns(email: { foo: { 'bar' => 'baz' } })
@@ -510,7 +510,7 @@ RSpec.describe User do
       end
     end
 
-    context 'when the User has thier own Pref' do
+    context 'when the User has their own Pref' do
       before do
         create(:pref, user: user,
                       settings: { email: { foo: { bar: 'bam' } } })

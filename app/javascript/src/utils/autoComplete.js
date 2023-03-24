@@ -56,7 +56,7 @@ const getId = (context, attrName) => {
   return '';
 };
 
-// Determine which warning message to display based on the precense of the
+// Determine which warning message to display based on the presence of the
 // :not_in_list checkbox
 const invalidSelectionMessage = (id) => {
   let msg = getConstant('AUTOCOMPLETE_ARIA_HELPER_EMPTY_WITHOUT_CUSTOM');

@@ -261,7 +261,7 @@ RSpec.describe OrgSelection::SearchService do
       end
     end
 
-    describe '#evaluate(reord:, search_term:)' do
+    describe '#evaluate(record:, search_term:)' do
       before do
         described_class.stubs(:score).returns(0)
         described_class.stubs(:weigh).returns(0)

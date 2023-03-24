@@ -72,12 +72,12 @@ class User < ApplicationRecord
   #   :token_authenticatable, :confirmable,
   #   :lockable, :timeoutable and :omniauthable
   # devise :invitable, :database_authenticatable, :registerable, :recoverable,
-  #        :rememberable, :trackable, :validatable, :omniauthable,
+  #        :memorable, :trackable, :validatable, :omniauthable,
   #        omniauth_providers: %i[shibboleth orcid]
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+  devise :database_authenticatable, :registerable, :recoverable, :memorable,
          :trackable, :validatable,
          :omniauthable, omniauth_providers: %i[shibboleth orcid]
 
@@ -144,7 +144,7 @@ class User < ApplicationRecord
   #
   # validates :org, presence: { message: PRESENCE_MESSAGE }
 
-  # Validations to support ouur sign in / sign up workflow
+  # Validations to support our sign in / sign up workflow
   validates :institution, presence: { message: PRESENCE_MESSAGE }
   validates :accept_terms, inclusion: { in: [true, nil], message: _('and conditions') }
 
@@ -301,7 +301,7 @@ class User < ApplicationRecord
     identifiers.by_scheme_name(scheme, 'User')&.first
   end
 
-  # Checks if the user is a super admin. If the user has any privelege which requires
+  # Checks if the user is a super admin. If the user has any privilege which requires
   # them to see the super admin page then they are a super admin.
   #
   # Returns Boolean
@@ -309,7 +309,7 @@ class User < ApplicationRecord
     can_add_orgs? || can_grant_api_to_orgs? || can_change_org?
   end
 
-  # Checks if the user is an organisation admin if the user has any privlege which
+  # Checks if the user is an organisation admin if the user has any privilege which
   # requires them to see the org-admin pages then they are an org admin.
   #
   # Returns Boolean

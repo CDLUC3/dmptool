@@ -606,7 +606,7 @@ namespace :upgrade do
             section.update! versionable_id: funder_section.versionable_id if fuzzy_match?(text_a, text_b)
           end
 
-          funder_section.questions.select { |ques| ques.versionable_id.nil? }.each do |funder_question|
+          funder_section.questions.select { |quest| quest.versionable_id.nil? }.each do |funder_question|
             Rails.logger.info "Updating versionable_id for Question: #{funder_question.id}"
 
             funder_question.update! versionable_id: SecureRandom.uuid
@@ -1202,7 +1202,7 @@ namespace :upgrade do
     p ''
     p "    Assigned #{number_with_delimiter(rors_added)} ROR identifiers to your Orgs"
     p "    Assigned #{number_with_delimiter(fundrefs_added)} Crossref Funder identifiers to your Orgs"
-    p '      NOTE: Please refer to the tmp/ror_fundref_ids.csv file to see how the assigment worked.'
+    p '      NOTE: Please refer to the tmp/ror_fundref_ids.csv file to see how the assignment worked.'
     p '            You should make any adjustments BEFORE running part 2 of the upgrade scripts!'
     p '            For example ROR sometimes incorrectly matches Orgs. For example:'
     p "               'University of Somewhere' may match to 'Univerity of Somewhere - Medical Center'"

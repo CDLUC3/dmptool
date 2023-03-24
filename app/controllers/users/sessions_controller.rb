@@ -77,7 +77,7 @@ module Users
       elsif resource.language_id.present?
         session[:locale] = resource.language.abbreviation
       end
-      # Change the locale if the user has a prefered language
+      # Change the locale if the user has a preferred language
 
       (oauth_path.presence || plans_path)
     end

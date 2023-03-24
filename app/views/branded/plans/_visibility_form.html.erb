@@ -50,7 +50,7 @@
 <% else %>
   <p>&nbsp;<%= _("This plan is currently set to: ") %>
     <% if plan.publicly_visible? %>
-      <%= _('<strong>Public visibilty</strong> - anyone can view').html_safe %>
+      <%= _('<strong>Public visibility</strong> - anyone can view').html_safe %>
     <% elsif plan.organisationally_visible? %>
       <%= _('<strong>Organisation visibility</strong> - anyone at my organisation can view').html_safe %>
     <% else %>

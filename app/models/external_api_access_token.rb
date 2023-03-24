@@ -25,7 +25,7 @@
 # Model representing an OAuth access token to an external system like ORCID
 class ExternalApiAccessToken < ApplicationRecord
   # This class works in conjunction with Devise OmniAuth providers. If a provider returns an
-  # acess token along with the :uid, then the access token gets stored in this table. It expects
+  # access token along with the :uid, then the access token gets stored in this table. It expects
   # the following to be passed back as part of the "omniauth.auth" response:
   #
   # "credentials": {

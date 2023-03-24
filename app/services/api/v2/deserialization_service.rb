@@ -64,7 +64,7 @@ module Api
           role = role.gsub(url, '').downcase if role.include?(url)
           role = role.tr('-', '_').delete('/')
 
-          # Return the role if its a valid one otherwise defualt
+          # Return the role if its a valid one otherwise default
           return role if ::Contributor.new.all_roles.include?(role.downcase.to_sym)
 
           default

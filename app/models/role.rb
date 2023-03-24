@@ -71,7 +71,7 @@ class Role < ApplicationRecord
   # Return ActiveRecord::Relation
   scope :with_access_flags, lambda { |*flags|
     bad_flag = flags.detect { |flag| !flag.in?(flag_mapping['access'].keys) }
-    raise ArgumentError, "Unkown access flag '#{bad_flag}'" if bad_flag
+    raise ArgumentError, "Unknown access flag '#{bad_flag}'" if bad_flag
 
     access_values = flags.map { |flag| sql_in_for_flag(flag.to_sym, 'access') }
                          .flatten

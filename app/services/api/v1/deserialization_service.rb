@@ -74,7 +74,7 @@ module Api
           url = ::Contributor::ONTOLOGY_BASE_URL
           role = role.gsub("#{url}/", '').downcase if role.include?(url)
 
-          # Return the role if its a valid one otherwise defualt
+          # Return the role if its a valid one otherwise default
           return role if ::Contributor.new.all_roles.include?(role.downcase.to_sym)
 
           default

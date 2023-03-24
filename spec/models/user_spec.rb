@@ -464,7 +464,7 @@ RSpec.describe User do
     end
   end
 
-  # Test creationg a User from an omniauth callback like Shibboleth
+  # Test creating a User from an omniauth callback like Shibboleth
   describe '.from_omniauth' do
     subject { described_class.from_omniauth(auth) }
 

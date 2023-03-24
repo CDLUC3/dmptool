@@ -147,7 +147,7 @@ class NewPlanTemplateStructure < ActiveRecord::Migration[4.2]
           puts ""
           puts "beginning number #{proj_number}"
           proj_number +=1
-          if project.dmptemplate.nil?               # one of the templates dosent exist
+          if project.dmptemplate.nil?               # one of the templates doesn't exist
             next
           end
           new_plan = initNewPlan(project)           # copy data from project to NewPlan object

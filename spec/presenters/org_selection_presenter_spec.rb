@@ -45,7 +45,7 @@ RSpec.describe OrgSelectionPresenter do
       expect(@presenter.crosswalk_entry_from_org_id(value: '999')).to eql('{}')
     end
 
-    it 'return ther correct crosswalk entry' do
+    it 'return their correct crosswalk entry' do
       rslt = @presenter.crosswalk_entry_from_org_id(value: @org.id.to_s)
       expected = OrgSelection::OrgToHashService.to_hash(org: @org).to_json
       expect(rslt).to eql(expected)

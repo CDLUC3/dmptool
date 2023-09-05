@@ -5,7 +5,6 @@ import { DmpApi } from "../../../api.js";
 import TextInput from "../../../components/text-input/textInput.js";
 import "./new.scss";
 
-
 function PlanNew() {
   let navigate = useNavigate();
 
@@ -18,7 +17,7 @@ function PlanNew() {
     // NOTE: Remove the content-type header so that rails and browser will
     // figure it out If we don't do this, then the request always fail.
     var headers = api.getHeaders();
-    headers.delete('Content-Type');
+    headers.delete("Content-Type");
 
     let options = api.getOptions({
       headers: headers,
@@ -71,10 +70,7 @@ function PlanNew() {
 
                 <div className="dmpui-field-fileinput-group  ">
                   <div className="">
-                    <input
-                      name="narrative"
-                      type="file"
-                    />
+                    <input name="narrative" type="file" accept=".pdf" />
                   </div>
                 </div>
               </div>

@@ -188,7 +188,7 @@ function PlanOverview() {
                   </Link>
                 </p>
                 <div className={"step-status status-" + dmp.stepStatus.outputs[0]}>
-                  {dmp.stepStatus.outputs[1]}
+                  4 works for review
                 </div>
               </div>
             )}

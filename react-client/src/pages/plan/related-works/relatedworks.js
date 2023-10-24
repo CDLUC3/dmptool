@@ -149,26 +149,26 @@ function RelatedWorks() {
   function handleChange(ev) {
     /*
     const { name, value } = ev.target;
- 
+
     switch (name) {
       case "data_type":
         var newObj = new DataObject(dataObj.getData());
         newObj.type = value;
         setDataObj(newObj);
         break;
- 
+
       case "personal_info":
         var newObj = new DataObject(dataObj.getData());
         newObj.personal = value;
         setDataObj(newObj);
         break;
- 
+
       case "sensitive_data":
         var newObj = new DataObject(dataObj.getData());
         newObj.sensitive = value;
         setDataObj(newObj);
         break;
- 
+
       case "repository":
         var newObj = new DataObject(dataObj.getData());
         if (ev.data) {
@@ -186,19 +186,19 @@ function RelatedWorks() {
         }
         setDataObj(newObj);
         break;
- 
+
       case "repository_description":
         var newObj = new DataObject(dataObj.getData());
         newObj.repository.description = value;
         setDataObj(newObj);
         break;
- 
+
       case "repository_url":
         var newObj = new DataObject(dataObj.getData());
         newObj.repository.url = value;
         setDataObj(newObj);
         break;
- 
+
     }
     */
   }
@@ -226,20 +226,20 @@ function RelatedWorks() {
     ev.preventDefault();
     /*
         const data = new FormData(ev.target);
-    
+
         let newObj = new DataObject(dataObj.getData());
         newObj.title = data.get("title");
         newObj.type = data.get("data_type");
         // NOTE: Repository should already be set, because it's handled in the
         // handleChange() function.
-    
+
         if (newObj.isValid()) {
           if (editIndex === null) {
             dmp.dataset.add(newObj);
           } else {
             dmp.dataset.update(editIndex, newObj);
           }
-    
+
           let newDmp = new DmpModel(dmp.getData());
           setDmp(newDmp);
           closeModal();
@@ -263,7 +263,7 @@ function RelatedWorks() {
     /*
     const index = ev.target.value;
     let obj = dmp.dataset.get(index);
- 
+
     if (confirm(`Are you sure you want to delete the output, ${obj.title}?`)) {
       let newDmp = new DmpModel(dmp.getData());
       newDmp.dataset.remove(index);
@@ -507,9 +507,15 @@ function RelatedWorks() {
                     )}
 
                     <label>
+                      Source
+                    </label>
+                    <p className="text-muted">
+                      CrossRef
+                    </p>
+
+                    <label>
                       Date Found
                     </label>
-
                     {dataObj.date_found ? (
                       <p>{dataObj.date_found}</p>
                     ) : (

@@ -288,6 +288,13 @@ group :ci, :development do
 
   gem 'capistrano-rails'
 
+  # cap errors on ssh if these not installed. (ag)
+  gem 'ed25519'
+  gem 'bcrypt_pbkdf'
+
+  # cap errors on
+  gem 'net-smtp'
+
   # RuboCop is a Ruby code style checking and code formatting tool. It aims to enforce
   # the community-driven Ruby Style Guide.
   gem 'rubocop'

@@ -19,8 +19,8 @@
 
 .panel-title a {
   display: block;
-  padding: 8px $grid-gutter-width / 2;
-  margin: -10px $grid-gutter-width / -2;
+  padding: 8px calc($grid-gutter-width / 2);
+  margin: -10px calc($grid-gutter-width / -2);
   background-color: $color-primary-background;
   color: $color-primary-text;
 }

@@ -16,7 +16,7 @@ thead th.table-scope {
 
   a {
     color: $color-secondary-text;
-    padding: 2px ($grid-gutter-width / 2) 2px 2px;
+    padding: 2px calc($grid-gutter-width / 2) 2px 2px;
   }
 }
 
@@ -35,7 +35,7 @@ th.download-column {
 /* Fix issues with dropdwon within tables being cut off */
 .table-responsive > .table {
   width: 100%;
-  margin-bottom: $grid-gutter-width / 2;
+  margin-bottom: calc($grid-gutter-width / 2);
   overflow: auto;
 }
 

@@ -8,6 +8,6 @@
   border-radius:0px;
   z-index: 1;
   ul {
-    padding-right: $grid-gutter-width / 2;
+    padding-right: calc($grid-gutter-width / 2);
   }
 }

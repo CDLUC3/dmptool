@@ -18,7 +18,9 @@ class AnswersController < ApplicationController
 
     # First it is checked plan exists and question exist for that plan
     begin
+# SELECT `plans`.* FROM `plans` WHERE `plans`.`id` = 121295 LIMIT 1
       p = Plan.find(p_params[:plan_id])
+# SELECT 1 AS one FROM `plans` INNER JOIN `templates` ON `templates`.`id` = `plans`.`template_id` INNER JOIN `phases` ON `phases`.`template_id` = `templates`.`id` INNER JOIN `sections` ON `sections`.`phase_id` = `phases`.`id` INNER JOIN `questions` ON `questions`.`section_id` = `sections`.`id` WHERE `plans`.`id` = 121295 AND `questions`.`id` = 4027 LIMIT 1
       unless p.question_exists?(p_params[:question_id])
         # rubocop:disable Layout/LineLength
         render(status: :not_found, json: {
@@ -35,6 +37,8 @@ class AnswersController < ApplicationController
       # rubocop:enable Layout/LineLength
       return
     end
+
+# SELECT `questions`.* FROM `questions` WHERE `questions`.`id` = 4027 ORDER BY `questions`.`number` ASC LIMIT 1
     q = Question.find(p_params[:question_id])
 
     # rubocop:disable Metrics/BlockLength
@@ -44,12 +48,17 @@ class AnswersController < ApplicationController
       standards = args[:standards]
       args.delete(:standards)
 
+# SELECT `answers`.* FROM `answers` WHERE `answers`.`plan_id` = 121295 AND `answers`.`question_id` = 4027 LIMIT 1
       @answer = Answer.find_by!(
         plan_id: args[:plan_id],
         question_id: args[:question_id]
       )
+# SELECT `users`.* FROM `users` WHERE `users`.`id` = 118750 ORDER BY `users`.`id` ASC LIMIT 1
+# SELECT `plans`.* FROM `plans` WHERE `plans`.`id` = 121295 LIMIT 1
+# SELECT `roles`.* FROM `roles` WHERE `roles`.`plan_id` = 121295
       authorize @answer
 
+# INSERT INTO `answers`
       @answer.update(args.merge(user_id: current_user.id))
       if args[:question_option_ids].present?
         # Saves the record with the updated_at set to the current time.
@@ -67,12 +76,19 @@ class AnswersController < ApplicationController
       @answer = Answer.new(args.merge(user_id: current_user.id))
       @answer.lock_version = 1
       authorize @answer
+# SELECT `question_formats`.* FROM `question_formats` WHERE `question_formats`.`id` = 1 LIMIT 1
       if q.question_format.rda_metadata?
         @answer.update_answer_hash(
           JSON.parse(standards.to_json), args[:text]
         )
       end
+# SELECT `questions`.* FROM `questions` WHERE `questions`.`id` = 4027 ORDER BY `questions`.`number` ASC LIMIT 1
+# SELECT `users`.* FROM `users` WHERE `users`.`id` = 118750 LIMIT 1
+# SELECT 1 AS one FROM `answers` WHERE `answers`.`question_id` = 4027 AND `answers`.`plan_id` = 121295 LIMIT 1
+# INSERT INTO `answers`
       @answer.save!
+# SELECT `subscriptions`.* FROM `subscriptions` WHERE `subscriptions`.`plan_id` = 121295
+
     rescue ActiveRecord::StaleObjectError
       @stale_answer = @answer
       @answer = Answer.find_by(
@@ -86,15 +102,26 @@ class AnswersController < ApplicationController
     #      200 with an empty body. We should update to send back some JSON. The
     #      check should probably happen on create/update
     # rubocop:disable Style/GuardClause
+
     if @answer.present?
-      @plan = Plan.includes(
-        sections: {
-          questions: %i[
-            answers
-            question_format
-          ]
-        }
-      ).find(p_params[:plan_id])
+
+
+
+# briley - 6/14 17:17
+#          attempt to fix extremely slow query on one of the requests that was returning a 502
+
+#      @plan = Plan.includes(
+#        sections: {
+#          questions: %i[
+#            answers
+#            question_format
+#          ]
+#        }
+#      ).find(p_params[:plan_id])
+      @plan = Plan.includes(answers: { question: :question_format }).find(p_params[:plan_id])
+
+
+
       @question = @answer.question
       @section = @plan.sections.find_by(id: @question.section_id)
       template = @section.phase.template

@@ -309,44 +309,6 @@ class PlansController < ApplicationController
   # GET /plans/:id/download
   def download
 
-# 172.31.5.220 - - [14/Jun/2024:17:28:55 -0700] "GET /plans/89616/download HTTP/1.1" 200 25442
-# 172.31.5.220 - - [14/Jun/2024:17:28:54 -0700] "GET /plans/89616/download HTTP/1.1" 200 25442
-# 172.31.5.220 - - [14/Jun/2024:17:28:54 -0700] "GET /plans/89616/download HTTP/1.1" 200 25442
-# 172.31.5.220 - - [14/Jun/2024:17:28:54 -0700] "GET /plans/89616/download HTTP/1.1" 200 25442
-# 172.31.5.220 - - [14/Jun/2024:17:28:55 -0700] "GET /plans/89616/download HTTP/1.1" 200 25442
-# 172.31.5.220 - - [14/Jun/2024:17:28:55 -0700] "GET /plans/89616/download HTTP/1.1" 200 25442
-# 172.31.5.220 - - [14/Jun/2024:17:28:55 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:55 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:55 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:55 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:55 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:56 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:56 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:56 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:56 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:56 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:56 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:56 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:56 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:57 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:57 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.5.220 - - [14/Jun/2024:17:28:57 -0700] "GET /plans/89616/download HTTP/1.1" 502 423
-# 172.31.41.78 - - [14/Jun/2024:17:29:00 -0700] "GET / HTTP/1.1" 502 417
-
-
-# 17:28:54 - Start Rails
-# 17:29:03 - End Rails
-
-# a282ead5faf3 - start 17:28:54, end 17:29:02
-# 2f341d02c67b - start 17:28:54, end 17:29:03
-# e18b4a8ea88b - start 17:28:54, end 17:29:02
-# 9474408d0d54 - start 17:28:54, end 17:29:03
-# f9ddcbb65285 - start 17:28:54, end 17:29:03
-# 33886ba1a361 - start 17:28:54, end 17:29:04
-# d7d3d7b5d25e - start 17:28:54, end 17:29:04
-# 441a2140ada7 - start 17:28:55, end 17:29:04
-# cda8c7509e01 - start 17:28:55, end 17:29:03
-# 0bbab5c4ec4b - start 17:28:55, end 17:29:05
 
 
 # briley - 06/17 17:59

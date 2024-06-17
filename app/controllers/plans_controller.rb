@@ -308,20 +308,10 @@ class PlansController < ApplicationController
 
   # GET /plans/:id/download
   def download
-
-
-
-# briley - 06/17 17:59
-#          Attempt to fix load issues on the download page
-
-#   @plan = Plan.find(params[:id])
     @plan = Plan.includes(:research_outputs, :related_identifiers, template: [:phases], roles: [:user])
                 .find(params[:id])
-    # Be sure to update app/views/branded/plans/download with to use these 2 new variables
     @has_related_identifiers = @plan.related_identifiers.any?
     @has_research_outputs = @plan.research_outputs.any?
-
-
 
     authorize @plan
     @phase_options = @plan.phases.order(:number).pluck(:title, :id)

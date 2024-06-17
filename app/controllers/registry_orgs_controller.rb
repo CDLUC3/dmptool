@@ -73,11 +73,6 @@ class RegistryOrgsController < ApplicationController
     registry_matches.reject { |match| match.org_id.nil? } if restricting
 
     # Filter out any RegistryOrgs that are also in the Orgs, we only want to return one!
-
-    # briley - 06/17
-    #          fix inefficient query causing 502 errors
-    #
-    # registry_matches = registry_matches.reject { |r_org| org_matches.map(&:id).include?(r_org.org_id) }
     registry_matches = (registry_matches - org_matches) + org_matches
 
     matches = (registry_matches + org_matches).flatten.compact.uniq
@@ -91,10 +86,6 @@ class RegistryOrgsController < ApplicationController
   def orgs_search(term:, **options)
     return [] if options[:unknown_only]
 
-    # briley - 06/17
-    #          fix inefficient query causing 502 errors. Add limit and user count
-    #
-    # matches = Org.includes(:users).search(term).limit(100)
     matches = Org.left_joins(:users)
                  .search(term)
                  .select('orgs.*, COUNT(users.id) AS user_count')
@@ -122,10 +113,6 @@ class RegistryOrgsController < ApplicationController
     # If we only want Orgs with a template, skip the RegistryOrg search
     return [] if options[:template_owner_only]
 
-    # briley - 06/17
-    #          fix inefficient query causing 502 errors. Add limit and user count
-    #
-    #matches = RegistryOrg.includes(org: :users).search(term).limit(100)
     matches = RegistryOrg.left_joins(org: :users)
                          .search(term)
                          .select('registry_orgs.*, COUNT(users.id) AS user_count')
@@ -183,7 +170,6 @@ class RegistryOrgsController < ApplicationController
     hashes = list.map do |item|
       {
         normalized: item.name.downcase.strip,
-        # user_count: item.respond_to?(:users) ? item.users.count : 0,
         user_count: item.respond_to?(:user_count) ? item.user_count : 0,
         weight: weigh(term: term, org: item),
         original: item

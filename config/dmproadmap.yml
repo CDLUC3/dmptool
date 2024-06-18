@@ -205,13 +205,6 @@ default: &default
     - "shared/authentication/shib_sign_in_form"
     - "shared/authentication/sign_in_form"
 
-  # =============================================
-  # = PDF generator configuration (wkhtmltoprf) =
-  # =============================================
-
-  # Location of the wkhtmltopdf executable.
-  wkhtmltopdf_path: <%= Rails.root.join("bin", "wkhtmltopdf").to_s %>
-
   # ==================================
   # = Base application configuration =
   # ==================================

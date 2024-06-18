@@ -15,6 +15,9 @@ lib/tasks/init.rake
 # Ignore the local Docker DB files
 docker/
 
+# Ignore cache files for Puppeteer
+.cache/
+
 # Homepage background images
 app/assets/images/homepage
 # ----------------------

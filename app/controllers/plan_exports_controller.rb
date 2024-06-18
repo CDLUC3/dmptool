@@ -124,29 +124,58 @@ class PlanExportsController < ApplicationController
   end
 
   def show_pdf
-    Rails.logger.debug("ActiveStorage using the '#{Rails.configuration.active_storage.service}' service from bucket: '#{Rails.configuration.x.dmproadmap.dragonfly_bucket}'")
+
+    # Grover experiment
+    begin
+      html = render_to_string(partial: '/shared/export/plan')
+      tmp_dir = Rails.root.join('tmp')
+
+      grover_options = {
+        # format: 'letter',
+        margin:  {
+          top: @formatting.fetch(:margin, {}).fetch(:top, '25px'),
+          right: @formatting.fetch(:margin, {}).fetch(:right, '25px'),
+          bottom: @formatting.fetch(:margin, {}).fetch(:bottom, '25px'),
+          left: @formatting.fetch(:margin, {}).fetch(:left, '25px')
+        },
+        display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'#,
+        # path: tmp_dir.join("grover-#{file_name}.pdf")
+      }
+
+      #browser = ChromiumManager.browser
+      pdf = Grover.new(html, **grover_options).to_pdf #(browser)
+      send_data(pdf, filename: "#{file_name}.pdf", type: 'application/pdf')
+    rescue StandardError => e
+      Rails.logger.error("Unable to generate PDF! #{e.message}")
+      Rails.logger.error(e.backtrace)
+      flash[:alert] = 'Unable to generate a PDF at this time.'
+      render 'download'
+    end
+
+
+    # Rails.logger.debug("ActiveStorage using the '#{Rails.configuration.active_storage.service}' service from bucket: '#{Rails.configuration.x.dmproadmap.dragonfly_bucket}'")
 
     # If we have a copy of the PDF stored in ActiveStorage, just retrieve that one instead of generating it
-    redirect_to rails_blob_path(@plan.narrative, disposition: "attachment") and return if @plan.narrative.present? &&
-                                                                                          current_user.nil?
+    # redirect_to rails_blob_path(@plan.narrative, disposition: "attachment") and return if @plan.narrative.present? &&
+    #                                                                                       current_user.nil?
 
-    footer = {
-      center: format(_('Created using %{application_name}. Last modified %{date}'),
-                      application_name: ApplicationService.application_name,
-                      date: l(@plan.updated_at.localtime.to_date, format: :readable)),
-      font_size: 8,
-      spacing: (Integer(@formatting[:margin][:bottom]) / 2) - 4,
-      right: _('[page] of [topage]'),
-      encoding: 'utf8'
-    }
-    render pdf: file_name,
-          margin: @formatting[:margin],
-          # wkhtmltopdf behavior is based on the OS so force the zoom level
-          # See 'Gotchas' section of https://github.com/mileszs/wicked_pdf
-          # zoom: 0.78125,
-          # show_as_html: params.key?('debug'),
-          page_size: 'Letter',
-          footer: Rails.configuration.x.dmproadmap.include_footer_in_pdfs ? footer : nil
+    # footer = {
+    #   center: format(_('Created using %{application_name}. Last modified %{date}'),
+    #                   application_name: ApplicationService.application_name,
+    #                   date: l(@plan.updated_at.localtime.to_date, format: :readable)),
+    #   font_size: 8,
+    #   spacing: (Integer(@formatting[:margin][:bottom]) / 2) - 4,
+    #   right: _('[page] of [topage]'),
+    #   encoding: 'utf8'
+    # }
+    # render pdf: file_name,
+    #       margin: @formatting[:margin],
+    #       # wkhtmltopdf behavior is based on the OS so force the zoom level
+    #       # See 'Gotchas' section of https://github.com/mileszs/wicked_pdf
+    #       # zoom: 0.78125,
+    #       # show_as_html: params.key?('debug'),
+    #       page_size: 'Letter',
+    #       footer: Rails.configuration.x.dmproadmap.include_footer_in_pdfs ? footer : nil
   end
 
   def show_json

@@ -35,7 +35,7 @@ Grover.configure do |config|
     convert_timeout: 10000, # Timeout when converting the content (overloads the `timeout` option, only applies to PDF conversion)
 
     headless: true,
-    executable_path: ENV['CHROMIUM_PATH'] || Rails.root.join(".cache", "puppeteer", "chrome"),  #"/usr/bin/chromium",
+    executable_path: Rails.root.join('.cache', 'puppeteer', 'chrome', 'linux-126.0.6478.61', 'chrome-linux64', 'chrome'),
 
     launch_args: ['--font-render-hinting=medium', '--no-sandbox', '--disable-setuid-sandbox'],
     wait_until: 'networkidle0',

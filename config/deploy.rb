@@ -22,7 +22,8 @@ append :linked_dirs,
        'tmp/pids',
        'tmp/cache',
        'tmp/sockets',
-       'public'
+       'public',
+       '.cache'
 
 # Default value for keep_releases is 5
 set :keep_releases, 5
@@ -91,6 +92,13 @@ namespace :dmptool_assets do
   task :copy_robots do
     on roles(:app), wait: 1 do
       execute "cp -r #{release_path}/config/robots.txt #{release_path}/public/robots.txt"
+    end
+  end
+
+  desc 'Install Chrome'
+  task :chrome_install do
+    on roles(:app), wait: 1 do
+      execute "cd #{release_path} && npx puppeteer browsers install chrome"
     end
   end
 end

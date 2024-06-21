@@ -26,30 +26,9 @@ def margin_mm_to_px(val)
   return crosswalk[val.to_s.to_sym] || crosswalk[:'25']
 end
 
-case font_size
-when '8pt'
-  converted_size = '10pt'
-when '9pt'
-  converted_size = '11pt'
-when '10pt'
-  converted_size = '12pt'
-when '11pt'
-  converted_size = '14pt'
-when '12pt'
-  converted_size = '15pt'
-when '13pt'
-  converted_size = '16pt'
-when '14pt'
-  converted_size = '18pt'
-else
-  converted_size = '14pt'
-end
-
-font_family = 'Tinos, serif'
-font_family = 'Roboto, sans-serif' if font_face.downcase.include?('roboto')
-font_family = 'Lora, serif' if font_face.downcase.include?('lora')
-font_family = 'Merriweather, serif' if font_face.downcase.include?('merri')
-font_family = 'Vollkorn, serif' if font_face.downcase.include?('vollk')
+# The Grover PDF top and bottom margins do not match the WkHtmlToPdf margins, so reduce them down a bit
+margin_top = (margin_top.to_s =~ /[\d]+/) == 0 ? (margin_top.to_s.to_i - 4).to_s : '20'
+margin_bottom = (margin_bottom.to_s =~ /[\d]+/) == 0 ? (margin_bottom.to_s.to_i - 4).to_s : '20'
 %>
 
 <style>
@@ -60,11 +39,10 @@ font_family = 'Vollkorn, serif' if font_face.downcase.include?('vollk')
     margin-left: <%= margin_mm_to_px(margin_left) %>;
   }
   body {
-    font-family: <%= font_family %>;
-    font-size: <%= converted_size %>;
-    line-height: 150%;
+    font-family: <%= font_face %>;
+    font-size: <%= font_size %>;
+    line-height: 120%;
   }
-
   .break-after {
     page-break-after: always;
   }

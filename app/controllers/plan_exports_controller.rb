@@ -127,6 +127,10 @@ class PlanExportsController < ApplicationController
 
     # Grover experiment
     begin
+      # If we have a copy of the PDF stored in ActiveStorage, just retrieve that one instead of generating it
+      redirect_to rails_blob_path(@plan.narrative, disposition: "attachment") and return if @plan.narrative.present? &&
+                                                                                            current_user.nil?
+
       html = render_to_string(partial: '/shared/export/plan')
 
       grover_options = {

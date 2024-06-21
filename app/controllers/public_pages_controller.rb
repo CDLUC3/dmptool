@@ -60,6 +60,9 @@ class PublicPagesController < ApplicationController
     @formatting = Settings::Template::DEFAULT_SETTINGS[:formatting]
 
     begin
+      # If we have a copy of the PDF stored in ActiveStorage, just retrieve that one instead of generating it
+      redirect_to rails_blob_path(@template.narrative, disposition: "attachment") and return if @template.narrative.present?
+
       file_name = @template.title.gsub(/[^a-zA-Z\d\s]/, '').tr(' ', '_')
       file_name = "#{file_name}_v#{@template.version}"
       respond_to do |format|

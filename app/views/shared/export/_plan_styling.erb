@@ -25,17 +25,19 @@ def margin_mm_to_px(val)
   }
   return crosswalk[val.to_s.to_sym] || crosswalk[:'25']
 end
+
+font_family = font_face.downcase.include?('tinos') ? 'Tinos' : 'Roboto'
 %>
 
 <style>
   @page {
-    margin-top: <%= margin_mm_to_px(margin_top) %>px;
-    margin-right: <%= margin_mm_to_px(margin_right) %>px;
-    margin-bottom: <%= margin_mm_to_px(margin_bottom) %>px;
-    margin-left: <%= margin_mm_to_px(margin_left) %>px;
+    margin-top: <%= margin_mm_to_px(margin_top) %>;
+    margin-right: <%= margin_mm_to_px(margin_right) %>;
+    margin-bottom: <%= margin_mm_to_px(margin_bottom) %>;
+    margin-left: <%= margin_mm_to_px(margin_left) %>;
   }
   body {
-    font-family: <%= font_face %>;
+    font-family: <%= font_family %>;
     font-size: <%= font_size %>;
     line-height: 150%;
   }

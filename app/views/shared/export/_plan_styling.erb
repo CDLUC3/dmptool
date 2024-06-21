@@ -1,9 +1,38 @@
+<%
+def margin_mm_to_px(val)
+  crosswalk = {
+    '5': '18.898px',
+    '6': '22.677px',
+    '7': '26.457px',
+    '8': '30.236px',
+    '9': '34.016px',
+    '10': '37.795px',
+    '11': '41.575px',
+    '12': '45.354px',
+    '13': '49.134px',
+    '14': '52.913px',
+    '15': '56.693px',
+    '16': '60.472px',
+    '17': '64.252px',
+    '18': '68.031px',
+    '19': '71.811px',
+    '20': '75.591px',
+    '21': '79.37px',
+    '22': '83.15px',
+    '23': '86.929px',
+    '24': '90.709px',
+    '25': '94.488px'
+  }
+  return crosswalk[val.to_s.to_sym] || crosswalk[:'25']
+end
+%>
+
 <style>
   @page {
-    margin-top: <%= margin_top %>px;
-    margin-right: <%= margin_right %>px;
-    margin-bottom: <%= margin_bottom %>px;
-    margin-left: <%= margin_left %>px;
+    margin-top: <%= margin_mm_to_px(margin_top) %>px;
+    margin-right: <%= margin_mm_to_px(margin_right) %>px;
+    margin-bottom: <%= margin_mm_to_px(margin_bottom) %>px;
+    margin-left: <%= margin_mm_to_px(margin_left) %>px;
   }
   body {
     font-family: <%= font_face %>;

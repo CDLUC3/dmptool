@@ -10,7 +10,8 @@
 
 # Install fonts manually to /user/share/fonts
 # To view fonts > fc-list
-
+# Copy fonts to the dmp user's `~/.local/share/fonts` directory
+# Rebuild the font cache > fc-cache -f -v
 
 Grover.configure do |config|
   config.options = {

@@ -9,13 +9,23 @@ class PdfPublisherJob < ApplicationJob
     if plan.is_a?(Plan)
       ac = ApplicationController.new # ActionController::Base.new
       html = ac.render_to_string(template: 'branded/shared/export/pdf', layout: false, locals: _prep_for_pdf(plan: plan))
-      pdf = WickedPdf.new.pdf_from_string(html)
 
       # limit the filename length to 100 chars. Windows systems have a MAX_PATH allowance
       # of 255 characters, so this should provide enough of the title to allow the user
       # to understand which DMP it is and still allow for the file to be saved to a deeply
       # nested directory
       file_name = Zaru.sanitize!(plan.title).strip.gsub(/\s+/, '_')[0, 100]
+      grover_options = {
+        margin:  {
+          top: @formatting.fetch(:margin, {}).fetch(:top, '25px'),
+          right: @formatting.fetch(:margin, {}).fetch(:right, '25px'),
+          bottom: @formatting.fetch(:margin, {}).fetch(:bottom, '25px'),
+          left: @formatting.fetch(:margin, {}).fetch(:left, '25px')
+        },
+        display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'#,
+      }
+      pdf = Grover.new(html, **grover_options).to_pdf
+
       _process_narrative_file(plan: plan, file_name: file_name, file: pdf)
     elsif plan.is_a?(Draft)
       return false unless plan.narrative.attached?

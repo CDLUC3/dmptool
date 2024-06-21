@@ -128,10 +128,8 @@ class PlanExportsController < ApplicationController
     # Grover experiment
     begin
       html = render_to_string(partial: '/shared/export/plan')
-      tmp_dir = Rails.root.join('tmp')
 
       grover_options = {
-        # format: 'letter',
         margin:  {
           top: @formatting.fetch(:margin, {}).fetch(:top, '25px'),
           right: @formatting.fetch(:margin, {}).fetch(:right, '25px'),
@@ -139,11 +137,9 @@ class PlanExportsController < ApplicationController
           left: @formatting.fetch(:margin, {}).fetch(:left, '25px')
         },
         display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'#,
-        # path: tmp_dir.join("grover-#{file_name}.pdf")
       }
 
-      #browser = ChromiumManager.browser
-      pdf = Grover.new(html, **grover_options).to_pdf #(browser)
+      pdf = Grover.new(html, **grover_options).to_pdf
       send_data(pdf, filename: "#{file_name}.pdf", type: 'application/pdf')
     rescue StandardError => e
       Rails.logger.error("Unable to generate PDF! #{e.message}")

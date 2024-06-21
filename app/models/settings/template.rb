@@ -17,10 +17,11 @@ module Settings
   # Records export settings for a Plan and defaults for the template
   class Template < RailsSettings::SettingObject
     VALID_FONT_FACES = [
-      'Tinos, Times, serif',
-      'Charis SIL, serif',
-      'Gentium Plus", serif',
-      'Roboto, sans-serif'
+      'Lora, serif',
+      'Merriweather, serif',
+      'Roboto, sans-serif',
+      'Tinos, serif',
+      'Vollkorn, serif'
     ].freeze
 
     VALID_FONT_SIZE_RANGE = (8..14)

@@ -1,49 +1,8 @@
-<%
-def margin_mm_to_px(val)
-  crosswalk = {
-    '5': '18.898px',
-    '6': '22.677px',
-    '7': '26.457px',
-    '8': '30.236px',
-    '9': '34.016px',
-    '10': '37.795px',
-    '11': '41.575px',
-    '12': '45.354px',
-    '13': '49.134px',
-    '14': '52.913px',
-    '15': '56.693px',
-    '16': '60.472px',
-    '17': '64.252px',
-    '18': '68.031px',
-    '19': '71.811px',
-    '20': '75.591px',
-    '21': '79.37px',
-    '22': '83.15px',
-    '23': '86.929px',
-    '24': '90.709px',
-    '25': '94.488px'
-  }
-  return crosswalk[val.to_s.to_sym] || crosswalk[:'25']
-end
-
-font_family = 'Tinos, serif'
-font_family = 'Roboto, sans-serif' if font_face.downcase.include?('roboto')
-font_family = '"Charis SIL", serif' if font_face.downcase.include?('charis')
-font_family = '"Gentium Plus", serif' if font_face.downcase.include?('gentium')
-
-Rails.logger.debug("FONT FACE IN: '#{font_face.downcase}'")
-Rails.logger.debug("FONT FAMILY: '#{font_family}'")
-%>
-
 <style>
-  @page {
-    margin-top: <%= margin_mm_to_px(margin_top) %>;
-    margin-right: <%= margin_mm_to_px(margin_right) %>;
-    margin-bottom: <%= margin_mm_to_px(margin_bottom) %>;
-    margin-left: <%= margin_mm_to_px(margin_left) %>;
-  }
+  @import 'https://fonts.googleapis.com/css?family=<%= font_face.downcase.include?('times') ? 'Times' : 'Roboto' %>';
+
   body {
-    font-family: <%= font_family %>;
+    font-family: <%= font_face %>;
     font-size: <%= font_size %>;
     line-height: 150%;
   }

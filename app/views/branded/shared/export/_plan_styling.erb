@@ -1,5 +1,31 @@
 <%
-# Convert points to pixels
+def margin_mm_to_px(val)
+  crosswalk = {
+    '5': '19px',
+    '6': '23px',
+    '7': '26px',
+    '8': '30px',
+    '9': '34px',
+    '10': '38px',
+    '11': '42px',
+    '12': '45px',
+    '13': '49px',
+    '14': '53px',
+    '15': '57px',
+    '16': '60px',
+    '17': '64px',
+    '18': '68px',
+    '19': '72px',
+    '20': '76px',
+    '21': '79px',
+    '22': '83px',
+    '23': '87px',
+    '24': '91px',
+    '25': '96px'
+  }
+  return crosswalk[val.to_s.to_sym] || crosswalk[:'25']
+end
+
 case font_size
 when '8pt'
   converted_size = '10pt'
@@ -18,14 +44,24 @@ when '14pt'
 else
   converted_size = '14pt'
 end
+
+font_family = 'Tinos, serif'
+font_family = 'Roboto, sans-serif' if font_face.downcase.include?('roboto')
+font_family = 'Lora, serif' if font_face.downcase.include?('lora')
+font_family = 'Merriweather, serif' if font_face.downcase.include?('merri')
+font_family = 'Vollkorn, serif' if font_face.downcase.include?('vollk')
 %>
 
 <style>
-  @import 'https://fonts.googleapis.com/css?family=<%= font_face.downcase.include?('tinos') ? 'Tinos' : 'Roboto' %>';
-
-  html body {
-    font-family: <%= font_face %>;
-    font-size: <%= font_size %>;
+  @page {
+    margin-top: <%= margin_mm_to_px(margin_top) %>;
+    margin-right: <%= margin_mm_to_px(margin_right) %>;
+    margin-bottom: <%= margin_mm_to_px(margin_bottom) %>;
+    margin-left: <%= margin_mm_to_px(margin_left) %>;
+  }
+  body {
+    font-family: <%= font_family %>;
+    font-size: <%= converted_size %>;
     line-height: 150%;
   }
 

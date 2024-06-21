@@ -1,6 +1,10 @@
 <style>
-  @import 'https://fonts.googleapis.com/css?family=<%= font_face.downcase.include?('tinos') ? 'Tinos' : 'Roboto' %>';
-
+  @page {
+    margin-top: <%= margin_top %>px;
+    margin-right: <%= margin_right %>px;
+    margin-bottom: <%= margin_bottom %>px;
+    margin-left: <%= margin_left %>px;
+  }
   body {
     font-family: <%= font_face %>;
     font-size: <%= font_size %>;

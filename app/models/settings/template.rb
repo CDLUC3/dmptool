@@ -18,6 +18,8 @@ module Settings
   class Template < RailsSettings::SettingObject
     VALID_FONT_FACES = [
       '"Tinos", Times, Serif',
+      '"Charis SIL", Serif',
+      '"Gentium Plus", Serif',
       'Roboto, Arial, Sans-Serif'
     ].freeze
 

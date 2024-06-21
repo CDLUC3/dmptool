@@ -26,7 +26,13 @@ def margin_mm_to_px(val)
   return crosswalk[val.to_s.to_sym] || crosswalk[:'25']
 end
 
-font_family = font_face.downcase.include?('tinos') ? 'Tinos' : 'Roboto'
+font_family = 'Tinos, serif'
+font_family = 'Roboto, sans-serif' if font_face.downcase.include?('roboto')
+font_family = '"Charis SIL", serif' if font_face.downcase.include?('charis')
+font_family = '"Gentium Plus", serif' if font_face.downcase.include?('gentium')
+
+Rails.logger.debug("FONT FACE IN: '#{font_face.downcase}'")
+Rails.logger.debug("FONT FAMILY: '#{font_family}'")
 %>
 
 <style>

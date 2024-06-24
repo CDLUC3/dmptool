@@ -32,7 +32,7 @@ class PlanExportsController < ApplicationController
       @formatting               = export_params[:formatting]
       @formatting               = @plan.settings(:export)&.formatting if @formatting.nil?
       @public_plan              = false
-
+      @from_public_plans_page   = export_params[:pub].to_s.downcase.strip == 'true'
     elsif publicly_authorized?
       skip_authorization
       @show_coversheet          = true
@@ -129,7 +129,7 @@ class PlanExportsController < ApplicationController
     begin
       # If we have a copy of the PDF stored in ActiveStorage, just retrieve that one instead of generating it
       redirect_to rails_blob_path(@plan.narrative, disposition: "attachment") and return if @plan.narrative.present? &&
-                                                                                            current_user.nil?
+                                                                                            @from_public_plans_page
 
       html = render_to_string(partial: '/shared/export/plan')
 
@@ -218,7 +218,7 @@ class PlanExportsController < ApplicationController
     #
     params.require(:export)
           .permit(:form, :project_details, :section_headings, :question_text, :unanswered_questions,
-                  :custom_sections, :research_outputs, :related_identifiers,
+                  :custom_sections, :research_outputs, :related_identifiers, :pub,
                   formatting: [:font_face, :font_size, { margin: %i[top right bottom left] }])
   end
 

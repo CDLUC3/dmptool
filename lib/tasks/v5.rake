@@ -155,7 +155,7 @@ namespace :v5 do
       publisher_job_status = 'enqueued'
       plan.save(touch: false)
 
-      PdfPublisherJob.perform_now(plan: plan)
+      PdfPublisherJob.perform_now(obj: plan)
       pauser = pauser >= 11 ? 0 : (pauser += 1)
     end
     p "done"
@@ -215,7 +215,7 @@ namespace :v5 do
               old_subscriptions.destroy_all
 
               puts "    registered #{plan.dmp_id}. Uploading narrative ..."
-              if PdfPublisherJob.perform_now(plan: plan)
+              if PdfPublisherJob.perform_now(obj: plan)
                 plan = plan.reload
                 puts "        uploaded to #{plan.narrative_url}"
               else
@@ -301,6 +301,35 @@ namespace :v5 do
     end
   end
 
+  # This will generate PDF copies of each published public template and store them in
+  # ActiveStorage for faster retrieval. This is being done because bad bots have been
+  # crawling our public pages and forcing the system to generate PDFs on the fly which
+  # bogs down the Rails workers
+  #
+  # As templates are published, the PDF will be regenerated and replace the existing one
+  # in ActiveStorage
+  desc 'Create PDF copies of publish public templates'
+  task build_template_pdfs: :environment do
+    pauser = 0
+    template_ids = Template.live(Template.families(Org.funder.pluck(:id)).pluck(:family_id))
+                           .publicly_visible.pluck(:id) <<
+                   Template.where(is_default: true).unarchived.published.pluck(:id)
+    templates = Template.includes(:org)
+                        .where(id: templates.uniq.flatten)
+                        .unarchived.published
 
+    templates.each do |tmplt|
+      next if tmplt.publisher_job_status == 'enqueued'
+
+      # Don't retrigger all of the callbacks when just changing the status of the publisher job!
+      tmplt.publisher_job_status = 'enqueued'
+      tmplt.save(touch: false)
+
+      p "Creating job to generate PDF for #{tmplt.id} - '#{tmplt.title}'"
+      PdfPublisherJob.perform_now(obj: tmplt)
+      pauser = pauser >= 11 ? 0 : (pauser += 1)
+    end
+    p "done"
+  end
 end
 # rubocop:enable Naming/VariableNumber

@@ -1,29 +1,32 @@
+<%
+formatting = formatting || @formatting
+template = template || @template
+margin = formatting.fetch(:margin, {}) %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>
-      <%= @template.title %>
+      <%= template.title %>
     </title>
     <style>
       html {
-        font-family: <%= @formatting[:font_face].tr('"', '') -%>;
-        font-size: <%= @formatting[:font_size] -%>pt;
-        margin: <%= @formatting[:margin][:top] %>px <%= @formatting[:margin][:right] %>px <%= @formatting[:margin][:bottom] %>px <%= @formatting[:margin][:left] %>px; */
+        font-family: <%= formatting.fetch(:font_face, 'Tinos, serif').tr('"', '') -%>;
+        font-size: <%= formatting.fetch(:font_size, '11') -%>pt;
+        margin: <%= margin.fetch(:top, '76') %>px <%= margin.fetch(:right, '76') %>px <%= margin.fetch(:bottom, '76') %>px <%= margin.fetch(:left, '76') %>px;
       }
-      h1 {
-        font-size: <%= @formatting[:font_size] + 3 -%>pt;
+        font-size: <%= formatting.fetch(:font_size, 11).to_i + 3 -%>pt;
         font-face:bold;
         padding: 0;
       }
       h2 {
-        font-size: <%= @formatting[:font_size] + 2 -%>pt;
+        font-size: <%= formatting.fetch(:font_size, 11).to_i + 2 -%>pt;
         font-face:bold;
         padding: 0;
         margin: 1em 0 0 0;
       }
       h3 {
-        font-size: <%= @formatting[:font_size] + 1 -%>pt;
+        font-size: <%= formatting.fetch(:font_size, 11).to_i + 1 -%>pt;
         font-face:bold;
         padding: 0;
         margin: 1em 0 0 0;
@@ -58,9 +61,9 @@
     </style>
   </head>
   <body>
-    <% @template.phases.each do |phase| %>
+    <% template.phases.each do |phase| %>
       <div style="page-break-before:always;"></div> <!-- Page break before each phase -->
-      <h1><%= "#{@template.org.name}: #{@template.title}" %><%= @template.phases.length > 1 ? " - #{phase.title}" : "" %></h1>
+      <h1><%= "#{template.org.name}: #{template.title}" %><%= template.phases.length > 1 ? " - #{phase.title}" : "" %></h1>
       <% phase.sections.order(:number).each do |section| %>
         <h2><%= section.title %></h2>
         <% section.questions.each do |question| %>

@@ -285,6 +285,13 @@ module OrgAdmin
       publishable, errors = template.publishability
       if publishable
         if template.publish!
+          if template.publicly_visible?
+            # Render the template and place it into ActiveStorage
+            template.publisher_job_status = 'enqueued'
+            template.save(touch: false)
+            PdfPublisherJob.set(wait: 10.seconds).perform_later(obj: template)
+          end
+
           flash.now[:notice] = _("Your #{template_type(template)} has been published and is now available to users.")
         else
           flash.now[:alert] = _("Unable to publish your #{template_type(template)}.")

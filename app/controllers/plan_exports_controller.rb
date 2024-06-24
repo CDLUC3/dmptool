@@ -32,7 +32,6 @@ class PlanExportsController < ApplicationController
       @formatting               = export_params[:formatting]
       @formatting               = @plan.settings(:export)&.formatting if @formatting.nil?
       @public_plan              = false
-      @from_public_plans_page   = export_params[:pub].to_s.downcase.strip == 'true'
     elsif publicly_authorized?
       skip_authorization
       @show_coversheet          = true
@@ -57,6 +56,7 @@ class PlanExportsController < ApplicationController
       raise Pundit::NotAuthorizedError, _('are not authorized to view that plan')
     end
 
+    @from_public_plans_page   = export_params[:pub].to_s.downcase.strip == 'true'
     @hash           = @plan.as_pdf(current_user, @show_coversheet)
     @formatting     = export_params[:formatting] || @plan.settings(:export).formatting
     if params.key?(:phase_id) && params[:phase_id].length.positive?

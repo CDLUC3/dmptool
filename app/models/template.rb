@@ -509,12 +509,10 @@ class Template < ApplicationRecord
 
   def publish
     update(published: true)
-    publish_narrative! if publicly_visible?
   end
 
   def publish!
     update!(published: true)
-    publish_narrative! if publicly_visible?
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

@@ -37,10 +37,17 @@ class PdfPublisherJob < ApplicationJob
       file_name = Zaru.sanitize!(obj.metadata['dmp']['title']).strip.gsub(/\s+/, '_')[0, 100]
       _process_narrative_file(obj: obj, file_name: file_name, file: pdf)
     elsif obj.is_a?(Template)
+      @formatting = {
+        font_face: 'Tinos, serif',
+        font_size: '11',
+        margin: { top: '20', right: '20', bottom: '20', left: '20' }
+      }
       @template = obj
       file_name = @template.title.gsub(/[^a-zA-Z\d\s]/, '').tr(' ', '_')
       file_name = "#{file_name}_v#{@template.version}"
-      html = render_to_string(template: '/template_exports/template_export')
+      ac = ApplicationController.new # ActionController::Base.new
+      html = ac.render_to_string(template: '/template_exports/template_export', layout: false,
+                                 locals: { template: @template, formatting: @formatting})
 
       grover_options = {
         margin:  {
@@ -88,7 +95,7 @@ class PdfPublisherJob < ApplicationJob
 
   # Publish the PDF to local ActiveStorage
   def _publish_locally(obj:, pdf_file_path:, pdf_file_name:)
-    key = obj.is_a(Template) ? 'templates' : 'narratives'
+    key = obj.is_a?(Template) ? 'templates' : 'narratives'
 
     # Get rid of the existing one (if applicable)
     obj.narrative.purge if obj.narrative.attached?

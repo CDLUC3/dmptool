@@ -315,7 +315,7 @@ namespace :v5 do
                            .publicly_visible.pluck(:id) <<
                    Template.where(is_default: true).unarchived.published.pluck(:id)
     templates = Template.includes(:org)
-                        .where(id: templates.uniq.flatten)
+                        .where(id: template_ids.uniq.flatten)
                         .unarchived.published
 
     templates.each do |tmplt|

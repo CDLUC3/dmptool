@@ -1,29 +1,36 @@
 # The following actions were run manually on the server:
 #
-# Install Chromium to `/apps/dmp/install/dmptool/.cache/puppeteer/chrome/linux-126.0.6478.61/chrome-linux64/chrome`
-#   >  sudo su - dmp
-#   > cd ~/apps/dmptool/shared
-#   > npm install puppeteer (maybe?)
-#   > npx puppeteer browsers install chrome
-#   > export CHROMIUM_PATH=/apps/dmp/install/dmptool/.cache/puppeteer/chrome/linux-126.0.6478.61/chrome-linux64/chrome
-#   > export GROVER_NO_SANDBOX=true
-
-# Install fonts manually to /user/share/fonts
-# To view fonts > fc-list
-# Copy fonts to the dmp user's `~/.local/share/fonts` directory
-# Rebuild the font cache > fc-cache -f -v
-
+# In order for Grover to work properly you must install Chromium on the server!
+# This is managed via our Capistrano deploy.
+#
+# If you need to install Chromium outside the Capistrano build you should do the following:
+#   - From the project root run: `npx puppeteer browsers install chrome`
+#     This will install Chrome into a `.cache/puppeteer/chrome/` directory in the project root.
+#
+# Install the fonts:
+#   - From the project root run:
+#     - `cp app/assets/fonts/Roboto-*.ttf /dmp/.local/share/fonts/`
+#     - `cp app/assets/fonts/Tinos-*.ttf /dmp/.local/share/fonts/`
+#     - Then rebuild the font index/cache `fc-cache -f -v`
+#     - Verify that both the Roboto and Tinos fonts are installed: `fc-list`
+#
 Grover.configure do |config|
   config.options = {
     format: 'letter',
-    prefer_css_page_size: true, # Tells Puppeteer to prefer the `@page` CSS directive for margins
+    # Tells Puppeteer to prefer the `@page` CSS directive for margins
+    prefer_css_page_size: true,
     vision_deficiency: 'deuteranopia',
     cache: true,
-    timeout: 0, # Timeout in ms. A value of `0` means 'no timeout'
-    request_timeout: 10000, # Timeout when fetching the content (overloads the `timeout` option)
-    convert_timeout: 10000, # Timeout when converting the content (overloads the `timeout` option, only applies to PDF conversion)
+    # Default for all timeouts in ms. A value of `0` means 'no timeout'
+    timeout: 0,
+    # Timeout when fetching the content (overrides the `timeout` option for this scenario)
+    request_timeout: 10000,
+    # Timeout when converting the content (overrides the `timeout` option for this scenario)
+    convert_timeout: 10000,
 
-    headless: true, # Tell Puppeteer to use headless Chrome
+    # Tell Puppeteer to use headless Chrome
+    headless: true,
+    # Tells Puppeteer where the Chromium executable lives. Update this when Chrome is updated!
     executable_path: Rails.root.join('.cache', 'puppeteer', 'chrome', 'linux-126.0.6478.61', 'chrome-linux64', 'chrome'),
 
     launch_args: ['--font-render-hinting=medium', '--no-sandbox', '--disable-setuid-sandbox'],

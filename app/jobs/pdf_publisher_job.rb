@@ -7,7 +7,7 @@ class PdfPublisherJob < ApplicationJob
 
   def perform(obj:)
     if obj.is_a?(Plan)
-      ac = ApplicationController.new # ActionController::Base.new
+      ac = ApplicationController.new
       html = ac.render_to_string(template: 'branded/shared/export/pdf', layout: false, locals: _prep_plan_for_pdf(plan: obj))
 
       # limit the filename length to 100 chars. Windows systems have a MAX_PATH allowance
@@ -25,8 +25,6 @@ class PdfPublisherJob < ApplicationJob
     elsif obj.is_a?(Draft)
       return false unless obj.narrative.attached?
 
-      # obj.narrative.open { |file| Rails.logger.info "FILE: #{file.path}"; _process_narrative_file(obj: obj, file_name: file.path, file: file) }
-
       # Pull the PDF from ActiveStorage and save to a tmp file for upload to the DMPHub
       pdf = obj.narrative.download
       file_name = Zaru.sanitize!(obj.metadata['dmp']['title']).strip.gsub(/\s+/, '_')[0, 100]
@@ -40,18 +38,18 @@ class PdfPublisherJob < ApplicationJob
       @template = obj
       file_name = @template.title.gsub(/[^a-zA-Z\d\s]/, '').tr(' ', '_')
       file_name = "#{file_name}_v#{@template.version}"
-      ac = ApplicationController.new # ActionController::Base.new
+      ac = ApplicationController.new
       html = ac.render_to_string(template: '/template_exports/template_export', layout: false,
                                  locals: { template: @template, formatting: @formatting})
 
       grover_options = {
         margin:  {
           top: '96px',
-          right: '25px',
-          bottom: '79px',
+          right: '96px',
+          bottom: '96px',
           left: '96px'
         },
-        display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'#,
+        display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'
       }
 
       pdf = Grover.new(html, **grover_options).to_pdf

@@ -47,6 +47,7 @@ namespace :deploy do
   after :deploy, 'git:version'
   after :deploy, 'cleanup:remove_example_configs'
   after :deploy, 'deploy:chrome_install'
+  after :deploy, 'deploy:font_install'
 
   desc 'Retrieve encrypted crendtials file from SSM ParameterStore'
   task :retrieve_credentials do
@@ -62,7 +63,19 @@ namespace :deploy do
   desc 'Install Chromium for Puppeteer'
   task :chrome_install do
     on roles(:app), wait: 1 do
-      execute "cd #{release_path} && npx puppeteer browsers install chrome"
+      unless Dir.exist?("#{release_path}/.cache/puppeteer/chrome")
+        execute "cd #{release_path} && npx puppeteer browsers install chrome"
+      end
+    end
+  end
+
+  desc 'Install PDF Fonts for Puppeteer'
+  task :font_install do
+    on roles(:app), wait: 1 do
+      font_dir = "/dmp/.local/share/fonts/"
+      Dir.mkdir(font_dir) unless Dir.exist?(font_dir)
+      execute "cp #{release_path}/app/assets/fonts/Tinos-*.ttf #{font_dir}"
+      execute "cp #{release_path}/app/assets/fonts/Roboto-*.ttf #{font_dir}"
     end
   end
 end

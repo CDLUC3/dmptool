@@ -20,8 +20,6 @@ module Dmptool
       search_term = process_search
       sort_by = process_sort_by
 
-puts sort_by
-
       # Fetch the plan ids that match the user's search criteria
       #    NOTE: changing the order of columns in `pluck` will impact drop_unused_facets()
       plan_ids = ::Plan.joins(roles: [user: [:org]])

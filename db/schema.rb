@@ -681,6 +681,7 @@ ActiveRecord::Schema.define(version: 2023_12_19_175429) do
     t.string "target_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["target_id", "target_type"], name: "settings_target"
   end
 
   create_table "stats", id: :integer, charset: "utf8mb3", force: :cascade do |t|

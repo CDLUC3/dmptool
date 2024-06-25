@@ -308,7 +308,11 @@ class PlansController < ApplicationController
 
   # GET /plans/:id/download
   def download
-    @plan = Plan.find(params[:id])
+    @plan = Plan.includes(:research_outputs, :related_identifiers, template: [:phases], roles: [:user])
+                .find(params[:id])
+    @has_related_identifiers = @plan.related_identifiers.any?
+    @has_research_outputs = @plan.research_outputs.any?
+
     authorize @plan
     @phase_options = @plan.phases.order(:number).pluck(:title, :id)
     @phase_options.insert(0, ['All phases', 'All']) if @phase_options.length > 1

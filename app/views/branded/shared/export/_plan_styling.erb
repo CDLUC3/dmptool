@@ -21,11 +21,11 @@ end
 %>
 
 <style>
-  @import 'https://fonts.googleapis.com/css?family=<%= font_face.downcase.include?('times') ? 'Times' : 'Roboto' %>';
+  @import 'https://fonts.googleapis.com/css?family=<%= font_face.downcase.include?('tinos') ? 'Tinos' : 'Roboto' %>';
 
   html body {
     font-family: <%= font_face %>;
-    font-size: <%= converted_size %>;
+    font-size: <%= font_size # converted_size %>;
     line-height: 150%;
   }
 

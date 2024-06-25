@@ -35,6 +35,7 @@ class AnswersController < ApplicationController
       # rubocop:enable Layout/LineLength
       return
     end
+
     q = Question.find(p_params[:question_id])
 
     # rubocop:disable Metrics/BlockLength
@@ -67,6 +68,7 @@ class AnswersController < ApplicationController
       @answer = Answer.new(args.merge(user_id: current_user.id))
       @answer.lock_version = 1
       authorize @answer
+
       if q.question_format.rda_metadata?
         @answer.update_answer_hash(
           JSON.parse(standards.to_json), args[:text]
@@ -86,15 +88,10 @@ class AnswersController < ApplicationController
     #      200 with an empty body. We should update to send back some JSON. The
     #      check should probably happen on create/update
     # rubocop:disable Style/GuardClause
+
     if @answer.present?
-      @plan = Plan.includes(
-        sections: {
-          questions: %i[
-            answers
-            question_format
-          ]
-        }
-      ).find(p_params[:plan_id])
+      @plan = Plan.includes(answers: { question: :question_format }).find(p_params[:plan_id])
+
       @question = @answer.question
       @section = @plan.sections.find_by(id: @question.section_id)
       template = @section.phase.template

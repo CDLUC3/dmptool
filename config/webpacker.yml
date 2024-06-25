@@ -34,9 +34,6 @@ default: &default
     - .woff2
 
   extensions:
-    # DMPTool customization to add JS.ERB
-    - .js.erb
-    - .erb
     - .mjs
     - .js
     - .sass

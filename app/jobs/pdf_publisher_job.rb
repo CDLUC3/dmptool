@@ -16,12 +16,7 @@ class PdfPublisherJob < ApplicationJob
       # nested directory
       file_name = Zaru.sanitize!(obj.title).strip.gsub(/\s+/, '_')[0, 100]
       grover_options = {
-        margin:  {
-          top: @formatting.fetch(:margin, {}).fetch(:top, '25px'),
-          right: @formatting.fetch(:margin, {}).fetch(:right, '25px'),
-          bottom: @formatting.fetch(:margin, {}).fetch(:bottom, '25px'),
-          left: @formatting.fetch(:margin, {}).fetch(:left, '25px')
-        },
+        margin:  { top: '25px', right: '25px', bottom: '25px', left: '25px' },
         display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'#,
       }
       pdf = Grover.new(html, **grover_options).to_pdf

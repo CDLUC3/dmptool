@@ -111,7 +111,7 @@ class PdfPublisherJob < ApplicationJob
 
   # Publish the PDF to the DMPHub
   def _publish_to_dmphub(obj:, pdf_file_name:)
-    hash = DmpIdService.publish_pdf(obj: obj, pdf_file_name: pdf_file_name)
+    hash = DmpIdService.publish_pdf(plan: obj, pdf_file_name: pdf_file_name)
     if hash.is_a?(Hash) && hash[:narrative_url].present?
       Rails.logger.info "PdfPublisherJob._publish_to_dmphub successfully published PDF for #{obj.dmp_id} at #{hash[:narrative_url]}"
       # Skip updating the timestamps so that it does not re-trigger the callabcks again!

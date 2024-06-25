@@ -7,24 +7,18 @@ RUN groupadd -g 1000 dmpt && useradd -u 1000 -g 1000 dmpt
 # they were clobbered by a parent image.
 RUN set -ex \
     && RUN_DEPS=" \
-        vim \
-        mtr \
-        autoconf \
-        automake \
-        build-essential \
-        gawk \
-        g++ \
-        git \
-        curl \
-        imagemagick \
-        libffi-dev \
-        libgdbm-dev \
-        libmariadb-dev \
-        libreadline-dev \
-        libssl-dev \
-        libtool \
-        libyaml-dev \
-        shared-mime-info \
+        apt-transport-https autoconf automake build-essential ca-certificates chromium curl \
+        fonts-liberation gawk g++ gconf-service git imagemagick \
+        libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libcurl4-gnutls-dev \
+        libdbus-1-3 libexpat1 libffi-dev libfontconfig1 libgdbm-dev libgbm1 libgcc1 \
+        libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libmariadb-dev \
+        libnspr4 libnss3 libreadline-dev libpango-1.0-0 libpangocairo-1.0-0 \
+        libssl-dev libstdc++6 libtool libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
+        libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 \
+        libxrender1 libxss1 libxtst6 libyaml-dev locales lsb-release mtr \
+        shared-mime-info tzdata vim wget xdg-utils xfonts-base \
+        xfonts-75dpi xz-utils yarn \
+        nodejs -qqy \
     " \
     && seq 1 8 | xargs -I{} mkdir -p /usr/share/man/man{} \
     && apt-get update && apt-get install -y --no-install-recommends $RUN_DEPS \
@@ -48,14 +42,30 @@ COPY . $INSTALL_PATH/
 RUN chown -R dmpt:dmpt $INSTALL_PATH
 WORKDIR $INSTALL_PATH
 
+# Cleanup from build
 ENV RAILS_ENV development
 RUN rm -rf node_modules vendor
 
+# Install bundler foreman and then build Bundle and Yarn
 RUN gem install bundler -v 2.5
 RUN gem install foreman
 RUN bundle config without pgsql rollbar
 RUN bundle install
 RUN yarn install
+
+# Create the dir for the local user that will store the fonts and the $CHROME_PATH
+RUN mkdir -p /home/dmpt/.local/share/fonts
+
+# Build puppeteer and Chrome
+RUN npx puppeteer browsers install chrome@stable
+RUN CHROME_PATH=$(npx puppeteer browsers install chrome@stable | sed 's/^[^ ]* //' | awk '{$1=$1};1') && \
+    echo "CHROME_PATH=$CHROME_PATH" >> /etc/environment && \
+    echo "export CHROME_PATH=$CHROME_PATH" >> /home/dmpt/.bashrc
+
+# Install the fonts needed by Puppeteer to generate PDFs
+RUN cp app/assets/fonts/Roboto-*.ttf /home/dmpt/.local/share/fonts
+RUN cp app/assets/fonts/Tinos-*.ttf /home/dmpt/.local/share/fonts
+RUN fc-cache -f -v
 
 USER dmpt
 

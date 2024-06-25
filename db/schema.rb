@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_19_175429) do
+ActiveRecord::Schema.define(version: 2024_06_21_160500) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -762,6 +762,7 @@ ActiveRecord::Schema.define(version: 2023_12_19_175429) do
     t.boolean "customize_repositories", default: false
     t.boolean "customize_metadata_standards", default: false
     t.boolean "customize_licenses", default: false
+    t.string "publisher_job_status", default: "success"
     t.index ["family_id", "version"], name: "index_templates_on_family_id_and_version", unique: true
     t.index ["family_id"], name: "index_templates_on_family_id"
     t.index ["org_id", "family_id"], name: "template_organisation_dmptemplate_index"

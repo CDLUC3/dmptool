@@ -148,8 +148,8 @@ class PlanExportsController < ApplicationController
     rescue StandardError => e
       Rails.logger.error("Unable to generate PDF! #{e.message}")
       Rails.logger.error(e.backtrace)
-      flash[:alert] = 'Unable to generate a PDF at this time.'
-      render 'download'
+      path = @from_public_plans_page ? public_plans_path : download_plan_path(@plan)
+      redirect_to path, alert: 'Unable to generate a PDF at this time.'
     end
   end
 

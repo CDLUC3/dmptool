@@ -127,6 +127,9 @@ class Template < ApplicationRecord
   # ----------------------------------------
   has_one :sponsor, class_name: 'Org', foreign_key: 'id', primary_key: 'sponsor_id',
                     required: false
+
+  # ActiveStorage for PDF document
+  has_one_attached :narrative
   # ----------------------------------------
   # End DMPTool Customization
   # ----------------------------------------

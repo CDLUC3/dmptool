@@ -131,8 +131,7 @@ class DmproadmapConfig < Anyway::Config
               :user_group_subscription_url,
               :usersnap_key,
               :web_concurrency,
-              :welcome_links,
-              :wkhtmltopdf_path
+              :welcome_links
 
   # If any of these attributes are missing the application will fail to start
   required :cookie_key,
@@ -163,6 +162,4 @@ class DmproadmapConfig < Anyway::Config
            :server_host,
            :shibboleth_enabled,
            :spdx_active
-
-  :wkhtmltopdf_path
 end

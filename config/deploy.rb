@@ -22,7 +22,8 @@ append :linked_dirs,
        'tmp/pids',
        'tmp/cache',
        'tmp/sockets',
-       'public'
+       'public',
+       '.cache'
 
 # Default value for keep_releases is 5
 set :keep_releases, 5
@@ -45,6 +46,8 @@ namespace :deploy do
 
   after :deploy, 'git:version'
   after :deploy, 'cleanup:remove_example_configs'
+  after :deploy, 'deploy:chrome_install'
+  after :deploy, 'deploy:font_install'
 
   desc 'Retrieve encrypted crendtials file from SSM ParameterStore'
   task :retrieve_credentials do
@@ -54,6 +57,26 @@ namespace :deploy do
       master_key = ssm.parameter_for_key('master_key')
       File.write("#{release_path}/config/master.key", master_key.chomp)
       File.write("#{release_path}/config/credentials.yml.enc", credentials_yml_enc.chomp)
+    end
+  end
+
+  desc 'Install Chromium for Puppeteer'
+  task :chrome_install do
+    on roles(:app), wait: 1 do
+      unless Dir.exist?("#{release_path}/.cache/puppeteer/chrome")
+        execute "cd #{release_path} && npx puppeteer browsers install chrome"
+      end
+    end
+  end
+
+  desc 'Install PDF Fonts for Puppeteer'
+  task :font_install do
+    on roles(:app), wait: 1 do
+      font_dir = "/dmp/.local/share/fonts/"
+      Dir.mkdir(font_dir) unless Dir.exist?(font_dir)
+      execute "cp #{release_path}/app/assets/fonts/Tinos-*.ttf #{font_dir}"
+      execute "cp #{release_path}/app/assets/fonts/Roboto-*.ttf #{font_dir}"
+      execute "fc-cache -f -v"
     end
   end
 end

@@ -32,7 +32,6 @@ class PlanExportsController < ApplicationController
       @formatting               = export_params[:formatting]
       @formatting               = @plan.settings(:export)&.formatting if @formatting.nil?
       @public_plan              = false
-
     elsif publicly_authorized?
       skip_authorization
       @show_coversheet          = true
@@ -57,6 +56,7 @@ class PlanExportsController < ApplicationController
       raise Pundit::NotAuthorizedError, _('are not authorized to view that plan')
     end
 
+    @from_public_plans_page   = export_params[:pub].to_s.downcase.strip == 'true'
     @hash           = @plan.as_pdf(current_user, @show_coversheet)
     @formatting     = export_params[:formatting] || @plan.settings(:export).formatting
     if params.key?(:phase_id) && params[:phase_id].length.positive?
@@ -124,29 +124,33 @@ class PlanExportsController < ApplicationController
   end
 
   def show_pdf
-    Rails.logger.debug("ActiveStorage using the '#{Rails.configuration.active_storage.service}' service from bucket: '#{Rails.configuration.x.dmproadmap.dragonfly_bucket}'")
 
-    # If we have a copy of the PDF stored in ActiveStorage, just retrieve that one instead of generating it
-    redirect_to rails_blob_path(@plan.narrative, disposition: "attachment") and return if @plan.narrative.present? &&
-                                                                                          current_user.nil?
+    # Grover experiment
+    begin
+      # If we have a copy of the PDF stored in ActiveStorage, just retrieve that one instead of generating it
+      redirect_to rails_blob_path(@plan.narrative, disposition: "attachment") and return if @plan.narrative.present? &&
+                                                                                            @from_public_plans_page
 
-    footer = {
-      center: format(_('Created using %{application_name}. Last modified %{date}'),
-                      application_name: ApplicationService.application_name,
-                      date: l(@plan.updated_at.localtime.to_date, format: :readable)),
-      font_size: 8,
-      spacing: (Integer(@formatting[:margin][:bottom]) / 2) - 4,
-      right: _('[page] of [topage]'),
-      encoding: 'utf8'
-    }
-    render pdf: file_name,
-          margin: @formatting[:margin],
-          # wkhtmltopdf behavior is based on the OS so force the zoom level
-          # See 'Gotchas' section of https://github.com/mileszs/wicked_pdf
-          # zoom: 0.78125,
-          # show_as_html: params.key?('debug'),
-          page_size: 'Letter',
-          footer: Rails.configuration.x.dmproadmap.include_footer_in_pdfs ? footer : nil
+      html = render_to_string(partial: '/shared/export/plan')
+
+      grover_options = {
+        margin:  {
+          top: @formatting.fetch(:margin, {}).fetch(:top, '25px'),
+          right: @formatting.fetch(:margin, {}).fetch(:right, '25px'),
+          bottom: @formatting.fetch(:margin, {}).fetch(:bottom, '25px'),
+          left: @formatting.fetch(:margin, {}).fetch(:left, '25px')
+        },
+        display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'#,
+      }
+
+      pdf = Grover.new(html, **grover_options).to_pdf
+      send_data(pdf, filename: "#{file_name}.pdf", type: 'application/pdf')
+    rescue StandardError => e
+      Rails.logger.error("Unable to generate PDF! #{e.message}")
+      Rails.logger.error(e.backtrace)
+      path = @from_public_plans_page ? public_plans_path : download_plan_path(@plan)
+      redirect_to path, alert: 'Unable to generate a PDF at this time.'
+    end
   end
 
   def show_json
@@ -189,7 +193,7 @@ class PlanExportsController < ApplicationController
     #
     params.require(:export)
           .permit(:form, :project_details, :section_headings, :question_text, :unanswered_questions,
-                  :custom_sections, :research_outputs, :related_identifiers,
+                  :custom_sections, :research_outputs, :related_identifiers, :pub,
                   formatting: [:font_face, :font_size, { margin: %i[top right bottom left] }])
   end
 

@@ -202,12 +202,9 @@ gem 'autoprefixer-rails'
 # EXPORTING #
 # ========= #
 
-# Provides binaries for WKHTMLTOPDF project in an easily accessible package.
-gem 'wkhtmltopdf-binary'
-
-# PDF generator (from HTML) gem for Ruby on Rails
-# (https://github.com/mileszs/wicked_pdf)
-gem 'wicked_pdf'
+# A Ruby gem to transform HTML into PDFs, PNGs or JPEGs using Google Puppeteer and Chromium.
+# https://github.com/Studiosity/grover
+gem 'grover'
 
 # This simple gem allows you to create MS Word docx documents from simple
 # html documents. This makes it easy to create dynamic reports and forms

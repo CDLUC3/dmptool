@@ -102,7 +102,7 @@ module Dmptool
         publisher_job_status = 'enqueued'
         save(touch: false)
 
-        PdfPublisherJob.set(wait: 10.seconds).perform_later(plan: self)
+        PdfPublisherJob.set(wait: 10.seconds).perform_later(obj: self)
       rescue StandardError => e
         Rails.logger.error "Unable to publish PDF Narrative - #{e.message}"
       end

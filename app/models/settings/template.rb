@@ -17,8 +17,8 @@ module Settings
   # Records export settings for a Plan and defaults for the template
   class Template < RailsSettings::SettingObject
     VALID_FONT_FACES = [
-      '"Times New Roman", Times, Serif',
-      'Roboto, Arial, Sans-Serif'
+      'Tinos, serif',
+      'Roboto, sans-serif'
     ].freeze
 
     VALID_FONT_SIZE_RANGE = (8..14)
@@ -60,7 +60,7 @@ module Settings
           left: 25,
           right: 25
         },
-        font_face: '"Times New Roman", Times, Serif',
+        font_face: '"Tinos", Serif',
         # DMPTool customization for strict funder guidelines!
         font_size: 11 # pt
       },

@@ -60,6 +60,9 @@ class PublicPagesController < ApplicationController
     @formatting = Settings::Template::DEFAULT_SETTINGS[:formatting]
 
     begin
+      # If we have a copy of the PDF stored in ActiveStorage, just retrieve that one instead of generating it
+      redirect_to rails_blob_path(@template.narrative, disposition: "attachment") and return if @template.narrative.present?
+
       file_name = @template.title.gsub(/[^a-zA-Z\d\s]/, '').tr(' ', '_')
       file_name = "#{file_name}_v#{@template.version}"
       respond_to do |format|
@@ -68,18 +71,20 @@ class PublicPagesController < ApplicationController
         end
 
         format.pdf do
-          render pdf: file_name,
-                 template: 'template_exports/template_export',
-                 margin: @formatting[:margin],
-                 footer: {
-                   center: format(_('Template created using the %{application_name} service. Last modified %{date}'),
-                                  application_name: ApplicationService.application_name,
-                                  date: l(@template.updated_at.localtime.to_date, formats: :short)),
-                   font_size: 8,
-                   spacing: (@formatting[:margin][:bottom] / 2) - 4,
-                   right: '[page] of [topage]',
-                   encoding: 'utf8'
-                 }
+          html = render_to_string(template: '/template_exports/template_export')
+
+          grover_options = {
+            margin:  {
+              top: @formatting.fetch(:margin, {}).fetch(:top, '25px'),
+              right: @formatting.fetch(:margin, {}).fetch(:right, '25px'),
+              bottom: @formatting.fetch(:margin, {}).fetch(:bottom, '25px'),
+              left: @formatting.fetch(:margin, {}).fetch(:left, '25px')
+            },
+            display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'#,
+          }
+
+          pdf = Grover.new(html, **grover_options).to_pdf
+          send_data(pdf, filename: "#{file_name}.pdf", type: 'application/pdf')
         end
       end
     rescue ActiveRecord::RecordInvalid

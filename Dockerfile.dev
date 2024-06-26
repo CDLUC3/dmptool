@@ -8,7 +8,7 @@ RUN groupadd -g 1000 dmpt && useradd -u 1000 -g 1000 dmpt
 RUN set -ex \
     && RUN_DEPS=" \
         apt-transport-https autoconf automake build-essential ca-certificates chromium curl \
-        fonts-liberation gawk g++ gconf-service git imagemagick \
+        dumb-init fonts-liberation gawk g++ gconf-service git imagemagick \
         libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libcurl4-gnutls-dev \
         libdbus-1-3 libexpat1 libffi-dev libfontconfig1 libgdbm-dev libgbm1 libgcc1 \
         libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libmariadb-dev \
@@ -37,14 +37,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends nodejs yarn
 ENV INSTALL_PATH /opt/app
 RUN mkdir -p $INSTALL_PATH
 
-# Install gems
+# Copy the app in and make the dmpt user the owner
 COPY . $INSTALL_PATH/
 RUN chown -R dmpt:dmpt $INSTALL_PATH
 WORKDIR $INSTALL_PATH
 
 # Cleanup from build
 ENV RAILS_ENV development
-RUN rm -rf node_modules vendor
+RUN rm -rf node_modules vendor .cache
 
 # Install bundler foreman and then build Bundle and Yarn
 RUN gem install bundler -v 2.5
@@ -53,21 +53,17 @@ RUN bundle config without pgsql rollbar
 RUN bundle install
 RUN yarn install
 
-# Create the dir for the local user that will store the fonts and the $CHROME_PATH
-RUN mkdir -p /home/dmpt/.local/share/fonts
-
-# Build puppeteer and Chrome
-RUN npx puppeteer browsers install chrome@stable
-RUN CHROME_PATH=$(npx puppeteer browsers install chrome@stable | sed 's/^[^ ]* //' | awk '{$1=$1};1') && \
-    echo "CHROME_PATH=$CHROME_PATH" >> /etc/environment && \
-    echo "export CHROME_PATH=$CHROME_PATH" >> /home/dmpt/.bashrc
+# RUN npx puppeteer browsers install chrome
 
 # Install the fonts needed by Puppeteer to generate PDFs
+RUN mkdir -p /home/dmpt/.local/share/fonts
 RUN cp app/assets/fonts/Roboto-*.ttf /home/dmpt/.local/share/fonts
 RUN cp app/assets/fonts/Tinos-*.ttf /home/dmpt/.local/share/fonts
 RUN fc-cache -f -v
 
 USER dmpt
+
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
 # EXPOSE 25 80 443
 # CMD ["bundle", "exec", "puma", "-C", "config/puma.rb", "-p", "80"]

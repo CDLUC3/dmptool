@@ -14,6 +14,10 @@
 #     - Then rebuild the font index/cache `fc-cache -f -v`
 #     - Verify that both the Roboto and Tinos fonts are installed: `fc-list`
 #
+
+dflt_executable_path = Rails.root.join('.cache', 'puppeteer', 'chrome', 'linux-126.0.6478.61',
+                                       'chrome-linux64', 'chrome')
+
 Grover.configure do |config|
   config.options = {
     format: 'letter',
@@ -31,7 +35,7 @@ Grover.configure do |config|
     # Tell Puppeteer to use headless Chrome
     headless: true,
     # Tells Puppeteer where the Chromium executable lives. Update this when Chrome is updated!
-    executable_path: Rails.root.join('.cache', 'puppeteer', 'chrome', 'linux-126.0.6478.61', 'chrome-linux64', 'chrome'),
+    executable_path: ENV.fetch('CHROMIUM_PATH', dflt_executable_path),
 
     launch_args: ['--font-render-hinting=medium', '--no-sandbox', '--disable-setuid-sandbox'],
     wait_until: 'networkidle0',

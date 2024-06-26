@@ -65,6 +65,10 @@ namespace :deploy do
     on roles(:app), wait: 1 do
       unless Dir.exist?("#{release_path}/.cache/puppeteer/chrome")
         execute "cd #{release_path} && npx puppeteer browsers install chrome"
+
+        # Add step to clean up old versions and just always run this on each deploy
+        # Check to see if we can peg the version if we need to or at least lock it
+        # to a major version
       end
     end
   end
@@ -73,10 +77,12 @@ namespace :deploy do
   task :font_install do
     on roles(:app), wait: 1 do
       font_dir = "/dmp/.local/share/fonts/"
-      Dir.mkdir(font_dir) unless Dir.exist?(font_dir)
+      FileUtils.mkdir_p(font_dir) unless Dir.exist?(font_dir)
       execute "cp #{release_path}/app/assets/fonts/Tinos-*.ttf #{font_dir}"
       execute "cp #{release_path}/app/assets/fonts/Roboto-*.ttf #{font_dir}"
       execute "fc-cache -f -v"
+
+      # See if these can be managed via an rpm
     end
   end
 end

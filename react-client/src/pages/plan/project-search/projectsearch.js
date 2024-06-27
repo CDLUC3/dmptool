@@ -15,6 +15,7 @@ import { getValue, useDebounce, isEmpty } from "../../../utils.js";
 
 import TextInput from "../../../components/text-input/textInput";
 import Spinner from "../../../components/spinner";
+import PageWrapper from "../../../components/PageWrapper.js";
 
 import "./projectsearch.scss";
 
@@ -178,7 +179,7 @@ function ProjectSearch() {
 
 
   return (
-    <>
+    <PageWrapper title="Plan Details">
       {!dmp ? (
         <Spinner isActive={true} message="Loading search data …" className="page-loader" />
       ) : (
@@ -328,21 +329,21 @@ function ProjectSearch() {
 
             <div className="form-actions ">
 
-            <button type="button" onClick={() => navigate(`/dashboard/dmp/${dmpId}`)}>
-              Cancel
-            </button>
+              <button type="button" onClick={() => navigate(`/dashboard/dmp/${dmpId}`)}>
+                Cancel
+              </button>
 
-            <button
-              type="submit"
-              className="primary"
-              disabled={selected === null}>
-              Save & Continue
-            </button>
+              <button
+                type="submit"
+                className="primary"
+                disabled={selected === null}>
+                Save & Continue
+              </button>
             </div>
           </form>
         </div>
       )}
-    </>
+    </PageWrapper>
   );
 }
 

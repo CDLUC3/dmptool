@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   DmpModel,
   Contributor,
-  Contact,
   RoadmapAffiliation,
   getContributorRoles,
   getDmp,
@@ -15,6 +14,7 @@ import TextInput from "../../../components/text-input/textInput";
 import LookupField from "../../../components/lookup-field.js";
 import Checkbox from "../../../components/checkbox/checkbox.js";
 import Spinner from "../../../components/spinner";
+import PageWrapper from "../../../components/PageWrapper.js";
 
 import "./contributors.scss";
 
@@ -33,10 +33,10 @@ function Contributors() {
 
   // Want to scroll users to top of page when the arrive
   // TODO: Add a wrapper to pages to make sure we scroll to top of page when page is loaded
-    useEffect(() => {
-      window.scrollTo(0,0)
-    }, [])
-  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   useEffect(() => {
     getDmp(dmpId).then((initial) => {
       // Force the validation to run silently, so that we can detect contribuor
@@ -200,18 +200,18 @@ function Contributors() {
   }
 
   return (
-    <>
+    <PageWrapper title="Contributors">
       {!dmp ? (
         <Spinner isActive={true} message="Fetching contributors…" className="page-loader" />
       ) : (
         <div id="Contributors" ref={scrollToErrorRef}>
           <div className="dmpui-heading">
             <h1>Contributors</h1>
-              {errors && errors.map(err => {
-                return (
-                  <div key={err} className="dmpui-field-error">{err}</div>
-                )
-              })}
+            {errors && errors.map(err => {
+              return (
+                <div key={err} className="dmpui-field-error">{err}</div>
+              )
+            })}
           </div>
           <p>
             Tell us about the project contributors for your project and, designate
@@ -439,7 +439,7 @@ function Contributors() {
           </form>
         </div>
       )}
-    </>
+    </PageWrapper>
   );
 }
 

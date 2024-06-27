@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { DmpModel, getDmp } from '../../../models.js';
@@ -7,6 +7,7 @@ import { DmpApi } from "../../../api.js";
 import TextInput from "../../../components/text-input/textInput.js";
 import Checkbox from "../../../components/checkbox/checkbox.js";
 import Spinner from "../../../components/spinner";
+import PageWrapper from "../../../components/PageWrapper.js";
 
 import "./setup.scss";
 
@@ -115,93 +116,95 @@ function DmpSetup() {
 
 
   return (
-    <div id="planNew">
-      <div className="dmpui-heading">
-        <h1>{dmpId ? "Update" : "New"} Plan</h1>
-      </div>
+    <PageWrapper title={dmpId ? "Update Plan" : "New Plan"}>
+      <div id="planNew">
+        <div className="dmpui-heading">
+          <h1>{dmpId ? "Update" : "New"} Plan</h1>
+        </div>
 
-      <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
-        <div className="form-wrapper">
-          <div className="dmpui-form-cols">
-            <div className="dmpui-form-col">
-              <TextInput
-                label="Project Name"
-                type="text"
-                required="required"
-                name="title"
-                id="title"
-                inputValue={dmp ? dmp.title : ""}
-                placeholder="Project Name"
-                help="All or part of the project name/title, e.g. 'Particle Physics'"
-                error={errors.get("title")}
-              />
+        <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
+          <div className="form-wrapper">
+            <div className="dmpui-form-cols">
+              <div className="dmpui-form-col">
+                <TextInput
+                  label="Project Name"
+                  type="text"
+                  required="required"
+                  name="title"
+                  id="title"
+                  inputValue={dmp ? dmp.title : ""}
+                  placeholder="Project Name"
+                  help="All or part of the project name/title, e.g. 'Particle Physics'"
+                  error={errors.get("title")}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="dmpui-form-cols">
-            <div className="dmpui-form-col">
-              <div className={"dmpui-field-group"}>
-                <label className="dmpui-field-label" htmlFor="dmpNarrative">Upload DMP</label>
-                <p className="dmpui-field-help">
-                  Only PDFs may be uploaded, and files should be no more than
-                  2MB.
-                </p>
-                {errors.get("narrative") && (
-                  <p className="dmpui-field-error"> {errors.get("narrative")} </p>
-                )}
+            <div className="dmpui-form-cols">
+              <div className="dmpui-form-col">
+                <div className={"dmpui-field-group"}>
+                  <label className="dmpui-field-label" htmlFor="dmpNarrative">Upload DMP</label>
+                  <p className="dmpui-field-help">
+                    Only PDFs may be uploaded, and files should be no more than
+                    2MB.
+                  </p>
+                  {errors.get("narrative") && (
+                    <p className="dmpui-field-error"> {errors.get("narrative")} </p>
+                  )}
 
-                <div className="dmpui-field-fileinput-group">
-                  <div>
-                    {dmp.narrative && (
-                      <>
-                        <p>
-                          <a href={dmp.narrative?.url} target="_blank">{dmp.narrative?.file_name}</a>
-                        </p>
+                  <div className="dmpui-field-fileinput-group">
+                    <div>
+                      {dmp.narrative && (
+                        <>
+                          <p>
+                            <a href={dmp.narrative?.url} target="_blank">{dmp.narrative?.file_name}</a>
+                          </p>
 
-                        <Checkbox
-                          label="Remove PDF"
-                          name="remove_narrative"
-                          id="primaryContact"
-                          inputValue="yes"
-                        />
+                          <Checkbox
+                            label="Remove PDF"
+                            name="remove_narrative"
+                            id="primaryContact"
+                            inputValue="yes"
+                          />
 
-                        <br />
+                          <br />
 
-                        <p>
-                          Uploading a new PDF below will replace the existing one.
-                        </p>
-                      </>
-                    )}
+                          <p>
+                            Uploading a new PDF below will replace the existing one.
+                          </p>
+                        </>
+                      )}
 
-                    <input
-                      id="dmpNarrative"
-                      name="narrative"
-                      type="file"
-                      accept=".pdf"
-                    />
+                      <input
+                        id="dmpNarrative"
+                        name="narrative"
+                        type="file"
+                        accept=".pdf"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="form-actions ">
-          {working ? (
-            <Spinner isActive={working} message="" className="empty-list" />
-          ) : (
-            <>
-              <button type="button" onClick={() => navigate(`/dashboard/dmp/${dmp.id}`)}>
-                {dmp.isRegistered ? "Back" : "Cancel"}
-              </button>
-              <button type="submit" className="primary">
-                {dmp.isRegistered ? "Update" : "Save & Continue"}
-              </button>
-            </>
-          )}
-        </div>
-      </form>
-    </div>
+          <div className="form-actions ">
+            {working ? (
+              <Spinner isActive={working} message="" className="empty-list" />
+            ) : (
+              <>
+                <button type="button" onClick={() => navigate(`/dashboard/dmp/${dmp.id}`)}>
+                  {dmp.isRegistered ? "Back" : "Cancel"}
+                </button>
+                <button type="submit" className="primary">
+                  {dmp.isRegistered ? "Update" : "Save & Continue"}
+                </button>
+              </>
+            )}
+          </div>
+        </form>
+      </div>
+    </PageWrapper>
   );
 }
 

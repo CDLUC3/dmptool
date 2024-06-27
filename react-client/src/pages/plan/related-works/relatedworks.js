@@ -14,13 +14,8 @@ import {
 
 import { truncateText } from "../../../utils.js";
 
-
-import TextInput from "../../../components/text-input/textInput.js";
-import TextArea from "../../../components/textarea/textArea.js";
-import Select from "../../../components/select/select.js";
-import RadioButton from "../../../components/radio/radio.js";
-import LookupField from "../../../components/lookup-field.js";
 import Spinner from "../../../components/spinner.js";
+import PageWrapper from "../../../components/PageWrapper.js";
 
 import "./relatedworks.scss";
 
@@ -31,7 +26,7 @@ function RelatedWorksPage() {
   const { dmpId } = useParams();
   const [dmp, setDmp] = useState(null);
   const [relatedWorks, setRelatedWorks] = useState([]);
-  const [filterArgs, setFilterArgs] = useState({status: ""});
+  const [filterArgs, setFilterArgs] = useState({ status: "" });
   const [editIndex, setEditIndex] = useState(null);
   const [relatedWrk, setRelatedWrk] = useState(new RelatedWork({}));
   const [working, setWorking] = useState(false);
@@ -50,10 +45,10 @@ function RelatedWorksPage() {
     let newRelated = [];
 
     dmp.modifications
-        .items
-        .forEach(mod => mod.relatedWorks.items.forEach(rw => {
-          newRelated.push(rw);
-        }));
+      .items
+      .forEach(mod => mod.relatedWorks.items.forEach(rw => {
+        newRelated.push(rw);
+      }));
 
     if (filterArgs.status !== "") {
       newRelated = newRelated.filter(rw => rw.status === filterArgs.status);
@@ -69,15 +64,15 @@ function RelatedWorksPage() {
 
     switch (name) {
       case "filter_pending":
-        setFilterArgs({...filterArgs, status: "pending"});
+        setFilterArgs({ ...filterArgs, status: "pending" });
         break;
 
       case "filter_approved":
-        setFilterArgs({...filterArgs, status: "approved"});
+        setFilterArgs({ ...filterArgs, status: "approved" });
         break;
 
       case "filter_rejected":
-        setFilterArgs({...filterArgs, status: "rejected"});
+        setFilterArgs({ ...filterArgs, status: "rejected" });
         break;
     }
   }
@@ -167,7 +162,7 @@ function RelatedWorksPage() {
 
 
   return (
-    <>
+    <PageWrapper title="Related Works">
       {!dmp ? (
         <Spinner isActive={true} message="Fetching related works…" className="page-loader" />
       ) : (
@@ -438,7 +433,7 @@ function RelatedWorksPage() {
           </form>
         </div>
       )}
-    </>
+    </PageWrapper>
   );
 }
 

@@ -1,11 +1,10 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import TextInput from "../../../components/text-input/textInput";
 import RadioButton from "../../../components/radio/radio";
 import LookupField from "../../../components/lookup-field.js";
 import Spinner from "../../../components/spinner";
-
+import PageWrapper from "../../../components/PageWrapper.js";
 import {
   getDmp,
   saveDmp,
@@ -94,7 +93,7 @@ function PlanFunders() {
 
 
   return (
-    <>
+    <PageWrapper title="Funder">
       {!dmp ? (
         <Spinner isActive={true} message="Loading DMP funder page…" className="page-loader" />
       ) : (
@@ -182,20 +181,20 @@ function PlanFunders() {
 
 
 
-          <div className="form-actions ">
-            <button type="button" onClick={() => navigate(`/dashboard/dmp/${dmp.id}`)}>
-              {dmp.isRegistered ? "Back" : "Cancel"}
-            </button>
-            {!dmp.isRegistered && (
-              <button type="submit" className="primary">
-                Save & Continue
+            <div className="form-actions ">
+              <button type="button" onClick={() => navigate(`/dashboard/dmp/${dmp.id}`)}>
+                {dmp.isRegistered ? "Back" : "Cancel"}
               </button>
+              {!dmp.isRegistered && (
+                <button type="submit" className="primary">
+                  Save & Continue
+                </button>
               )}
             </div>
           </form>
         </div>
       )}
-    </>
+    </PageWrapper>
   );
 }
 

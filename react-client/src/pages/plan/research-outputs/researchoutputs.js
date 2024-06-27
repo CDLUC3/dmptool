@@ -22,6 +22,7 @@ import Select from "../../../components/select/select.js";
 import RadioButton from "../../../components/radio/radio";
 import SizeInput from "../../../components/size-input.js";
 import Spinner from "../../../components/spinner";
+import PageWrapper from "../../../components/PageWrapper.js";
 
 import "./researchoutputs.scss";
 
@@ -215,7 +216,7 @@ function ResearchOutputs() {
 
 
   return (
-    <>
+    <PageWrapper title="Research Outputs">
       {!dmp ? (
         <Spinner isActive={true} message="Fetching research outputs…" className="page-loader" />
       ) : (
@@ -487,7 +488,7 @@ function ResearchOutputs() {
           </form>
         </div>
       )}
-    </>
+    </PageWrapper>
   );
 }
 

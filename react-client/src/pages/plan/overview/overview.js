@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import {
@@ -8,10 +8,9 @@ import {
   registerDmp,
 } from "../../../models.js";
 
-import TextInput from "../../../components/text-input/textInput";
 import RadioButton from "../../../components/radio/radio";
 import Spinner from "../../../components/spinner";
-
+import PageWrapper from "../../../components/PageWrapper.js";
 import "./overview.scss";
 
 
@@ -23,9 +22,9 @@ function PlanOverview() {
 
   const [serverErrorMessage, setServerErrorMessage] = useState();
 
-    useEffect(() => {
-     window.scrollTo(0,0)
-    },[])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   useEffect(() => {
     getDmp(dmpId).then((initial) => {
@@ -102,7 +101,7 @@ function PlanOverview() {
   }
 
   return (
-    <>
+    <PageWrapper title="Plan Overview" >
       {!dmp ? (
         <Spinner isActive={true} message="Fetching DMP data…" className="page-loader" />
       ) : (
@@ -309,7 +308,7 @@ function PlanOverview() {
           </div>
         </div>
       )}
-    </>
+    </PageWrapper>
   );
 }
 

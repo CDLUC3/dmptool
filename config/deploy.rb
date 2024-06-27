@@ -63,13 +63,11 @@ namespace :deploy do
   desc 'Install Chromium for Puppeteer'
   task :chrome_install do
     on roles(:app), wait: 1 do
-      unless Dir.exist?("#{release_path}/.cache/puppeteer/chrome")
-        execute "cd #{release_path} && CHROME_PATH=$(npx puppeteer browsers install chrome@stable) && ln -s $(echo $CHROME_PATH | awk '{print $2}') ./bin/chrome"
+      execute "cd #{release_path} && CHROME_PATH=$(npx puppeteer browsers install chrome@stable) && ln -s $(echo $CHROME_PATH | awk '{print $2}') ./bin/chrome"
 
-        # Add step to clean up old versions and just always run this on each deploy
-        # Check to see if we can peg the version if we need to or at least lock it
-        # to a major version
-      end
+      # Add step to clean up old versions and just always run this on each deploy
+      # Check to see if we can peg the version if we need to or at least lock it
+      # to a major version
     end
   end
 

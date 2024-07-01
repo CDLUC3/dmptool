@@ -331,5 +331,38 @@ namespace :v5 do
     end
     p "done"
   end
+
+  # If using AWS S3, this will generate PDF narrative documents for each public Plan and place it into the
+  # S3 bucket for faster retrieval. This is being done because bad bots have been crawling our public plans page
+  # and the auto-build PDF per-request model was crippling the servers.
+  #
+  # As public plans are updated, the PDF will be regenerated and replace the existing one in ActiveStorage
+  desc 'Create PDF narrative documents for all public plans so that they are downloadable from public plans page'
+  task rebuild_narratives: :environment do
+    puts 'This task MUST be run on a server because it needs access to S3!' if Rails.env.development?
+    return 1 if Rails.env.development?
+
+    pauser = 0
+    Plan.includes(:org, :funder, :grant, :answers,
+                  roles: [user: [:org]],
+                  template: [phases: [sections: [:questions]]],
+                  contributors: [:org, :identifiers],
+                  research_outputs: [:identifiers, :metadata_standards, :repositories, :license])
+        .where(visibility: Plan.visibilities[:publicly_visible])
+        .each do |plan|
+      next if plan.publisher_job_status == 'enqueued'
+
+      sleep 5 if pauser >= 10
+      p "Publishing PDF narrative to ActiveStorage for Plan #{plan.id} \"#{plan.title}\"."
+
+      # Don't retrigger all of the callbacks when just changing the status of the publisher job!
+      publisher_job_status = 'enqueued'
+      plan.save(touch: false)
+
+      PdfPublisherJob.perform_now(obj: plan)
+      pauser = pauser >= 11 ? 0 : (pauser += 1)
+    end
+    p "done"
+  end
 end
 # rubocop:enable Naming/VariableNumber

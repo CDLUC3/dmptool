@@ -32,7 +32,7 @@ class PdfPublisherJob < ApplicationJob
     elsif obj.is_a?(Template)
       @formatting = {
         font_face: 'Tinos, serif',
-        font_size: '11',
+        font_size: '12',
         margin: { top: '20', right: '20', bottom: '20', left: '20' }
       }
       @template = obj
@@ -131,8 +131,10 @@ class PdfPublisherJob < ApplicationJob
       plan: plan,
       public_plan: plan.publicly_visible?,
       hash: plan.as_pdf(nil, true),
+      formatting: { font_face: 'Tinos, serif', font_size: '12' },
       formatting: plan.settings(:export).formatting || plan.template.settings(:export).formatting,
-      selected_phase: plan.phases.order('phases.updated_at DESC').first
+      selected_phase: plan.phases.order('phases.updated_at DESC').first,
+      show_coversheet: true
     }
   end
   # rubocop:enable Metrics/AbcSize

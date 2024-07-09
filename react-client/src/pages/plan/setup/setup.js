@@ -154,7 +154,7 @@ function DmpSetup() {
 
                   <div className="dmpui-field-fileinput-group">
                     <div>
-                      {dmp.narrative && (
+                      {dmp.narrative?.url && (
                         <>
                           <p>
                             <a href={dmp.narrative?.url} target="_blank">{dmp.narrative?.file_name}</a>

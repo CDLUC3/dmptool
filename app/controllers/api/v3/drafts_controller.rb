@@ -122,7 +122,7 @@ module Api
                                dmp.narrative.attached?
 
         # Remove the narrative from the metadata if it was purged
-        dmp.metadata.fetch('dmp', {})['draft_data']['narrative'] = {} if (create_params[:remove_narrative].present?) 
+        dmp.metadata.fetch('dmp', {})['draft_data']['narrative'] = {} if dmp.metadata.fetch('dmp', {})['draft_data'].present? && create_params[:remove_narrative].present?
 
         # Attach the narrative PDF if applicable
         dmp.metadata.fetch('dmp', {})['title'] = create_params[:title] if create_params[:title].present?

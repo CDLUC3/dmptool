@@ -207,7 +207,7 @@ module Api
       def modifications_params
         %i[id augmenter_run_id provenance timestamp] + [
           dmproadmap_related_identifiers: %i[descriptor work_type type identifier citation
-                                             confidence score status] + [notes: []],
+                                             domain confidence score status] + [notes: []],
           funding: %i[name acronym funding_status dmproadmap_opportunity_number dmproadmap_project_number
                       confidence score status] +
                       [notes: [], funder_id: identifier_permitted_params, grant_id: identifier_permitted_params]

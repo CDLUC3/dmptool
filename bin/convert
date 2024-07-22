@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Get Dragonfly gem to use GraphicsMagick instead of ImageMagick
+/usr/bin/gm convert "$@"

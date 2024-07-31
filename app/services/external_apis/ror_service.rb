@@ -73,9 +73,6 @@ module ExternalApis
             log_message(method: method, message: "From #{download_url}")
 
             payload = download_ror_file(url: download_url)
-
-puts payload[0..100]
-
             if payload.present?
               file = File.open(zip_file, 'wb')
               file.write(payload)

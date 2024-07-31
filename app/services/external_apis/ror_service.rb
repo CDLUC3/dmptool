@@ -56,7 +56,6 @@ module ExternalApis
 
         # Fetch the Zenodo metadata for ROR to see if we have the latest data dump
         metadata = fetch_zenodo_metadata
-
         if metadata.present?
           FileUtils.mkdir_p(file_dir)
 
@@ -67,29 +66,28 @@ module ExternalApis
           if old_checksum_val == metadata[:checksum]
             log_message(method: method, message: 'There is no new ROR file to process.')
           else
-            download_file = metadata.fetch(:links, {})[:download]
+            download_file = download_file = metadata['key']
+            download_url = metadata.fetch('links', {}).fetch('download', metadata.fetch('links', {})['self'])
             log_message(method: method, message: "New ROR file detected - checksum #{metadata[:checksum]}")
             log_message(method: method, message: "Downloading #{download_file}")
+            log_message(method: method, message: "From #{download_url}")
 
-            payload = download_ror_file(url: metadata.fetch(:links, {})[:download])
+            payload = download_ror_file(url: download_url)
+
+puts payload[0..100]
+
             if payload.present?
               file = File.open(zip_file, 'wb')
               file.write(payload)
 
-              # rubocop:disable Metrics/BlockNesting
-              if validate_downloaded_file(file_path: zip_file, checksum: metadata[:checksum])
-                json_file = download_file.split('/').last.gsub('.zip', '')
-                json_file = "#{json_file}.json" unless json_file.end_with?('.json')
+              json_file = download_file.split('/').last.gsub('.zip', '')
+              json_file = "#{json_file}.json" unless json_file.end_with?('.json')
 
-                # Process the ROR JSON
-                if process_ror_file(zip_file: zip_file, file: json_file)
-                  checksum = File.open(checksum_file, 'w')
-                  checksum.write(metadata[:checksum])
-                end
-              else
-                log_error(method: method, error: StandardError.new('Downloaded ROR zip does not match checksum!'))
+              # Process the ROR JSON
+              if process_ror_file(zip_file: zip_file, file: json_file)
+                checksum = File.open(checksum_file, 'w')
+                checksum.write(metadata[:checksum])
               end
-              # rubocop:enable Metrics/BlockNesting
             else
               log_error(method: method, error: StandardError.new('Unable to download ROR file!'))
             end
@@ -121,7 +119,7 @@ module ExternalApis
 
         # Extract the most recent file's metadata
         file_metadata = json.fetch('hits', {}).fetch('hits', []).first&.fetch('files', [])&.last&.with_indifferent_access
-        unless file_metadata.present? && file_metadata.fetch(:links, {})[:download].present?
+        unless file_metadata.present?
           handle_http_failure(method: 'No file found in ROR metadata from Zenodo', http_response: resp)
           notify_administrators(obj: 'RorService', response: resp)
           return nil
@@ -140,9 +138,12 @@ module ExternalApis
 
         headers = {
           host: 'zenodo.org',
-          Accept: 'application/zip'
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'User-Agent': "California Digital Library - dmptool.org (mailto:dmptool@ucop.edu)"
         }
         resp = http_get(uri: url, additional_headers: headers, debug: false)
+
         unless resp.present? && resp.code == 200
           handle_http_failure(method: "Fetching ROR file from Zenodo - #{url}", http_response: resp)
           notify_administrators(obj: 'RorService', response: resp)

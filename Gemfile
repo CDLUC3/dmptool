@@ -83,7 +83,7 @@ gem 'rollbar', group: :rollbar, require: false
 
 # A simple, fast Mysql library for Ruby, binding to libmysql
 # (http://github.com/brianmario/mysql2)
-gem 'mysql2', group: :mysql, require: false
+gem 'mysql2', "0.5.6", group: :mysql, require: false
 
 # Pg is the Ruby interface to the {PostgreSQL
 # RDBMS}[http://www.postgresql.org/](https://bitbucket.org/ged/ruby-pg)
@@ -172,6 +172,7 @@ group :aws do
   gem 'dragonfly-s3_data_store'
 
   gem "aws-sdk-s3"
+  gem "aws-sdk-ssm"
 end
 
 # A collection of text algorithms (http://github.com/threedaymonk/text)

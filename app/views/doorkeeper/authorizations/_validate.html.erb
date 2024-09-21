@@ -1,4 +1,4 @@
-<%= form_with model: resource, url: new_user_session_path, method: :post, local: false, class: "novalidate" do |form| %>
+<%= form_with model: resource, url: new_user_session_path, method: :post, local: true, class: "novalidate" do |form| %>
   <% if resource.email.present? %>
     <%# The user does not have an account! %>
     <p class="red"><%= _('Invalid email or password.') %></p>
@@ -22,5 +22,5 @@
     </div>
   </div>
   <br>
-  <button type="submit"><%= _("Continue") %></button>
+  <button type="submit" class="btn-primary"><%= _("Continue") %></button>
 <% end %>

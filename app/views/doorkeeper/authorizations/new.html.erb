@@ -27,9 +27,11 @@ oauth_hash = process_oauth
     <% end %>
 
     <div class="actions">
+      <% redirect_uri = @pre_auth.redirect_uri.include?('%3A') ? CGI.unescape(@pre_auth.redirect_uri) : @pre_auth.redirect_uri %>
+
       <%= form_tag oauth_authorization_path, method: :post, data: { turbo: false } do %>
         <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
-        <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
+        <%= hidden_field_tag :redirect_uri, redirect_uri %>
         <%= hidden_field_tag :state, @pre_auth.state %>
         <%= hidden_field_tag :response_type, @pre_auth.response_type %>
         <%= hidden_field_tag :scope, @pre_auth.scope %>
@@ -39,7 +41,7 @@ oauth_hash = process_oauth
       <% end %>
       <%= form_tag oauth_authorization_path, method: :delete, data: { turbo: false } do %>
         <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
-        <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
+        <%= hidden_field_tag :redirect_uri, redirect_uri %>
         <%= hidden_field_tag :state, @pre_auth.state %>
         <%= hidden_field_tag :response_type, @pre_auth.response_type %>
         <%= hidden_field_tag :scope, @pre_auth.scope %>

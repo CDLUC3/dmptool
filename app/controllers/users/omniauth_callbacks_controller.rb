@@ -31,38 +31,63 @@ module Users
 
     private
 
-    def shibboleth_passthru_params
-      params.require(:user).permit(:org_id)
+    def pre_auth_params
+      params.permit(:client_id, :code_challenge, :code_challenge_method, :response_type,
+                    :response_mode, :redirect_uri, :scope, :state)
     end
 
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def process_omniauth_response(scheme_name:, user:, omniauth_hash:)
       @hash = omniauth_hash
-      render 'static_pages/sso_error' and return unless user.present? && @hash.present? &&
+
+      # If this is part of an API V2 Oauth workflow, sign the user in and render the
+      # authorization page. If the authentication fails rerender the page with an error
+      if session['oauth-referer'].present?
+        unless user.present? && @hash.present? && scheme_name.present?
+          flash[:alert] = 'SSO login failure!'
+        end
+
+        sign_in(user, scope: :user)
+        oauth_hash = ApplicationService.decrypt(payload: session['oauth-referer'])
+
+        @client = ApiClient.find_by(uid: oauth_hash['client_id'])
+        @current_resource_owner = user
+
+        @pre_auth ||= Doorkeeper::OAuth::PreAuthorization.new(
+          Doorkeeper.configuration,
+          pre_auth_params,
+          resource,
+        )
+        @pre_auth.send(:validate_client)
+        render 'doorkeeper/authorizations/new', layout: 'doorkeeper/application'
+
+      # If the user is inside an Oauth2 API authorization workflow from the 3rd party apps page
+      else
+        render 'static_pages/sso_error' and return unless user.present? && @hash.present? &&
                                                         scheme_name.present?
 
-      # If the user is inside an Oauth2 API authorization workflow, then redirect back to caller
-      if current_user.present? && @hash['uid'].present?
-        # If the user is already signed in add the OmniAuth provided UID
-        handle_third_party_app_registration(
-          user: current_user, scheme_name: scheme_name, omniauth_hash: @hash
-        )
+        if current_user.present? && @hash['uid'].present?
+          # If the user is already signed in add the OmniAuth provided UID
+          handle_third_party_app_registration(
+            user: current_user, scheme_name: scheme_name, omniauth_hash: @hash
+          )
 
-      elsif user.persisted?
-        # We found the user by the OmniAuth UID so sign them in
-        flash[:notice] = _('Successfully signed in')
+        elsif user.persisted?
+          # We found the user by the OmniAuth UID so sign them in
+          flash[:notice] = _('Successfully signed in')
 
-        # Add/update the omniauth credentials if necessary
-        user.attach_omniauth_credentials(scheme_name: scheme_name, omniauth_hash: @hash)
+          # Add/update the omniauth credentials if necessary
+          user.attach_omniauth_credentials(scheme_name: scheme_name, omniauth_hash: @hash)
 
-        # Refresh the User API token (used by React pages)
-        user.generate_ui_token!
+          # Refresh the User API token (used by React pages)
+          user.generate_ui_token!
 
-        sign_in_and_redirect user, event: :authentication
-      else
-        handle_new_user_sign_in(
-          user: user, scheme_name: scheme_name, omniauth_hash: @hash
-        )
+          sign_in_and_redirect user, event: :authentication
+        else
+          handle_new_user_sign_in(
+            user: user, scheme_name: scheme_name, omniauth_hash: @hash
+          )
+        end
       end
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity

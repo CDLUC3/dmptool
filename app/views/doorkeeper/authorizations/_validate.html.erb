@@ -1,26 +1,68 @@
-<%= form_with model: resource, url: new_user_session_path, method: :post, local: true, class: "novalidate" do |form| %>
-  <% if resource.email.present? %>
-    <%# The user does not have an account! %>
+<% url = (@shibbolized && !Rails.env.development? && !@bypass_sso) ? users_shibboleth_path : user_session_path %>
+
+<%= form_with model: resource, url: url, method: :post, local: true, class: "novalidate",
+                               data: { turbo: false } do |form| %>
+  <% if (resource.email.present? && resource.id.nil?) %>
+    <%# The email address was not in the database! OR signin failed %>
     <p class="red"><%= _('Invalid email or password.') %></p>
-    <p><%= sanitize(_('If you do not have a DMP Tool account, you will need to create one before authorizing %<application>s. To create an account, please visit the %<link_to_home_page>s. Once your account has been created, you may return to this page to finish the authotization.') % {
-      application: client.is_a?(String) ? client : client&.name&.humanize,
-      link_to_home_page: link_to(root_url, _('DMP Tool home page'), target: '_blank')
-    }, { attributes: %w[href target] }) %></p>
   <% end %>
 
   <%# Have the user enter their email address so we can figure out how to auth them %>
   <div id="sign-in-sign-up-email" class="c-textfield js-textfield">
-    <%= form.label :email, _('Email address') %>
-    <%= form.email_field(:email,
-                        class: "require-me",
-                        aria: { describedby: "sign-in-sign-up-email-desc" },
-                        autocomplete: 'email') %>
-    <div id="sign-in-sign-up-email-desc" class="c-textfield__general-description">
-      <%= _("For SSO, use institutional address.") %>
-    </div>
-    <div id="" class="c-textfield__invalid-description js-invalid-description" hidden>
-    </div>
+    <% if @dmptool_oauth.present? %>
+      <%= hidden_field_tag :client_id, @dmptool_oauth['client_id'] %>
+      <%= hidden_field_tag :redirect_uri, @dmptool_oauth['redirect_uri'] %>
+      <%= hidden_field_tag :state, @dmptool_oauth['state'] %>
+      <%= hidden_field_tag :response_type, @dmptool_oauth['response_type'] %>
+      <%= hidden_field_tag :scope, @dmptool_oauth['scope'].gsub('+', ' ') %>
+      <%= hidden_field_tag :code_challenge, @dmptool_oauth['code_challenge'] %>
+      <%= hidden_field_tag :code_challenge_method, @dmptool_oauth['code_challenge_method'] %>
+    <% end %>
+
+    <%= form.hidden_field :org_id, value: resource.org_id %>
+      <% if resource.id.nil? || resource.id.blank? %>
+        <%= form.label :email, _('Email address') %>
+        <%= form.email_field(:email,
+                            class: "require-me",
+                            aria: { describedby: "sign-in-sign-up-email-desc" },
+                            autocomplete: 'email') %>
+
+        <div id="sign-in-sign-up-email-desc" class="c-textfield__general-description">
+          <%= _("For SSO, use institutional address.") %>
+        </div>
+        <div id="" class="c-textfield__invalid-description js-invalid-description" hidden>
+        </div>
+        <button type="submit" class="btn btn-primary"><%= _("Continue") %></button>
+
+      <% elsif @shibbolized && !Rails.env.development? && !@bypass_sso %>
+        <%# If the Org is @shibbolized and the user has an EPPN %>
+        <%= render partial: "users/shared/sso",
+                  locals: { form: form, label: _("Sign in with Institution (SSO)") } %>
+
+        <div id="sign-in-bypass-sso" class="c-login__pseudo-description">
+          <%= link_to _('Sign in with non SSO'),
+                      user_session_path(sso_bypass: true, user: {
+                                        email: resource.email, org_id: resource.org_id }),
+                      method: :post %>
+        </div>
+      <% else %>
+        <%= form.hidden_field(:email) %>
+        <div id="sign-in-password" class="c-textfield js-textfield">
+          <%# Display the standard Sign in form %>
+          <%= form.label(:password, _('Password')) %>
+          <%= form.password_field(:password, autocomplete: 'password', minlength: 8,
+                                  maxlength: 80, class: "require-me") %>
+          <div id="" class="c-textfield__invalid-description js-invalid-description" hidden>
+          </div>
+        </div>
+
+        <div class="c-login__pseudo-description">
+          <%= link_to _('Forgot password?'), new_password_path('user') %>
+        </div>
+
+        <button type="submit" class="btn btn-primary"><%= _("Sign in") %></button>
+      <% end %>
+
+
   </div>
-  <br>
-  <button type="submit" class="btn-primary"><%= _("Continue") %></button>
 <% end %>

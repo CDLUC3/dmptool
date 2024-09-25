@@ -53,6 +53,8 @@ namespace :v6_migration do
     file_name = Rails.root.join('tmp', "v6_templates_#{Time.now.strftime('%Y-%m-%d_%H%M')}.sql")
     file = File.open(file_name, 'w+')
 
+    question_formats = QuestionFormat.all
+
     file.write "# "
     file.write "# TEMPLATES"
     file.write "# ================================================================="
@@ -67,7 +69,7 @@ namespace :v6_migration do
 
       file.write ''
       file.write "INSERT INTO `templates` (`name`, `description`, `ownerId`, `visibility`, `currentVersion`, `isDirty`, `bestPractice`, `createdById`, `created`, `modifiedById`, `modified`) (SELECT '#{tmplt_title}', '#{tmplt_desc}', '#{org.ror_id}', '#{tmplt.visibility == 1 ? "PUBLIC" : "PRIVATE"}', 'v#{tmplt.version + 1}', 0, #{tmplt.is_default ? 1 : 0}, `users`.`id`, '#{tmplt.created_at.utc.strftime('%Y-%m-%d %H:%M:%S')}', `users`.`id`, '#{tmplt.updated_at.utc.strftime('%Y-%m-%d %H:%M:%S')}' FROM `users` WHERE `affiliationId` = '#{org.ror_id}' AND `role` = 'ADMIN'); "
-      file.write "INSERT INTO `versionedTemplates` (`templateId`, `active`, `version`, `versionType`, `versionedById`, `comment`, `name`, `description`, `ownerId`, `visibility`, `bestPractice`, `created`, `modified`, `createdById`, `modifiedById`) (SELECT `templates`.`id`, 1, `templates`.`currentVersion`, 'PUBLISHED', (SELECT id FROM users WHERE email = 'super@example.com' LIMIT 1), 'Initial migration from the old DMPTool system.', `templates`.`name`, `templates`.`description`, `templates`.`ownerId`, `templates`.`visibility`, `templates`.`bestPractice`, `templates`.`created`, `templates`.`modified`, `templates`.`createdbyId`, `templates`.`modifiedById` FROM `templates` WHERE `templates`.`name` = '#{tmplt_title}' AND `templates`.`ownerId` = '#{org.ror_id}' LIMIT 1); "
+      file.write "INSERT INTO `versionedTemplates` (`templateId`, `active`, `version`, `versionType`, `versionedById`, `comment`, `name`, `description`, `ownerId`, `visibility`, `bestPractice`, `created`, `modified`, `createdById`, `modifiedById`) (SELECT `templates`.`id`, 1, `templates`.`currentVersion`, 'PUBLISHED', (SELECT id FROM users WHERE email = 'super@example.com' LIMIT 1), 'Initial migration from the old DMPTool system.', `templates`.`name`, `templates`.`description`, `templates`.`ownerId`, `templates`.`visibility`, `templates`.`bestPractice`, `templates`.`created`, `templates`.`modified`, `templates`.`createdbyId`, `templates`.`modifiedById` FROM `templates` WHERE SUBSTRING(`templates`.`name`, 1, 100) = '#{tmplt_title[0..101]}' AND `templates`.`ownerId` = '#{org.ror_id}' LIMIT 1); "
       file.write ''
 
       # Fetch the phase ids
@@ -94,12 +96,25 @@ namespace :v6_migration do
         section_desc = safe_text(section.description)
         puts "No tags found for Section title: #{section_title}" if tags.empty?
 
-        file.write "INSERT INTO `sections` (`templateId`, `name`, `introduction`, `requirements`, `guidance`, `displayOrder`, `isDirty`, `createdById`, `created`, `modifiedById`, `modified`) (SELECT `templates`.`id`, '#{section_title}', '#{section_desc}', '', '#{guidance}', #{section.number}, 0, `templates`.`createdById`, `templates`.`created`, `templates`.`modifiedById`, `templates`.`modified` FROM `templates` WHERE `ownerId` = '#{org.ror_id}' AND `name` = '#{tmplt_title}'); "
-        file.write "INSERT INTO `versionedSections` (`sectionId`, `versionedTemplateId`, `name`, `introduction`, `requirements`, `guidance`, `displayOrder`, `createdById`, `created`, `modifiedById`, `modified`) (SELECT `sections`.`id`, (SELECT `id` FROM `versionedTemplates` WHERE `ownerId` = '#{org.ror_id}' AND `name` = '#{tmplt_title}' AND `active` = 1), '#{section_title}', '#{section_desc}', '', '#{guidance}', #{section.number}, `sections`.`createdById`, `sections`.`created`, `sections`.`modifiedById`, `sections`.`modified` FROM `templates` INNER JOIN `sections` ON `templates`.`id` = `sections`.`templateId` WHERE `sections`.`name` = '#{section_title}' AND `templates`.`ownerId` = '#{org.ror_id}' AND `templates`.`name` = '#{tmplt_title}' LIMIT 1); "
+        file.write "INSERT INTO `sections` (`templateId`, `name`, `introduction`, `requirements`, `guidance`, `displayOrder`, `isDirty`, `createdById`, `created`, `modifiedById`, `modified`) (SELECT `templates`.`id`, '#{section_title}', '#{section_desc}', '', '#{guidance}', #{section.number}, 0, `templates`.`createdById`, `templates`.`created`, `templates`.`modifiedById`, `templates`.`modified` FROM `templates` WHERE `ownerId` = '#{org.ror_id}' AND SUBSTRING(`name`, 1, 100) = '#{tmplt_title[0..101]}'); "
+        file.write "INSERT INTO `versionedSections` (`sectionId`, `versionedTemplateId`, `name`, `introduction`, `requirements`, `guidance`, `displayOrder`, `createdById`, `created`, `modifiedById`, `modified`) (SELECT `sections`.`id`, (SELECT `versionedTemplates`.`id` FROM `versionedTemplates` WHERE `versionedTemplates`.`templateId` = `templates`.`id`), '#{section_title}', '#{section_desc}', '', '#{guidance}', #{section.number}, `sections`.`createdById`, `sections`.`created`, `sections`.`modifiedById`, `sections`.`modified` FROM `templates` INNER JOIN `sections` ON `templates`.`id` = `sections`.`templateId` WHERE SUBSTRING(`sections`.`name`, 1, 100) = '#{section_title[0..101]}' AND `sections`.`displayOrder` = #{section.number} AND `templates`.`ownerId` = '#{org.ror_id}' AND SUBSTRING(`templates`.`name`, 1, 100) = '#{tmplt_title[0..101]}' LIMIT 1); "
         tags.each do |tag|
-          file.write "INSERT INTO `sectionTags` (`sectionId`, `tagId`, `createdById`, `modifiedById`) (SELECT `sections`.`id`, (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` = '#{tag}'), `sections`.`createdById`, `sections`.`modifiedById` FROM `templates` INNER JOIN `sections` ON `templates`.`id` = `sections`.`templateId` WHERE `sections`.`name` = '#{section_title}' AND `templates`.`ownerId` = '#{org.ror_id}' AND `templates`.`name` = '#{tmplt_title}' LIMIT 1); "
+          file.write "INSERT INTO `sectionTags` (`sectionId`, `tagId`, `createdById`, `modifiedById`) (SELECT `sections`.`id`, (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` = '#{tag}'), `sections`.`createdById`, `sections`.`modifiedById` FROM `templates` INNER JOIN `sections` ON `templates`.`id` = `sections`.`templateId` WHERE SUBSTRING(`sections`.`name`, 1, 100) = '#{section_title[0..101]}' AND `templates`.`ownerId` = '#{org.ror_id}' AND SUBSTRING(`templates`.`name`, 1, 100) = '#{tmplt_title[0..101]}' LIMIT 1); "
         end
         file.write ''
+
+        # Now process the questions
+        questions = Question.where(section_id: section.id)
+        questions.each do |question|
+          question_text = safe_text(question.text)
+          question_type = question_type(question_formats.select {|typ| typ.id = question.question_format_id }.first)
+          # See if there is any question level guidance
+          guidance_text = Annotation.where(question_id: question.id, type: 1).map { |g| safe_text(g.text) }.join('<br/>')
+          # See if there is a sample answer
+          sample_text = Annotation.where(question_id: question.id, type: 0).map { |st| safe_text(st.text) }.join('<br/>')
+          file.write "INSERT INTO `questions` (`templateId`, `sectionId`, `displayOrder`, `isDirty`, `questionTypeId`, `questionText`, `guidanceText`, `sampleText`, `required`, `createdById`, `created`, `modifiedById`, `modified`) (SELECT `sections`.`templateId`, `sections`.`id`, #{question.number}, false, (SELECT `questionTypes`.`id` FROM `questionTypes` WHERE `questionTypes`.`name` = '#{question_type}'), '#{question_text}', '#{guidance_text}', '#{sample_text}', false, `sections`.`createdById`, `sections`.`created`, `sections`.`modifiedById`, `sections`.`modified` FROM `sections` INNER JOIN `templates` ON `sections`.`templateId` = `templates`.`id` WHERE SUBSTRING(`sections`.`name`, 1, 100) = '#{section_title[0..101]}' AND `sections`.`displayOrder` = #{section.number} AND SUBSTRING(`templates`.`name`, 1, 100) = '#{tmplt_title[0..101]}' AND `templates`.`ownerId` = '#{org.ror_id}');"
+          file.write "INSERT INTO `versionedQuestions` (`questionId`, `versionedTemplateId`, `versionedSectionId`, `questionTypeId`, `questionText`, `requirementText`, `guidanceText`, `sampleText`, `displayOrder`, `required`, `createdById`, `created`, `modifiedById`, `modified`) (SELECT `questions`.`id`, (SELECT `versionedTemplates`.`id` FROM `versionedTemplates` WHERE `versionedTemplates`.`templateId` = `templates`.`id` ORDER BY `versionedTemplates`.`created` DESC LIMIT 1), (SELECT `versionedSections`.`id` FROM `versionedSections` WHERE `versionedSections`.`sectionId` = `sections`.`id` AND `versionedSections`.`displayOrder` = `sections`.`displayOrder` ORDER BY `versionedSections`.`created` DESC LIMIT 1), (SELECT `questionTypes`.`id` FROM `questionTypes` WHERE `questionTypes`.`name` = '#{question_type}'), '#{question_text}', '', '#{guidance_text}', '#{sample_text}', #{question.number}, false, `sections`.`createdById`, `sections`.`created`, `sections`.`modifiedById`, `sections`.`modified` FROM `questions` INNER JOIN `sections` ON `questions`.`sectionId` = `sections`.`id` INNER JOIN `templates` ON `questions`.`templateId` = `templates`.`id` WHERE SUBSTRING(`questions`.`questionText`, 1, 250) = '#{question_text[0..251]}' AND SUBSTRING(`sections`.`name`, 1, 100) = '#{section_title[0..101]}' AND `sections`.`displayOrder` = #{section.number} AND `templates`.`ownerId` = '#{org.ror_id}' AND SUBSTRING(`templates`.`name`, 1, 100) = '#{tmplt_title[0..101]}' LIMIT 1); "
+        end
       end
 
       file.write ''
@@ -252,5 +267,23 @@ namespace :v6_migration do
       tags << 'Security & privacy' if theme == 'related policies'
     end
     tags.uniq
+  end
+
+  # Question type mapping (Check new system to make sure names are correct!)
+  def question_type(type_in)
+    case type_in.title&.downcase&.strip
+    when 'text field'
+      'Text Field'
+    when 'radio button'
+      'Radio Buttons'
+    when 'check box'
+      'Check Boxes'
+    when 'dropdown'
+      'Select Box'
+    when 'multi select box'
+      'Multi-select Box'
+    else
+      'Rich Text Editor'
+    end
   end
 end

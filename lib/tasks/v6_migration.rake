@@ -10,10 +10,65 @@ require 'aws-sdk-s3'
 namespace :v6_migration do
   desc 'Generate all of the data migration scripts'
   task generate_all: :environment do
+    # Affiliations
+    Rake::Task['v6_migration:generate_affiliations'].execute
     # Templates, Sections, Questions
     Rake::Task['v6_migration:generate_templates'].execute
-    Rake::Task['v6_migration:generate_sections'].execute
+  end
 
+  desc 'Generate affiliations'
+  task generate_affiliations: :environment do
+    p "Generating SQL statements for Affiliations ..."
+    orgs = Org.includes(:registry_orgs).all
+
+    file_name = Rails.root.join('tmp', "v6_orgs_#{Time.now.strftime('%Y-%m-%d_%H%M')}.sql")
+    file = File.open(file_name, 'w+')
+
+    sql_insert = 'INSERT INTO `affiliations` (`id`, `provenance`, `name`, `displayName`, searchName`, `funder`, `fundrefId`, `homepage`, `acronyms`, `aliases`, `types`, `logoURI`, `logoName`, `contactName`, `contactEmail`, `ssoEntityId`, `feedbackEnabled`, `feedbackMessage`, `feedbackEmails`, `managed`, `createdById`, `created`, `modifiedById`, `modified`) '
+    orgs.each do |org|
+      sso_entity_id = org.identifier_for_scheme('shibboleth') if org.shibbolized?
+      ror = RegistryOrg.findBy(ror_id: org.identifier_for_scheme('ror'))
+
+      id = ror.present? ? ror.ror_id : "https://dmptool.org/affiliations/#{SecureRandom.hex(4)}"
+      provenance = ror.present? ? 'ROR' : 'DMPTOOL'
+      name = ror.present? ? ror.name.split(' (').first : org.name.split(' (').first
+      displayName = ror.present? ? ror.name : org.name
+      domain_parts = ror.present? ror.home_page.split('.').reverse
+      domain = "#{domain_parts[1]}.#{domain_parts[0]}" if domain_parts.length >= 2
+      searchName = "#{[name, domain].join(' | ')} | #{acronyms.join(' | ')} #{aliases.join(' | ')}"
+      funder = org.funder? || ror&.fundref_id.present?
+      fundref_id = ror&.fundref_id
+      homepage = ror.present? ? ror.home_page : org.target_url
+      acronyms = ror.present? ? ror.acronyms : []
+      aliases = ror.present? ? ror.aliases : [ ]
+      types = ror.present? ? ror.types : ["Education"]
+
+      # TODO: Figure out how to handle logos
+      logo_uri = nil #logo_uid if org.logo.present?
+      logo_name = nil
+
+      contact_name = org.contact_name
+      contact_email = org.contact_email
+      feedback_enabled = org.feedback_enabled
+      feedback_msg = org.feedback_msg
+      managed = org.managed
+
+      sql = "(SELECT '#{id}', '#{provenance}', '#{name}', '#{displayName}', '#{searchName}', #{funder ? '1' : '0'}, '#{fundref_id}', '#{homepage}', '#{acronyms.to_json}', '#{aliases.to_json}', '#{types.to_json}', NULL, NULL, '#{contact_name}', '#{contact_email}', '#{sso_entity_id}', #{feedback_enabled}, '#{feedback_msg}', '', #{managed}, `users`.`id`, CURDATE(), `users`.`id`, CURDATE() FROM users WHERE email = 'super@example.com')"
+      file.write("#{sql_insert} #{sql};")
+      file.write "INSERT INTO `affiliations_email_domains` (`email`, `affiliationId`, `createdById`, `created`, `modifiedById`, `modified`) (SELECT '#{domain}', `affiliations`.`id`, `affiliations`.`createdById`, CURDATE(), `affiliations`.`modifiedById`, CURDATE() FROM `affiliations` WHERE `affiliations`.`id` = '#{id}');"
+
+      if !org.links.nil? && org.links.any? && org.links['org'].present?
+        org.links['org'].each do |link|
+          next unless link['link'].present?
+
+          file.write "INSERT INTO `affiliations_links` (`url`, `text`, `affiliationId`, `createdById`, `created`, `modifiedById`, `modified`) (SELECT '#{link['link']}', '#{link['text']}', `affiliations`.`id`, `affiliations`.`createdById`, CURDATE(), `affiliations`.`modifiedById`, CURDATE() FROM `affiliations` WHERE `affiliations`.`id` = '#{id}');"
+        end
+      end
+      file.write ''
+    end
+
+    file.close
+    p "DONE. SQL written to: #{file_name}"
   end
 
   desc 'Generate mock/test users for each Org that has a published template'
@@ -22,7 +77,7 @@ namespace :v6_migration do
     orgs = RegistryOrg.known
     templates = Template.published.where(org_id: orgs.map(&:org_id), customization_of: nil)
 
-    file_name = Rails.root.join('tmp', "v6_userss_#{Time.now.strftime('%Y-%m-%d_%H%M')}.sql")
+    file_name = Rails.root.join('tmp', "v6_users_#{Time.now.strftime('%Y-%m-%d_%H%M')}.sql")
     file = File.open(file_name, 'w+')
 
     file.write "# "

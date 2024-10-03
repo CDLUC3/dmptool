@@ -34,6 +34,16 @@ module AuthenticationHelper
       begin
         # Fetch the oauth info from the session and decrypt it
         oauth_hash = ApplicationService.decrypt(payload: session['oauth-referer'])
+
+        pre_auth = {}
+        oauth_path_parts = oauth_hash['path'].split('?').last&.split('&')
+
+        oauth_path_parts.each do |entry|
+          parts = entry.split('=')
+          pre_auth[parts.first] = parts.length > 1 ? parts.last : ''
+        end
+        @dmptool_oauth = JSON.parse(pre_auth.to_json)
+
         {
           path: oauth_hash['path'],
           client: ApiClient.find_by(uid: oauth_hash['client_id'])

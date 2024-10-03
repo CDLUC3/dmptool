@@ -14,6 +14,26 @@ module Users
         if entity_id.present?
           shib_login = Rails.configuration.x.shibboleth.login_url
           target = user_shibboleth_omniauth_callback_url.gsub('http:', 'https:')
+
+          # If this is part of an API V2 Oauth workflow, we need to pass the pre_auth
+          # vals into the callback so they're available and useable by Doorkeeper
+          if session['oauth-referer'].present?
+            oauth_hash = ApplicationService.decrypt(payload: session['oauth-referer'])
+            oauth_path_parts = oauth_hash['path'].split('?').last&.split('&')
+
+            pre_auth = oauth_path_parts.map do |entry|
+              parts = entry.split('=')
+              if parts.length > 1
+                val = parts.last.include?('%3A') ? CGI.unescape(parts.last) : parts.last
+                "#{parts.first}=#{val}"
+              else
+                "#{parts.first}="
+              end
+            end
+
+            target = "#{target}?#{CGI.escape(pre_auth.join('&'))}"
+          end
+
           # initiate shibboleth login sequence
           redirect_to "#{shib_login}?target=#{target}&entityID=#{entity_id.value}"
         else

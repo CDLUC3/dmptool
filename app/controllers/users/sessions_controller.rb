@@ -20,9 +20,28 @@ module Users
         # redirect_to root_path, alert: _('Invalid email address!')
 
       elsif sign_in_params[:org_id].present? && !@bypass_sso
-        # If there is an Org in the params then this is step 2 of the email+password workflow
-        # so just let Devise sign them in normally
-        super
+        # If this is part of an API V2 Oauth workflow, sign the user in and render the
+        # authorization page. If the authentication fails rerender the page with an error
+        if session['oauth-referer'].present?
+          new_resource = warden.authenticate!(auth_options)
+          oauth_hash = ApplicationService.decrypt(payload: session['oauth-referer'])
+
+          @client = ApiClient.find_by(uid: oauth_hash['client_id'])
+          @current_resource_owner = resource
+
+          @pre_auth ||= Doorkeeper::OAuth::PreAuthorization.new(
+            Doorkeeper.configuration,
+            pre_auth_params,
+            resource,
+          )
+          @pre_auth.send(:validate_client)
+
+          render 'doorkeeper/authorizations/new', layout: 'doorkeeper/application'
+        else
+          # If there is an Org in the params then this is step 2 of the email+password workflow
+          # so just let Devise sign them in normally
+          super
+        end
 
       else
         # If there is no Org then the user provided their email in step 1 so we need
@@ -47,7 +66,18 @@ module Users
         if session['oauth-referer'].present?
           oauth_hash = ApplicationService.decrypt(payload: session['oauth-referer'])
 
-          @client = ApiClient.where(uid: oauth_hash['client_id'])
+          @client = ApiClient.find_by(uid: oauth_hash['client_id'])
+          @current_resource_owner = resource
+
+          @dmptool_oauth = generate_pre_auth(oauth_hash)
+
+          @pre_auth ||= Doorkeeper::OAuth::PreAuthorization.new(
+            Doorkeeper.configuration,
+            pre_auth_params,
+            resource,
+          )
+          @pre_auth.send(:validate_client)
+
           render 'doorkeeper/authorizations/new', layout: 'doorkeeper/application'
         else
           render 'static_pages/auth'
@@ -70,6 +100,11 @@ module Users
 
     protected
 
+    def pre_auth_params
+      params.permit(:client_id, :code_challenge, :code_challenge_method, :response_type,
+                    :response_mode, :redirect_uri, :scope, :state)
+    end
+
     # If you have extra params to permit, append them to the sanitizer.
     def configure_sign_in_params
       devise_parameter_sanitizer.permit(:sign_in, keys: authentication_params(type: :sign_in))
@@ -78,8 +113,8 @@ module Users
     # The path used after sign in.
     # rubocop:disable Metrics/AbcSize
     def after_sign_in_path_for(resource)
-      # Determine if this was parft of an OAuth workflow for API V2
-      if session['oauth-referer'].present?
+      # Determine if this was part of an OAuth workflow for API V2
+      if session['oauth-referer'].present? &&
         auth_hash = ApplicationService.decrypt(payload: session['oauth-referer']) || {}
         oauth_path = auth_hash['path']
 
@@ -100,5 +135,19 @@ module Users
       (oauth_path.presence || landing_page_path)
     end
     # rubocop:enable Metrics/AbcSize
+
+    def generate_pre_auth(oauth_hash)
+      pre_auth = {}
+      return {} unless oauth_hash.present?
+
+      oauth_path_parts = oauth_hash['path'].split('?').last&.split('&')
+
+      oauth_path_parts.each do |entry|
+        parts = entry.split('=')
+        pre_auth[parts.first] = parts.last
+      end
+
+      JSON.parse(pre_auth.to_json)
+    end
   end
 end

@@ -201,6 +201,9 @@ class PlanExportsController < ApplicationController
   # in html that break docx creation by htmltoword gem.
   def clean_html_for_docx_creation(html)
     # Replaces single backslash \ with \\ with gsub.
-    html.gsub('\\', '\&\&')
+    # Then replaces a specific pattern of tags that causes content to not be included in exported docx.
+      # \1 refers to the first captured group in parenthesis. <br> tag is replaced with </p></p>. \3 refers to all remaining content 
+      # up to and including the closing </p> tag.
+    html.gsub('\\', '\&\&').gsub(/(<p>.*?<strong>.*?<\/strong>[^<]+)(<br>)(.*?<\/p>)/, '\1</p><p>\3')
   end
 end

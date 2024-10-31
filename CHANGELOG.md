@@ -2,6 +2,9 @@
 
 ## DMPTool Releases
 
+### v4.1.6
+- Fixed a bug that was causing content to be excluded from .docx exports. Updated clean_html_for_docx_creation function [#647]
+
 ### v4.1.5
 
 - Added the ability for users to change the font size, font color, text alignment in the TinyMCE editors. See app/javascript/utils/tinymce.js.

@@ -2,14 +2,14 @@
 
 source 'https://rubygems.org'
 
-ruby '>= 3.0'
+ruby '>= 3.2'
 
 # ===========#
 # CORE RAILS #
 # ===========#
 
 # Full-stack web application framework. (http://rubyonrails.org)
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.2'
 
 # TODO: Remove this once Rails addresses the issue with its dependency on mimemagic. Mimemagic had
 #       an MIT license but was using some incompatible GPL license code.
@@ -245,10 +245,9 @@ gem 'activerecord_json_validator'
 # user input (we're using it for PDF invoice downloads in Noko). (https://github.com/madrobby/zaru)
 gem 'zaru'
 
-# We need to freeze the mail gem version as the recently released 2.8.0 triggers an exception
-# We will need to check if it's fixed when we migrate to Ruby 3.0/3.1
-# See : https://github.com/DMPRoadmap/roadmap/issues/3254
-gem 'mail', '2.7.1'
+# Mail is an internet library for Ruby that is designed to handle email generation, parsing and sending in
+# a simple, rubyesque manner.
+gem 'mail'
 
 # Delayed::Job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
 # See: https://github.com/collectiveidea/delayed_job#active-job

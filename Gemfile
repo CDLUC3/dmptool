@@ -306,10 +306,6 @@ group :ci, :development do
   # the community-driven Ruby Style Guide.
   gem 'rubocop'
 
-  # RuboCop rules for detecting and autocorrecting undecorated strings for i18n
-  # (gettext and rails-i18n)
-  gem 'rubocop-i18n'
-
   # A collection of RuboCop cops to check for performance optimizations in Ruby code.
   # gem 'rubocop-performance'
 

@@ -603,8 +603,6 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.33.0)
       parser (>= 3.3.1.0)
-    rubocop-i18n (3.0.0)
-      rubocop (~> 1.0)
     rubocop-performance (1.22.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
@@ -799,7 +797,6 @@ DEPENDENCIES
   rspec-rails
   rss
   rubocop
-  rubocop-i18n
   rubocop-performance
   rubocop-rails
   rubocop-rspec

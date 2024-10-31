@@ -36,6 +36,14 @@ gem 'turbo-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
+# The ultimate text progress bar library for Ruby!
+# (https://github.com/jfelchner/ruby-progressbar)
+gem 'ruby-progressbar'
+
+# Provides Sprockets implementation for Rails 4.x (and beyond) Asset Pipeline.
+# https://github.com/rails/sprockets-rails
+gem 'sprockets-rails'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 # Use Active Model has_secure_password

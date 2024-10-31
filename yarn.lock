@@ -1047,7 +1047,7 @@
   dependencies:
     spark-md5 "^3.0.1"
 
-"@rails/ujs@~7.2":
+"@rails/ujs@~7.1":
   version "7.1.500"
   resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.1.500.tgz#84bb037b6a823ec7fb7782a2ac03452deb505128"
   integrity sha512-PfPtQrxFOn55RlJ4ygXkcIHFkoPO1JMTRJcSdPb0EavcSZ3Ekl9ujAAPrrqj2zKwkbe0pGGR79RJhnUr5ngQjw==

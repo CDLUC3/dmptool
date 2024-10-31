@@ -27,8 +27,8 @@
 class Condition < ApplicationRecord
   belongs_to :question
   enum action_type: { remove: 0, add_webhook: 1 }
-  serialize :option_list, coder: Array
-  serialize :remove_data, coder: Array
+  serialize :option_list, type: Array
+  serialize :remove_data, type: Array
   serialize :webhook_data, coder: JSON
 
   # Sort order: Number ASC

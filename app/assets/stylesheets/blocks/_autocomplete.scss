@@ -5,26 +5,26 @@
 ul.ui-menu {
   width: 60%;
   list-style: none;
-  background: $color-secondary-background;
+  background: var(--color-secondary-background);
   padding-left: 0;
 
   .ui-menu-item {
-    color: $color-secondary-text;
-    border-bottom: 1px solid $color-border-default;
-    border-left: 1px solid $color-border-default;
-    border-right: 1px solid $color-border-default;
+    color: var(--color-secondary-text);
+    border-bottom: 1px solid var(--color-border-default);
+    border-left: 1px solid var(--color-border-default);
+    border-right: 1px solid var(--color-border-default);
     padding: 5px 10px 5px 10px;
 
     .ui-menu-item-wrapper {
       background-color: inherit;
-      font-family: $font-family;
+      font-family: var(--font-family);
     }
   }
 
   .ui-menu-item:hover,
   .ui-menu-item:focus {
-    color: $color-primary-text;
-    background-color: $color-primary-background;
+    color: var(--color-primary-text);
+    background-color: var(--color-primary-background);
   }
 }
 

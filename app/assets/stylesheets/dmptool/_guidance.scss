@@ -1,20 +1,22 @@
 @use '../variables/colours' as *;
 
 .question-body .guidance-section {
-  border-left: 5px solid $color-primary-background;
-}
-.question-body .question-section .toggle-guidance-section {
-  background-color: $color-primary-background;
+  border-left: 5px solid var(--color-primary-background);
 }
 
-.nav-pills > li.active > a {
-  background-color: $color-secondary-background;
-  border-color: $color-primary-background;
-  color: $color-secondary-text;
+.question-body .question-section .toggle-guidance-section {
+  background-color: var(--color-primary-background);
 }
-.nav-pills > li.active > a:hover,
-.nav-pills > li.active > a:focus {
-  background-color: $color-primary-background;
-  border-color: $color-primary-background;
-  color: $color-primary-text;
+
+.nav-pills>li.active>a {
+  background-color: var(--color-secondary-background);
+  border-color: var(--color-primary-background);
+  color: var(--color-secondary-text);
+}
+
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
+  background-color: var(--color-primary-background);
+  border-color: var(--color-primary-background);
+  color: var(--color-primary-text);
 }

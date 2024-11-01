@@ -1,9 +1,10 @@
 @use '../variables/colours' as *;
+
 .red {
-  color: $color-text-red;
+  color: var(--color-text-red);
 }
 
 //default colour used on headings
-.color-heading-text{
-  color: $color-heading-text;
+.color-heading-text {
+  color: var(--color-heading-text);
 }

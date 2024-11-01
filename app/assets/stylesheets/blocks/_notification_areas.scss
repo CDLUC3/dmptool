@@ -9,7 +9,7 @@
   width: 90vw;
 
   // Non-mobile settings
-  @media (min-width: #{$screen-sm-min}) {
+  @media (min-width: #{var(--screen-sm-min)}) {
     right: 4rem;
     width: 300px;
   }

@@ -13,9 +13,9 @@
 .btn-primary:visited,
 .btn-primary:active:hover,
 .btn-primary.active:hover {
-  background-color: $color-primary-background;
-  border-color: $color-border-default;
-  color: $color-primary-text;
+  background-color: var(--color-primary-background);
+  border-color: var(--color-border-default);
+  color: var(--color-primary-text);
   outline: none;
   margin-top: 5px;
   margin-bottom: 10px;
@@ -29,9 +29,9 @@
 .btn-default:visited,
 .btn-default:active:hover,
 .btn-default.active:hover {
-  background-color: $color-primary-background;
-  border-color: $color-border-default;
-  color: $color-primary-text;
+  background-color: var(--color-primary-background);
+  border-color: var(--color-border-default);
+  color: var(--color-primary-text);
   outline: none;
   margin-top: 5px;
   margin-bottom: 10px;
@@ -44,8 +44,8 @@
 .btn-default:active[data-toggle=tooltip],
 .btn-default:visited[data-toggle=tooltip],
 .btn-default:active:hover[data-toggle=tooltip] {
-  color: $color-secondary-text;
-  background-color: $color-secondary-background;
+  color: var(--color-secondary-text);
+  background-color: var(--color-secondary-background);
   border: none;
   padding-left: -10px;
   font-size: .8rem;
@@ -53,5 +53,5 @@
 
 /* link button */
 .btn-link {
-  color: $color-link-text;
+  color: var(--color-link-text);
 }

@@ -1,7 +1,11 @@
 @import url(https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap);
 
-$font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+:root {
+  --fa-font-path: '.';
 
-$font-size-base: 16px;
+  --font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 
-$grid-gutter-width: 1.5rem;
+  --font-size-base: 16px;
+
+  --grid-gutter-width: 1.5rem;
+}

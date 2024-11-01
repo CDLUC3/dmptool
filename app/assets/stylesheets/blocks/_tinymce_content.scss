@@ -1,8 +1,8 @@
 @use '../variables/colours' as *;
 
 .mce-content-body {
-  
+
   a {
-    color: $color-link-text;
+    color: var(--color-link-text);
   }
 }

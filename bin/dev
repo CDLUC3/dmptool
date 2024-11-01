@@ -21,4 +21,5 @@ else
   # export DB_CMD="bin/rails db:drop && bin/rails db:create && bin/rails db:schema:load"
 fi
 
+echo "DB Migrations complete. Starting Foreman:"
 exec foreman start -f Procfile.dev "$@"

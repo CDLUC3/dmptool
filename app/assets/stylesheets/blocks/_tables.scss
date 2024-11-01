@@ -1,27 +1,42 @@
 @use '../variables/colours' as *;
 @use "../../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss" as *;
+
 // This file contains overrides to the core Bootstrap 3.x styling
-.table { border: 1px solid $color-border-default; }
-.table thead > tr > th { border-bottom: none; }
-.table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td { border: 1px solid $color-border-default; }
+.table {
+  border: 1px solid var(--color-border-default);
+}
+
+.table thead>tr>th {
+  border-bottom: none;
+}
+
+.table thead>tr>th,
+.table tbody>tr>th,
+.table tfoot>tr>th,
+.table thead>tr>td,
+.table tbody>tr>td,
+.table tfoot>tr>td {
+  border: 1px solid var(--color-border-default);
+}
 
 thead th {
-  background-color: $color-primary-background;
-  color: $color-primary-text;
+  background-color: var(--color-primary-background);
+  color: var(--color-primary-text);
 }
 
 thead th.table-scope {
-  background-color: $color-secondary-background;
+  background-color: var(--color-secondary-background);
   font-weight: normal;
 
   a {
-    color: $color-secondary-text;
-    padding: 2px calc($grid-gutter-width / 2) 2px 2px;
+    color: var(--color-secondary-text);
+    padding: 2px calc(var(--grid-gutter-width) / 2) 2px 2px;
   }
 }
 
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: $color-grey;
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+  background-color: var(--color-grey);
 }
 
 th.date-column {
@@ -33,13 +48,14 @@ th.download-column {
 }
 
 /* Fix issues with dropdwon within tables being cut off */
-.table-responsive > .table {
+.table-responsive>.table {
   width: 100%;
-  margin-bottom: calc($grid-gutter-width / 2);
+  margin-bottom: calc(var(--grid-gutter-width) / 2);
   overflow: auto;
 }
 
 @media (max-width: 768px) {
+
   .table-responsive .dropdown-menu,
   .table-responsive .dropdown-toggle {
     position: static !important;
@@ -56,11 +72,14 @@ th.download-column {
   table {
     border: none;
 
-    thead > tr > th {
+    thead>tr>th {
       border: none;
-      background-color: $color-secondary-background;
-      color: $color-text-black;
+      background-color: var(--color-secondary-background);
+      color: var(--color-text-black);
     }
-    tbody > tr > td { border: none; }
+
+    tbody>tr>td {
+      border: none;
+    }
   }
 }

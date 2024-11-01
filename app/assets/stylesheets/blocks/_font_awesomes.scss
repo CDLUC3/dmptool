@@ -7,40 +7,44 @@
 /* FONTAWESOME STYLING */
 .fas:not(.small) {
   // font-size: 1.7rem;
-  font-size: $font-size-base;
+  font-size: var(--font-size-base);
 }
+
 .fa-reverse {
-  color: $color-secondary-text;
+  color: var(--color-secondary-text);
 }
-.fa-sort, .fa-sort-up, .fa-sort-down {
-  color: $color-primary-text;
+
+.fa-sort,
+.fa-sort-up,
+.fa-sort-down {
+  color: var(--color-primary-text);
 }
 
 /* change color of search icon */
 .fa-search {
-  color: $color-primary-text;
+  color: var(--color-primary-text);
 }
 
 /* adjust the position of the 'remove - X' button for links */
 .link .fa-times-circle {
-  margin-top: $grid-gutter-width;
+  margin-top: var(--grid-gutter-width);
 }
 
 /* Links with fontawesome icons:
    fa-file-pdf-o and fa-file-word-o */
 a {
-   i {
-     &.fas {
+  i {
+    &.fas {
 
-       &.fa-file-pdf,
-       &.fa-file-word {
-         color: inherit;
-         margin: 5px;
+      &.fa-file-pdf,
+      &.fa-file-word {
+        color: inherit;
+        margin: 5px;
 
-         &:not(.small) {
-           font-size: 1.9em;
-         }
-       }
-     }
-   }
+        &:not(.small) {
+          font-size: 1.9em;
+        }
+      }
+    }
+  }
 }

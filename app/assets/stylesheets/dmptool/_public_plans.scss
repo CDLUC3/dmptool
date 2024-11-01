@@ -9,7 +9,7 @@ div.c-faceting {
 }
 
 div.c-faceting .t-publicplans__section-header {
-  border-bottom: 1px solid $color-blue-dark;
+  border-bottom: 1px solid var(--color-blue-dark);
   margin-bottom: 20px;
 }
 
@@ -22,20 +22,20 @@ div.c-facet-controls {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: $space-base;
+    gap: var(--space-base);
   }
 
-  > ul {
-    padding-inline: $space-sm;
+  >ul {
+    padding-inline: var(--space-sm);
   }
 }
 
 .c-facet header {
   display: flex;
   justify-content: space-between;
-  margin-block-end: $space-sm;
-  padding: $space-sm $space-sm $space-sm 0;
-  border-block-end: 1px solid $color-primary-background;
+  margin-block-end: var(--space-sm);
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) 0;
+  border-block-end: 1px solid var(--color-primary-background);
 
   h3 {
     margin: 0;
@@ -49,8 +49,8 @@ div.c-facet-controls {
   inline-size: 1rem;
   block-size: 1rem;
   border-style: none;
-  background-color: $color-secondary-background;
-  color: $color-primary-background;
+  background-color: var(--color-secondary-background);
+  color: var(--color-primary-background);
   mask-size: 1rem;
   mask-position: center;
 }
@@ -63,7 +63,7 @@ div.c-facet-controls {
 
   label {
     display: flex;
-    gap: $space-sm;
+    gap: var(--space-sm);
   }
 }
 
@@ -83,26 +83,27 @@ div.c-facet-controls {
 
   &::after {
     content: '';
-    margin-inline-start: $space-sm;
+    margin-inline-start: var(--space-sm);
     inline-size: 1rem;
     block-size: 1rem;
-    background-color: $color-primary-background;
+    background-color: var(--color-primary-background);
     mask: url('data-url:fa-solid/caret-down.svg') center / 1rem;
   }
 
-  + * { // #3
-    margin-block-start: $space-base;
+  +* {
+    // #3
+    margin-block-start: var(--space-base);
   }
 }
 
 .c-more[open] summary {
-  color: $color-primary-background;
+  color: var(--color-primary-background);
 }
 
 .c-search {
   display: flex;
   flex-direction: column;
-  gap: $space-sm;
+  gap: var(--space-sm);
   margin-bottom: 10px;
 
   h3 {
@@ -111,7 +112,7 @@ div.c-facet-controls {
     font-weight: 600;
   }
 
-  > button {
+  >button {
     align-self: flex-start;
   }
 }
@@ -124,7 +125,7 @@ div.c-facet-controls {
     flex: 1;
     padding: 0.3rem;
     min-inline-size: 0; // overrides browser default
-    border: 1px solid $color-black;
+    border: 1px solid var(--color-black);
     line-height: 1;
   }
 
@@ -132,8 +133,8 @@ div.c-facet-controls {
     flex: none;
     inline-size: 1.5rem;
     block-size: 1.5rem;
-    margin-inline-start: $space-sm;
-    color: $color-primary-background;
+    margin-inline-start: var(--space-sm);
+    color: var(--color-primary-background);
 
     i {
       font-size: 1.5rem;
@@ -148,14 +149,14 @@ div.c-facet-controls {
 // Results section
 .t-publicplans {
   display: grid;
-  gap: $space-base;
+  gap: var(--space-base);
   grid-template-rows: auto auto 1fr auto;
   height: 100vh;
 
   .t-publicplans__intro,
   .t-publicplans__plans,
   main {
-    margin-inline: $space-base;
+    margin-inline: var(--space-base);
   }
 
   h2 {
@@ -163,23 +164,23 @@ div.c-facet-controls {
   }
 
   .t-publicplans__section-header {
-    margin-block-end: $space-base;
+    margin-block-end: var(--space-base);
     padding-block-end: 0.3rem;
-    border-block-end: 1px solid $color-blue-dark;
+    border-block-end: 1px solid var(--color-blue-dark);
   }
 
   main .t-publicplans__section-header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: $space-sm;
+    gap: var(--space-sm);
   }
 
   .c-search,
   .c-facet,
   .c-clear,
   .c-plan {
-    margin-block-end: $space-base;
+    margin-block-end: var(--space-base);
   }
 }
 
@@ -202,21 +203,21 @@ div.c-facet-controls {
   select {
     padding: 0.3rem 2rem 0.3rem 0.3rem;
     border-radius: 0;
-    background-color: $color-grey;
-    color: $color-black;
+    background-color: var(--color-grey);
+    color: var(--color-black);
   }
 }
 
 .t-publicplans {
   display: grid;
-  gap: $space-base;
+  gap: var(--space-base);
   grid-template-rows: auto auto 1fr auto;
   height: 100vh;
 
   .t-publicplans__intro,
   .t-publicplans__plans,
   main {
-    margin-inline: $space-base;
+    margin-inline: var(--space-base);
   }
 
   h2 {
@@ -224,23 +225,23 @@ div.c-facet-controls {
   }
 
   .t-publicplans__section-header {
-    margin-block-end: $space-base;
+    margin-block-end: var(--space-base);
     padding-block-end: 0.3rem;
-    border-block-end: 1px solid $color-blue;
+    border-block-end: 1px solid var(--color-blue);
   }
 
   main .t-publicplans__section-header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: $space-sm;
+    gap: var(--space-sm);
   }
 
   .c-search,
   .c-facet,
   .c-clear,
   .c-plan {
-    margin-block-end: $space-base;
+    margin-block-end: var(--space-base);
   }
 }
 
@@ -268,14 +269,14 @@ div.c-facet-controls {
 
 .c-plan {
   display: grid;
-  padding: 0 $space-base $space-base $space-base;
-  gap: $space-base;
-  background-color: $color-grey;
+  padding: 0 var(--space-base) var(--space-base) var(--space-base);
+  gap: var(--space-base);
+  background-color: var(--color-grey);
   margin-bottom: 20px;
   font-size: 1.3em;
 
   .c-taggroup {
-    margin-inline-start: -$space-base;
+    margin-inline-start: -var(--space-base);
     justify-self: start;
   }
 
@@ -319,10 +320,10 @@ div.c-facet-controls {
 
   display: inline-flex;
   align-items: center;
-  gap: $space-sm;
-  padding: 0.3rem $space-base;
-  background-color: $color-blue-dark;
-  color: $color-white;
+  gap: var(--space-sm);
+  padding: 0.3rem var(--space-base);
+  background-color: var(--color-blue-dark);
+  color: var(--color-white);
   font-size: 0.9rem;
   text-transform: uppercase;
 
@@ -332,7 +333,7 @@ div.c-facet-controls {
   display: inline-grid;
   grid-template-columns: auto auto;
   margin: 0;
-  gap: $space-base;
+  gap: var(--space-base);
 
   dt {
     justify-self: end;

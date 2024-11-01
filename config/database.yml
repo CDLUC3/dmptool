@@ -7,10 +7,6 @@ defaults: &defaults
   username: <%= Rails.configuration.x.dmproadmap.database_username %>
   password: <%= Rails.configuration.x.dmproadmap.database_password %>
 
-  # DB connections should be greater than or equal to the number of threads (see config/puma.rb)
-  #    - nbr workers * nbr threads
-  pool: 10
-
 # Local development environment
 local:
   <<: *defaults

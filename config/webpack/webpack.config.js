@@ -12,11 +12,24 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules|bower_components/,
         loader: 'babel-loader',
-        options: { presets: ['@babel/env','@babel/preset-react'] },
+        options: { presets: ['@babel/env', '@babel/preset-react'] },
       },
       {
         test: /\.(sa|sc|c)ss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              api: "modern-compiler",
+              sassOptions: {
+                // Your sass options
+                verbose: false
+              },
+            },
+          },
+        ],
       },
     ],
   },

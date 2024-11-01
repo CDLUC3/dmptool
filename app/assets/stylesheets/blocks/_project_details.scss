@@ -1,10 +1,11 @@
 @use '../variables/colours' as *;
+
 fieldset.project-details {
-  border: 0.5px groove $color-border-light;
+  border: 0.5px groove var(--color-border-light);
   padding: 0 5px;
   margin: 0px;
   width: 480px;
-  box-shadow:  0px 0px 0px 0px $color-grey;
+  box-shadow: 0px 0px 0px 0px var(--color-grey);
 }
 
 legend.project-details {

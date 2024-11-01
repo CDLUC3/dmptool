@@ -19,11 +19,11 @@
 }
 
 .promotion-logo.separator {
-  border-bottom: 1px solid $color-black;
+  border-bottom: 1px solid var(--color-black);
 }
 
 .promotion-logo.white {
-  background-color: $color-black;
+  background-color: var(--color-black);
 }
 
 .promotion-landscape .promotion-logo img {

@@ -10,19 +10,22 @@ html {
   min-height: 100%;
 
   line-height: 1.15;
-  font-size: $font-size-base;
+  font-size: var(--font-size-base);
 }*/
 
 /* For sticky footer */
 main {
   margin-bottom: 100px;
+
   @media (max-width: 768px) {
     margin-bottom: 420px;
   }
+
   @media (min-width: 768px) and (max-width: 1000px) {
     margin-bottom: 200px;
   }
 }
+
 /*
 body{
   padding-bottom: 50px;
@@ -43,8 +46,8 @@ fieldset {
 
   input[type="radio"],
   input[type="checkbox"] {
-      margin: 0px;
-      vertical-align: middle;
+    margin: 0px;
+    vertical-align: middle;
   }
 
   .checkbox,
@@ -63,10 +66,15 @@ legend {
 }
 
 a {
-  color: $color-link-text;
+  color: var(--color-link-text);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   /* font-family: "GillSansLight"; */
-  color: $color-heading-text;
+  color: var(--color-heading-text);
 }

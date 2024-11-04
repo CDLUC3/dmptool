@@ -6,6 +6,8 @@ RUN groupadd -g 1000 dmpt && useradd -u 1000 -g 1000 dmpt
 # Install packages needed to run your application (not build deps):
 # We need to recreate the /usr/share/man/man{1..8} directories first because
 # they were clobbered by a parent image.
+#
+# 11/1/2024 added python3 to support Sass dependcy for @parcel/watcher
 RUN set -ex \
     && RUN_DEPS=" \
     apt-transport-https autoconf automake build-essential ca-certificates chromium curl \
@@ -19,6 +21,7 @@ RUN set -ex \
     libxrender1 libxss1 libxtst6 libyaml-dev locales lsb-release mtr \
     shared-mime-info tzdata vim wget xdg-utils xfonts-base \
     xfonts-75dpi xz-utils yarn \
+    python3 \
     nodejs -qqy \
     " \
     && seq 1 8 | xargs -I{} mkdir -p /usr/share/man/man{} \
@@ -53,8 +56,9 @@ RUN gem install foreman
 RUN bundle config without pgsql rollbar
 RUN bundle install
 
-# Install the appropriate watcher for @parcel for this container
-RUN yarn add @parcel/watcher-linux-arm64-glibc --save --optional
+# Sass uses @parcel/watcher to monitor changes to scss files. It has OS specific versions though, so
+# we need to add it within the container.
+RUN yarn add @parcel/watcher
 
 RUN yarn install
 

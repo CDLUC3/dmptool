@@ -975,6 +975,11 @@
   resolved "https://registry.yarnpkg.com/@parcel/watcher-linux-arm64-glibc/-/watcher-linux-arm64-glibc-2.4.1.tgz#6d7c00dde6d40608f9554e73998db11b2b1ff7c7"
   integrity sha512-BJ7mH985OADVLpbrzCLgrJ3TOpiZggE9FMblfO65PlOCdG++xJpKUJ0Aol74ZUIYfb8WsRlUdgrZxKkz3zXWYA==
 
+"@parcel/watcher-linux-arm64-glibc@2.4.2-alpha.0":
+  version "2.4.2-alpha.0"
+  resolved "https://registry.yarnpkg.com/@parcel/watcher-linux-arm64-glibc/-/watcher-linux-arm64-glibc-2.4.2-alpha.0.tgz#91dc10ccbcefd4534706eb78c9cc6f6aafbd5191"
+  integrity sha512-vIIOcZf+fgsRReIK3Fw0WINvGo9UwiXfisnqYRzfpNByRZvkEPkGTIVe8iiDp72NhPTVmwIvBqM6yKDzIaw8GQ==
+
 "@parcel/watcher-linux-arm64-musl@2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@parcel/watcher-linux-arm64-musl/-/watcher-linux-arm64-musl-2.4.1.tgz#bd39bc71015f08a4a31a47cd89c236b9d6a7f635"

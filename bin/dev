@@ -22,4 +22,7 @@ else
 fi
 
 echo "DB Migrations complete. Starting Foreman:"
-exec foreman start -f Procfile.dev "$@"
+# exec foreman start -f Procfile.dev "$@"
+exec ls -la ./node_modules/@parcel
+# exec cat yarn.lock | grep @parcel/watcher
+# exec cat package.json

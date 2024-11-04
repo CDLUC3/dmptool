@@ -12,7 +12,7 @@
 <% end %>
 </address>
 <%
-telephone=Rails.configuration.x.dmproadmap.organisation_telephone
+telephone=Rails.configuration.x.dmproadmap.organisation_phone
 if telephone.present? %>
   <strong><%= "#{_('Helpline')} #{telephone}" %></strong>
 <% end %>

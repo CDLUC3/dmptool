@@ -254,6 +254,10 @@ default: &default
   organisation_copywrite_name: "My institution's official name"
   # Your organisation's helpdesk email
   email_from_address: "my.organization@email.edu"
+  # Your organisation's help desk email
+  organisation_helpdesk_email: "helpdesk@email.edu"
+  # Your organisation's do not reply email
+  organisation_do_not_reply_email: "do-not-reply@email.edu"
 
   # Your organisation's telephone number - used on the contact us page. This can be left blank.
   organisation_phone: "My institution's phone number"

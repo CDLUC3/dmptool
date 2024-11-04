@@ -61,7 +61,7 @@ module OrgSelection
       private
 
       def expiry
-        expiration = Rails.configuration.x.dmproadmap.cache.org_selection_expiration
+        expiration = Rails.configuration.x.dmproadmap.cache_org_selection_expiration
         (expiration.presence || 1.day)
       end
 

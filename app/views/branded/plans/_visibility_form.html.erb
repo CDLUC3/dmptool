@@ -17,7 +17,7 @@
         <ul>
           <li>
             <% if plan.complete? %><span class="fa fa-check green"><span class="sr-only">Complete: </span></span><% else %><span class="fa fa-times red"><span class="sr-only">Incomplete: </span></span><% end %>
-            <%= (_("have answered at least %{percentage}%% of questions on the %{write_plan_link} panel") % { percentage: Rails.configuration.x.dmproadmap.plans.default_percentage_answered, write_plan_link: link_to(_('Write Plan'), edit_plan_path(plan.id, phase: plan.phases&.first&.id)) }).html_safe %>
+            <%= (_("have answered at least %{percentage}%% of questions on the %{write_plan_link} panel") % { percentage: Rails.configuration.x.dmproadmap.plans_default_percentage_answered, write_plan_link: link_to(_('Write Plan'), edit_plan_path(plan.id, phase: plan.phases&.first&.id)) }).html_safe %>
           </li>
           <li>
             <% if !plan.is_test? %><span class="fa fa-check green"><span class="sr-only">Complete: </span></span><% else %><span class="fa fa-times red"><span class="sr-only">Incomplete: </span></span><% end %>

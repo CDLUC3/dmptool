@@ -429,10 +429,10 @@ class Plan < ApplicationRecord
     return false if current_user.blank?
 
     # If the user is a super admin and the config allows for supers to view plans
-    if current_user.can_super_admin? && Rails.configuration.x.dmproadmap.plans.super_admins_read_all
+    if current_user.can_super_admin? && Rails.configuration.x.dmproadmap.plans_super_admins_read_all
       true
     # If the user is an org admin and the config allows for org admins to view plans
-    elsif current_user.can_org_admin? && Rails.configuration.x.dmproadmap.plans.org_admins_read_all
+    elsif current_user.can_org_admin? && Rails.configuration.x.dmproadmap.plans_org_admins_read_all
       owner_and_coowners.map(&:org_id).include?(current_user.org_id)
     else
       false

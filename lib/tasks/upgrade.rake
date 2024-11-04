@@ -154,7 +154,7 @@ namespace :upgrade do
 
   desc 'Sets completed for plans whose no. questions matches no. valid answers'
   task set_plan_complete: :environment do
-    dflt = Rails.configuration.x.dmproadmap.plans.default_percentage_answered
+    dflt = Rails.configuration.x.dmproadmap.plans_default_percentage_answered
 
     Plan.includes(:answers).joins(:answers)
         .where("plans.complete = 0 AND plans.created_at >= '2019-01-01 00:00:01'")
@@ -460,7 +460,7 @@ namespace :upgrade do
   desc 'Org.contact_email is now required, sets any nil values to the helpdesk email defined in dmproadmap.rb initializer'
   task check_org_contact_emails: :environment do
     email = Rails.configuration.x.dmproadmap.organisation.helpdesk_email
-    name = Rails.configuration.x.dmproadmap.organisation.name
+    name = Rails.configuration.x.dmproadmap.organisation_name
 
     if email.present? && name.present?
       puts 'Searching for Orgs with an undefined contact_email ...'
@@ -471,7 +471,7 @@ namespace :upgrade do
     else
       puts 'No helpdesk_email and/or name found in your config/initializers/dmproadmap.rb. Please add them!'
       puts 'For example:'
-      puts 'config.x.organisation.name = "Curation Centre"'
+      puts 'config.x.organisation_name = "Curation Centre"'
       puts 'config.x.organisation.helpdesk_email = "help@example.org"'
     end
     puts 'Search complete'
@@ -511,7 +511,7 @@ namespace :upgrade do
 
     # Get the helpdesk email from the dmproadmap.rb initializer
     email = Rails.configuration.x.dmproadmap.organisation.helpdesk_email
-    name = Rails.configuration.x.dmproadmap.organisation.name
+    name = Rails.configuration.x.dmproadmap.organisation_name
     email = 'other.organisation@example.org' if email.blank?
     name = 'Helpdesk' if name.blank?
 

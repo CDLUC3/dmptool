@@ -93,8 +93,8 @@ RSpec.describe 'Sign up via email and password' do
 
   context 'Validate various Org types when we are not allowing custom org entry', js: true do
     before do
-      @original_restrict = Rails.configuration.x.dmproadmap.application.restrict_orgs
-      Rails.configuration.x.dmproadmap.application.restrict_orgs = true
+      @original_restrict = Rails.configuration.x.dmproadmap.application_restrict_orgs
+      Rails.configuration.x.dmproadmap.application_restrict_orgs = true
       visit root_path
       fill_in 'Email address', with: Faker::Internet.unique.email
       click_on 'Continue'
@@ -110,7 +110,7 @@ RSpec.describe 'Sign up via email and password' do
     end
 
     after do
-      Rails.configuration.x.dmproadmap.application.restrict_orgs = @original_restrict
+      Rails.configuration.x.dmproadmap.application_restrict_orgs = @original_restrict
     end
 
     it 'Does not allow user to enter a random Org into autocomplete' do
@@ -133,8 +133,8 @@ RSpec.describe 'Sign up via email and password' do
 
   context 'Validate various Org types when we are allowing custom org entry', js: true do
     before do
-      @original_restrict = Rails.configuration.x.dmproadmap.application.restrict_orgs
-      Rails.configuration.x.dmproadmap.application.restrict_orgs = false
+      @original_restrict = Rails.configuration.x.dmproadmap.application_restrict_orgs
+      Rails.configuration.x.dmproadmap.application_restrict_orgs = false
       visit root_path
       fill_in 'Email address', with: Faker::Internet.unique.email
       click_on 'Continue'
@@ -150,7 +150,7 @@ RSpec.describe 'Sign up via email and password' do
     end
 
     after do
-      Rails.configuration.x.dmproadmap.application.restrict_orgs = @original_restrict
+      Rails.configuration.x.dmproadmap.application_restrict_orgs = @original_restrict
     end
 
     it 'Allows user to select an Org that exists but is not a ROR Org' do

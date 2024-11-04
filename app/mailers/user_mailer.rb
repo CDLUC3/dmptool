@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
 
   include Dmptool::Mailer
 
-  default from: Rails.configuration.x.dmproadmap.organisation.do_not_reply_email || Rails.configuration.x.dmproadmap.organisation.email
+  default from: Rails.configuration.x.dmproadmap.organisation_do_not_reply_email || Rails.configuration.x.dmproadmap.organisation_email
 
   # rubocop:disable Metrics/AbcSize
   def welcome_notification(user)
@@ -129,8 +129,8 @@ class UserMailer < ActionMailer::Base
     @helpdesk_email = helpdesk_email(org: @plan.org)
 
     I18n.with_locale I18n.default_locale do
-      sender = Rails.configuration.x.dmproadmap.organisation.do_not_reply_email ||
-               Rails.configuration.x.dmproadmap.organisation.email
+      sender = Rails.configuration.x.dmproadmap.organisation_do_not_reply_email ||
+               Rails.configuration.x.dmproadmap.organisation_email
 
       mail(to: recipient.email,
            from: sender,

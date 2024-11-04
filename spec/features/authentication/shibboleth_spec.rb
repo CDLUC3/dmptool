@@ -8,10 +8,10 @@ RSpec.describe 'Shibboleth Sign in / Sign up' do
   include Helpers::AuthenticationHelper
 
   before do
-    @original_shib = Rails.configuration.x.dmproadmap.shibboleth&.enabled
-    @original_disco = Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service
-    Rails.configuration.x.dmproadmap.shibboleth&.enabled = true
-    Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service = true
+    @original_shib = Rails.configuration.x.dmproadmap.shibboleth_enabled
+    @original_disco = Rails.configuration.x.dmproadmap.shibboleth_use_filtered_discovery_service
+    Rails.configuration.x.dmproadmap.shibboleth_enabled = true
+    Rails.configuration.x.dmproadmap.shibboleth_use_filtered_discovery_service = true
     @email_domain = 'foo.edu'
     @org = create(:org, contact_email: "#{Faker::Lorem.unique.word}@#{@email_domain}", managed: true)
     @registry_org = create(:registry_org, home_page: "http://#{@email_domain}", org: @org)
@@ -32,8 +32,8 @@ RSpec.describe 'Shibboleth Sign in / Sign up' do
   end
 
   after do
-    Rails.configuration.x.dmproadmap.shibboleth.enabled = @original_shib
-    Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service = @original_disco
+    Rails.configuration.x.dmproadmap.shibboleth_enabled = @original_shib
+    Rails.configuration.x.dmproadmap.shibboleth_use_filtered_discovery_service = @original_disco
   end
 
   it 'user authenticates with their IdP' do

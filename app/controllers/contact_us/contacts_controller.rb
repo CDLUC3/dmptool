@@ -12,7 +12,7 @@ module ContactUs
     def create
       @contact = ContactUs::Contact.new(params[:contact_us_contact])
 
-      if !user_signed_in? && Rails.configuration.x.dmproadmap.recaptcha.enabled &&
+      if !user_signed_in? && Rails.configuration.x.dmproadmap.recaptcha_enabled &&
          !(verify_recaptcha(action: 'contact') && @contact.save)
         flash.now[:alert] = _('Invalid security check! Please make sure your browser is up to date and then try again')
         render_new_page and return

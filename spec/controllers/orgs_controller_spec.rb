@@ -33,7 +33,7 @@ RSpec.describe OrgsController do
                 feedback_msg: Faker::Lorem.paragraph,
                 org_autocomplete: { name: other_org.name } }
       @link_args = org_links_field
-      Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service = false
+      Rails.configuration.x.dmproadmap.shibboleth_use_filtered_discovery_service = false
       sign_in(@user)
     end
 
@@ -65,7 +65,7 @@ RSpec.describe OrgsController do
 
     it 'updates the shibboleth entityID if super_admin and enabled' do
       @args.delete(:feedback_enabled)
-      Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service = true
+      Rails.configuration.x.dmproadmap.shibboleth_use_filtered_discovery_service = true
       scheme = create(:identifier_scheme, name: 'shibboleth')
       @args[:identifiers_attributes] = { '0': { identifier_scheme_id: scheme.id,
                                                 value: SecureRandom.uuid } }

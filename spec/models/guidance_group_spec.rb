@@ -39,7 +39,7 @@ RSpec.describe GuidanceGroup do
     context 'when owned by a curation center' do
       let!(:org) do
         create(:org,
-               abbreviation: Rails.configuration.x.dmproadmap.organisation.abbreviation)
+               abbreviation: Rails.configuration.x.dmproadmap.organisation_abbreviation)
       end
 
       let!(:guidance_group) { create(:guidance_group, org: org) }
@@ -104,7 +104,7 @@ RSpec.describe GuidanceGroup do
     context 'when is owned by managing curation center' do
       let!(:org) do
         create(:org,
-               abbreviation: Rails.configuration.x.dmproadmap.organisation.abbreviation)
+               abbreviation: Rails.configuration.x.dmproadmap.organisation_abbreviation)
       end
 
       let!(:guidance_group) { create(:guidance_group, org: org) }

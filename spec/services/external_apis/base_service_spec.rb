@@ -121,11 +121,11 @@ RSpec.describe ExternalApis::BaseService do
 
   context 'private methods' do
     before do
-      @original_name = Rails.configuration.x.dmproadmap.application.name
+      @original_name = Rails.configuration.x.dmproadmap.application_name
     end
 
     after do
-      Rails.configuration.x.dmproadmap.application.name = @original_name
+      Rails.configuration.x.dmproadmap.application_name = @original_name
     end
 
     describe '#app_name' do
@@ -136,7 +136,7 @@ RSpec.describe ExternalApis::BaseService do
       end
 
       it 'returns the application name defined in dmproadmap.rb initializer' do
-        Rails.configuration.x.dmproadmap.application.name = 'Foo'
+        Rails.configuration.x.dmproadmap.application_name = 'Foo'
         expect(described_class.send(:app_name)).to eql('Foo')
       end
     end

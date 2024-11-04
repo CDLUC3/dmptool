@@ -163,7 +163,7 @@ default: &default
 
   # Whether or not to restrict Org selection to the ones in the `orgs` table (Meaning not allowing
   # users to search/select from the org_indices table)
-  restrict_orgs: false
+  application_restrict_orgs: false
 
   # Translation IO can be used to help failitate translating your custom code.Translations for the
   # core DMPRoadmap codebase are handled by the development team (DEV only)
@@ -212,17 +212,17 @@ default: &default
   # This name is used throughout the system to identify your application. (e.g. in
   # email communications, API calls to external systems, etc.)
   # NOTE - This name must match the Google Analytics Tracker in this file!
-  name: "MyApp"
+  application_name: "MyApp"
   # The :from email address used in emails sent by the application
-  do_not_reply_email: "do-not-reply-my-app-dev@cdlib.org"
+  application_do_not_reply_email: "do-not-reply-my-app-dev@cdlib.org"
   # The helpdesk email
-  helpdesk_email: "help@example.org"
+  application_helpdesk_email: "help@example.org"
   # Used as the default domain when 'archiving' (aka anonymizing) a user account
   # for example `jane.doe@uni.edu` becomes `1234@removed_accounts-example.org`
-  archived_accounts_email_suffix: "@removed_accounts_dmproadmap.org"
+  application_archived_accounts_email_suffix: "@removed_accounts_dmproadmap.org"
 
   # Available CSV separators, the default is ','
-  csv_separators: [",", "|", "#"]
+  application_csv_separators: [",", "|", "#"]
 
   # Determines the number of links a funder is allowed to add to their template
   max_number_links_funder: 5
@@ -279,10 +279,10 @@ default: &default
   # =====================
 
   # The largest page size allowed in requests to the API (all versions)
-  api_max_page_size: 100
+  application_api_max_page_size: 100
 
   # The link to the API documentation - used in emails about the API.
-  api_documentation_urls:
+  application_api_documentation_urls:
     v0: "https://github.com/CDLUC3/dmptool/wiki/api-v0-documentation"
     v1: "https://github.com/CDLUC3/dmptool/wiki/api-v1-documentation"
     v2: "https://github.com/CDLUC3/dmptool/wiki/api-v2-documentation"
@@ -301,11 +301,11 @@ default: &default
   # The link to your Listserv
   user_group_subscription_url: ""
   # The link to your blog
-  blog_rss: "https://blog.dmptool.org/feed" # "https://example.org/feed"
+  application_blog_rss: "https://blog.dmptool.org/feed" # "https://example.org/feed"
 
 
   # The links that appear on the home page. Add any number of links
-  welcome_links: []
+  application_welcome_links: []
 
   # =================
   # = Plan defaults =
@@ -337,13 +337,18 @@ default: &default
   # are displayed on the 'Share' tab.
   # If true: The 'Share' tab appears with Plan Visibility and Collaborators
   # If false: It appears on the Contributors tab and the 'Share' tab becomes 'Publish'
-  show_collaborators_on_share_tab: false
+  application_show_collaborators_on_share_tab: false
+
+  # Whether or not the guidance/comments section on the Write Plan page can be collapsed/expanded
+  application_guidance_comments_toggleable: true
+  # Whether or not the guidance/comments section is expanded when the page loads
+  application_guidance_comments_opened_by_default: true
 
   # Whether or not the coversheet checkbox should be checked by default
-  download_coversheet_tickbox_checked: false
+  plans_download_coversheet_tickbox_checked: false
 
   # Whether or not to include the footer in the PDF downloads
-  include_footer_in_pdfs: false
+  application_include_footer_in_pdfs: false
 
   # ======================================= #
   # = maDMP / Networked DMP functionality = #
@@ -351,8 +356,8 @@ default: &default
 
   # Whether or not to require contributor names and/or emails.
   # Note that at least one is required!
-  require_contributor_email: false
-  require_contributor_name: true
+  application_require_contributor_email: false
+  application_require_contributor_name: true
 
   # Enable/disable functionality on the Project Details tab
   enable_ethical_issues: false

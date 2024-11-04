@@ -707,16 +707,16 @@ describe Plan do
 
     context 'config allows for admin viewing' do
       it 'super admins' do
-        original_setting = Rails.configuration.x.dmproadmap.plans.super_admins_read_all
-        Rails.configuration.x.dmproadmap.plans.super_admins_read_all = true
+        original_setting = Rails.configuration.x.dmproadmap.plans_super_admins_read_all
+        Rails.configuration.x.dmproadmap.plans_super_admins_read_all = true
         user.perms << create(:perm, name: 'add_organisations')
         expect(subject.readable_by?(user.id)).to be(true)
         Rails.configuration.x.dmproadmap.plans.super_admins_read_all = original_setting
       end
 
       it 'org admins' do
-        original_setting = Rails.configuration.x.dmproadmap.plans.super_admins_read_all
-        Rails.configuration.x.dmproadmap.plans.org_admins_read_all = true
+        original_setting = Rails.configuration.x.dmproadmap.plans_super_admins_read_all
+        Rails.configuration.x.dmproadmap.plans_org_admins_read_all = true
         user.org_id = plan.owner.org_id
         user.save
         user.perms << create(:perm, name: 'modify_guidance')
@@ -727,15 +727,15 @@ describe Plan do
 
     context 'config does not allow admin viewing' do
       before do
-        @org_admins = Rails.configuration.x.dmproadmap.plans.org_admins_read_all
-        @super_admins = Rails.configuration.x.dmproadmap.plans.super_admins_read_all
-        Rails.configuration.x.dmproadmap.plans.org_admins_read_all = false
-        Rails.configuration.x.dmproadmap.plans.super_admins_read_all = false
+        @org_admins = Rails.configuration.x.dmproadmap.plans_org_admins_read_all
+        @super_admins = Rails.configuration.x.dmproadmap.plans_super_admins_read_all
+        Rails.configuration.x.dmproadmap.plans_org_admins_read_all = false
+        Rails.configuration.x.dmproadmap.plans_super_admins_read_all = false
       end
 
       after do
-        Rails.configuration.x.dmproadmap.plans.org_admins_read_all = @org_admins
-        Rails.configuration.x.dmproadmap.plans.super_admins_read_all = @super_admins
+        Rails.configuration.x.dmproadmap.plans_org_admins_read_all = @org_admins
+        Rails.configuration.x.dmproadmap.plans_super_admins_read_all = @super_admins
       end
 
       it 'super admins' do
@@ -800,12 +800,12 @@ describe Plan do
         end
 
         it 'when user is a reviewer and feedback not requested' do
-          original_setting = Rails.configuration.x.dmproadmap.plans.super_admins_read_all
-          Rails.configuration.x.dmproadmap.plans.org_admins_read_all = false
+          original_setting = Rails.configuration.x.dmproadmap.plans_super_admins_read_all
+          Rails.configuration.x.dmproadmap.plans_org_admins_read_all = false
           plan.feedback_requested = false
           plan.save
           expect(subject.readable_by?(user.id)).to be(false)
-          Rails.configuration.x.dmproadmap.plans.super_admins_read_all = original_setting
+          Rails.configuration.x.dmproadmap.plans_super_admins_read_all = original_setting
         end
 
         it 'when user is a reviewer of a different org and feedback requested' do
@@ -831,27 +831,27 @@ describe Plan do
 
     context 'explicit sharing does not conflict with admin-viewing' do
       it 'super admins' do
-        original_setting = Rails.configuration.x.dmproadmap.plans.super_admins_read_all
-        Rails.configuration.x.dmproadmap.plans.super_admins_read_all = false
+        original_setting = Rails.configuration.x.dmproadmap.plans_super_admins_read_all
+        Rails.configuration.x.dmproadmap.plans_super_admins_read_all = false
         user.perms << create(:perm, name: 'add_organisations')
         role = subject.roles.commenter.first
         role.user_id = user.id
         role.save!
 
         expect(subject.readable_by?(user.id)).to be(true)
-        Rails.configuration.x.dmproadmap.plans.super_admins_read_all = original_setting
+        Rails.configuration.x.dmproadmap.plans_super_admins_read_all = original_setting
       end
 
       it 'org admins' do
-        original_setting = Rails.configuration.x.dmproadmap.plans.super_admins_read_all
-        Rails.configuration.x.dmproadmap.plans.org_admins_read_all = false
+        original_setting = Rails.configuration.x.dmproadmap.plans_super_admins_read_all
+        Rails.configuration.x.dmproadmap.plans_org_admins_read_all = false
         user.perms << create(:perm, name: 'modify_guidance')
         role = subject.roles.commenter.first
         role.user_id = user.id
         role.save!
 
         expect(subject.readable_by?(user.id)).to be(true)
-        Rails.configuration.x.dmproadmap.plans.super_admins_read_all = original_setting
+        Rails.configuration.x.dmproadmap.plans_super_admins_read_all = original_setting
       end
     end
   end
@@ -1268,12 +1268,12 @@ describe Plan do
 
     context 'when requisite number of questions answered' do
       before do
-        @original_percentage = Rails.configuration.x.dmproadmap.plans.default_percentage_answered
-        Rails.configuration.x.dmproadmap.plans.default_percentage_answered = 75
+        @original_percentage = Rails.configuration.x.dmproadmap.plans_default_percentage_answered
+        Rails.configuration.x.dmproadmap.plans_default_percentage_answered = 75
       end
 
       after do
-        Rails.configuration.x.dmproadmap.plans.default_percentage_answered = @original_percentage
+        Rails.configuration.x.dmproadmap.plans_default_percentage_answered = @original_percentage
       end
 
       it { is_expected.to be(true) }
@@ -1281,12 +1281,12 @@ describe Plan do
 
     context 'when requisite number of questions not answered' do
       before do
-        @original_percentage = Rails.configuration.x.dmproadmap.plans.default_percentage_answered
-        Rails.configuration.x.dmproadmap.plans.default_percentage_answered = 76
+        @original_percentage = Rails.configuration.x.dmproadmap.plans_default_percentage_answered
+        Rails.configuration.x.dmproadmap.plans_default_percentage_answered = 76
       end
 
       after do
-        Rails.configuration.x.dmproadmap.plans.default_percentage_answered = @original_percentage
+        Rails.configuration.x.dmproadmap.plans_default_percentage_answered = @original_percentage
       end
 
       it { is_expected.to be(false) }
@@ -1353,9 +1353,9 @@ describe Plan do
 
   describe '#registration_allowed?' do
     before do
-      @original_reg = Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration
-      @original_orcid = Rails.configuration.x.dmproadmap.madmp.enable_orcid_publication
-      Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = true
+      @original_reg = Rails.configuration.x.dmproadmap.enable_dmp_id_registration
+      @original_orcid = Rails.configuration.x.dmproadmap.enable_orcid_publication
+      Rails.configuration.x.dmproadmap.enable_dmp_id_registration = true
       @plan = create(:plan, :creator, funder: create(:org))
       create(:identifier, identifier_scheme: create(:identifier_scheme, name: 'orcid'),
                           identifiable: @plan.owner)
@@ -1363,24 +1363,24 @@ describe Plan do
     end
 
     after do
-      Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = @original_reg
-      Rails.configuration.x.dmproadmap.madmp.enable_orcid_publication = @original_orcid
+      Rails.configuration.x.dmproadmap.enable_dmp_id_registration = @original_reg
+      Rails.configuration.x.dmproadmap.enable_orcid_publication = @original_orcid
     end
 
     it 'returns false if the config does not allow DMP ID registration' do
-      Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = false
+      Rails.configuration.x.dmproadmap.enable_dmp_id_registration = false
       expect(@plan.registration_allowed?).to be(false)
     end
 
     it 'returns true if the creator/owner does not have an ORCID (but ORCID is disabled)' do
-      Rails.configuration.x.dmproadmap.madmp.enable_orcid_publication = false
+      Rails.configuration.x.dmproadmap.enable_orcid_publication = false
       @plan.owner.identifiers.clear
       @plan.expects(:visibility_allowed?).returns(true)
       expect(@plan.registration_allowed?).to be(true)
     end
 
     it 'returns false if the creator/owner does not have an ORCID (and ORCID is enabled)' do
-      Rails.configuration.x.dmproadmap.madmp.enable_orcid_publication = true
+      Rails.configuration.x.dmproadmap.enable_orcid_publication = true
       @plan.owner.identifiers.clear
       @plan.expects(:visibility_allowed?).returns(true)
       expect(@plan.registration_allowed?).to be(false)
@@ -1405,28 +1405,28 @@ describe Plan do
 
   describe '#dmp_id' do
     before do
-      @original_reg = Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration
+      @original_reg = Rails.configuration.x.dmproadmap.enable_dmp_id_registration
       @plan = create(:plan, :creator)
       IdentifierScheme.for_plans.destroy_all
       @scheme = create(:identifier_scheme, name: 'foo', active: true, for_plans: true)
     end
 
     after do
-      Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = @original_reg
+      Rails.configuration.x.dmproadmap.enable_dmp_id_registration = @original_reg
     end
 
     it 'returns nil if the config does not allow DMP ID registration' do
-      Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = false
+      Rails.configuration.x.dmproadmap.enable_dmp_id_registration = false
       expect(@plan.dmp_id).to be_nil
     end
 
     it 'returns nil if the Plan has no DMP ID' do
-      Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = true
+      Rails.configuration.x.dmproadmap.enable_dmp_id_registration = true
       expect(@plan.dmp_id).to be_nil
     end
 
     it 'returns the correct identifier' do
-      Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = true
+      Rails.configuration.x.dmproadmap.enable_dmp_id_registration = true
       DmpIdService.expects(:identifier_scheme).returns(@scheme)
       id = create(:identifier, identifier_scheme: @scheme, identifiable: @plan)
       @plan.reload

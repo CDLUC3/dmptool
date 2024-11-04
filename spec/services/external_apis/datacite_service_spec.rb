@@ -12,8 +12,8 @@ RSpec.describe ExternalApis::DataciteService, type: :model do
   before do
     @original_active = Rails.configuration.x.dmproadmap.datacite.active
     @original_url = Rails.configuration.x.dmproadmap.datacite.api_base_url
-    @original_enabled = Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration
-    Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = true
+    @original_enabled = Rails.configuration.x.dmproadmap.enable_dmp_id_registration
+    Rails.configuration.x.dmproadmap.enable_dmp_id_registration = true
     Rails.configuration.x.dmproadmap.datacite.active = true
     Rails.configuration.x.dmproadmap.datacite.api_base_url = 'https://api.test.datacite.org/'
 
@@ -32,7 +32,7 @@ RSpec.describe ExternalApis::DataciteService, type: :model do
   after do
     Rails.configuration.x.dmproadmap.datacite.active = @original_active
     Rails.configuration.x.dmproadmap.datacite.api_base_url = @original_url
-    Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = @original_enabled
+    Rails.configuration.x.dmproadmap.enable_dmp_id_registration = @original_enabled
   end
 
   describe '#mint_dmp_id' do

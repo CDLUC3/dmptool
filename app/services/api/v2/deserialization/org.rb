@@ -71,7 +71,7 @@ module Api
             return org if org.present?
 
             # Skip if restrict_orgs is set to true!
-            unless Rails.configuration.x.dmproadmap.application.restrict_orgs
+            unless Rails.configuration.x.dmproadmap.application_restrict_orgs
               # fetch from the ror table
               registry_org = ::RegistryOrg.where(where, name.downcase.strip).first
 

@@ -21,7 +21,7 @@ other = presenter.other_license
 options << other unless show_all || other.nil?
 options << full_list_link unless show_all
 
-preferred_guidance = Rails.configuration.x.dmproadmap.madmp.preferred_licenses_guidance_url
+preferred_guidance = Rails.configuration.x.dmproadmap.preferred_licenses_guidance_url
 preferred_guidance = default_guidance if preferred_guidance.nil? || preferred_guidance.empty?
 
 guidance = show_all ? default_guidance : preferred_guidance

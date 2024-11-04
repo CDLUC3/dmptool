@@ -9,10 +9,10 @@ RSpec.describe ExternalApis::DmphubService, type: :model do
   before do
     @original_active = Rails.configuration.x.dmproadmap.dmphub.active
     @original_url = Rails.configuration.x.dmproadmap.dmphub.api_base_url
-    @orignal_enabled = Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration
+    @orignal_enabled = Rails.configuration.x.dmproadmap.enable_dmp_id_registration
     Rails.configuration.x.dmproadmap.dmphub.active = true
     Rails.configuration.x.dmproadmap.dmphub.api_base_url = 'https://api.test.dmphub.org/'
-    Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = true
+    Rails.configuration.x.dmproadmap.enable_dmp_id_registration = true
     unless Language.where(default_language: true).any?
       # Org model requires a language so make sure the default is set
       create(:language, default_language: true)
@@ -31,7 +31,7 @@ RSpec.describe ExternalApis::DmphubService, type: :model do
   after do
     Rails.configuration.x.dmproadmap.dmphub.active = @original_active
     Rails.configuration.x.dmproadmap.dmphub.api_base_url = @original_url
-    Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = @orignal_enabled
+    Rails.configuration.x.dmproadmap.enable_dmp_id_registration = @orignal_enabled
   end
 
   describe '#mint_dmp_id' do

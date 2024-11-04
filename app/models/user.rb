@@ -484,7 +484,7 @@ class User < ApplicationRecord
   # Returns boolean
   # rubocop:disable Metrics/AbcSize
   def archive
-    suffix = Rails.configuration.x.dmproadmap.application.fetch(:archived_accounts_email_suffix, '@example.org')
+    suffix = Rails.configuration.x.dmproadmap.fetch(:application_archived_accounts_email_suffix, '@example.org')
     self.firstname = 'Deleted'
     self.surname = 'User'
     self.email = User.unique_random(field_name: 'email',

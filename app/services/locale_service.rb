@@ -6,7 +6,7 @@ class LocaleService
     # Returns the default locale/language
     def default_locale
       abbrev = Language.default.try(:abbreviation) if Language.table_exists?
-      (abbrev.presence || Rails.configuration.x.dmproadmap.locales.default)
+      (abbrev.presence || Rails.configuration.x.dmproadmap.locales_default)
     end
 
     alias default_language default_locale
@@ -21,21 +21,21 @@ class LocaleService
 
     # Converts the locale to the i18n format (e.g. `en-GB`)
     def to_i18n(locale:)
-      join_char = Rails.configuration.x.dmproadmap.locales.i18n_join_character
+      join_char = Rails.configuration.x.dmproadmap.locales_i18n_join_character
       locale = default_locale if locale.blank?
       convert(string: locale, join_char: join_char)
     end
 
     # Converts the locale to the i18n format (e.g. `en_GB`)
     def to_gettext(locale:)
-      join_char = Rails.configuration.x.dmproadmap.locales.gettext_join_character
+      join_char = Rails.configuration.x.dmproadmap.locales_gettext_join_character
       locale = default_locale if locale.blank?
       convert(string: locale, join_char: join_char)
     end
 
     private
 
-    def convert(string:, join_char: Rails.configuration.x.dmproadmap.locales.gettext_join_character)
+    def convert(string:, join_char: Rails.configuration.x.dmproadmap.locales_gettext_join_character)
       language, region = string.to_s.scan(/[a-zA-Z]{2}/)
       language.downcase! if language.present?
       region.upcase!     if region.present?

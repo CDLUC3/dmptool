@@ -34,19 +34,19 @@ describe License do
         @preferred_latest = create(:license, identifier: "#{@preferred_oldest.identifier}-1.1",
                                              deprecated: false)
 
-        @original_pref = Rails.configuration.x.dmproadmap.madmp.preferred_licenses
-        Rails.configuration.x.dmproadmap.madmp.preferred_licenses = [
+        @original_pref = Rails.configuration.x.dmproadmap.preferred_licenses
+        Rails.configuration.x.dmproadmap.preferred_licenses = [
           @preferred_license.identifier,
           "#{@preferred_oldest.identifier}-%{latest}"
         ]
       end
 
       after do
-        Rails.configuration.x.dmproadmap.madmp.preferred_licenses = @original_pref
+        Rails.configuration.x.dmproadmap.preferred_licenses = @original_pref
       end
 
       it 'calls :selectable if no preferences are defined in the app config' do
-        Rails.configuration.x.dmproadmap.madmp.preferred_licenses = nil
+        Rails.configuration.x.dmproadmap.preferred_licenses = nil
         described_class.expects(:selectable).returns([@license])
         described_class.preferred
       end

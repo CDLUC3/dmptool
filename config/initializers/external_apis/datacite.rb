@@ -22,4 +22,4 @@ Rails.configuration.x.dmproadmap.datacite.hosting_institution_identifier = 'http
 Rails.configuration.x.dmproadmap.datacite.repository_id = Rails.application.credentials.datacite_repository_id
 Rails.configuration.x.dmproadmap.datacite.password = Rails.application.credentials.datacite_password
 Rails.configuration.x.dmproadmap.datacite.shoulder = Rails.application.credentials.datacite_shoulder
-Rails.configuration.x.dmproadmap.datacite.active = false
+Rails.configuration.x.dmproadmap.datacite_active = false

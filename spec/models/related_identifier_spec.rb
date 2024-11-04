@@ -105,25 +105,25 @@ describe RelatedIdentifier do
 
     describe ':load_citation' do
       before do
-        @original_lookup = Rails.configuration.x.dmproadmap.madmp.enable_citation_lookup
+        @original_lookup = Rails.configuration.x.dmproadmap.enable_citation_lookup
         @id.citation = nil
         @id.identifier_type = 'doi'
         @citation = Faker::Lorem.paragraph
       end
 
       after do
-        Rails.configuration.x.dmproadmap.madmp.enable_citation_lookup = @original_lookup
+        Rails.configuration.x.dmproadmap.enable_citation_lookup = @original_lookup
       end
 
       it 'does not process if the config is disabled' do
-        Rails.configuration.x.dmproadmap.madmp.enable_citation_lookup = false
+        Rails.configuration.x.dmproadmap.enable_citation_lookup = false
         @id.expects(:fetch_citation).never
         @id.send(:load_citation)
         expect(@id.citation).to be_nil
       end
 
       it 'does not process if a :citation already exists' do
-        Rails.configuration.x.dmproadmap.madmp.enable_citation_lookup = true
+        Rails.configuration.x.dmproadmap.enable_citation_lookup = true
         @id.expects(:fetch_citation).never
         @id.citation = @citation
         @id.send(:load_citation)
@@ -131,7 +131,7 @@ describe RelatedIdentifier do
       end
 
       it "does not process if a the :value is not a 'doi'" do
-        Rails.configuration.x.dmproadmap.madmp.enable_citation_lookup = true
+        Rails.configuration.x.dmproadmap.enable_citation_lookup = true
         @id.expects(:fetch_citation).never
         @id.identifier_type = 'url'
         @id.send(:load_citation)
@@ -139,7 +139,7 @@ describe RelatedIdentifier do
       end
 
       it "calls out to the Uc3Citation gem's :fetch_citation method" do
-        Rails.configuration.x.dmproadmap.madmp.enable_citation_lookup = true
+        Rails.configuration.x.dmproadmap.enable_citation_lookup = true
         @id.expects(:fetch_citation).returns(@citation)
         @id.send(:load_citation)
         expect(@id.citation).to eql(@citation)

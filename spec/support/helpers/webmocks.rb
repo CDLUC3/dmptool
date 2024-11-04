@@ -79,7 +79,7 @@ module Helpers
 
     def mock_shib_login(user:, successful: true)
       url = Faker::Internet.url(scheme: 'https', path: '').to_s
-      Rails.configuration.x.dmproadmap.shibboleth.login_url = url
+      Rails.configuration.x.dmproadmap.shibboleth_login_url = url
       # Rails.rou
       stub_request(:get, url)
         .to_return(

@@ -43,7 +43,7 @@ class PlansController < ApplicationController
     @visibility = if @plan.visibility.present?
                     @plan.visibility.to_s
                   else
-                    Rails.configuration.x.dmproadmap.plans.default_visibility
+                    Rails.configuration.x.dmproadmap.plans_default_visibility
                   end
     # Get all of the available funders
     @funders = Org.funder
@@ -359,7 +359,7 @@ class PlansController < ApplicationController
       else
         # rubocop:disable Layout/LineLength
         render status: :forbidden, json: {
-          msg: format(_("Unable to change the plan's status since it is needed at least %{percentage} percentage responded"), percentage: Rails.configuration.x.dmproadmap.plans.default_percentage_answered)
+          msg: format(_("Unable to change the plan's status since it is needed at least %{percentage} percentage responded"), percentage: Rails.configuration.x.dmproadmap.plans_default_percentage_answered)
         }
         # rubocop:enable Layout/LineLength
       end

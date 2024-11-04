@@ -56,7 +56,7 @@ module Api
           return nil if registry_org.blank?
 
           # Return nil if we do not allow creating Orgs in this manner
-          return nil if registry_org.org_id.nil? && Rails.configuration.x.dmproadmap.application.restrict_orgs
+          return nil if registry_org.org_id.nil? && Rails.configuration.x.dmproadmap.application_restrict_orgs
 
           # return the related Org or initialize a new one
           registry_org.to_org

@@ -4,14 +4,14 @@
   <p>
     <%= sanitize _('<p>%{application_name} has been developed by the <strong>%{organisation_name}</strong> to help you write data management plans.</p>') % {
       application_name: ApplicationService.application_name,
-      organisation_name: Rails.configuration.x.dmproadmap.organisation.name}
+      organisation_name: Rails.configuration.x.dmproadmap.organisation_name}
       %>
 
     <label for="linklist">
       <%=_('Getting started:')%>
     </label>
     <ul id="linklist">
-      <% Rails.configuration.x.dmproadmap.application.welcome_links.each do |wlink| %>
+      <% Rails.configuration.x.dmproadmap.application_welcome_links.each do |wlink| %>
       <li><a href="<%= wlink[:url] %>"><%= wlink[:title] %></a></li>
       <% end %>
     </ul>

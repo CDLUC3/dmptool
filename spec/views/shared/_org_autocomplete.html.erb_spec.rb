@@ -10,7 +10,7 @@ describe 'shared/_org_autocomplete.html.erb' do
   context 'local assignments' do
     describe 'has defaults for all locals' do
       before do
-        Rails.configuration.x.dmproadmap.application.restrict_orgs = false
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = false
         render partial: 'shared/org_autocomplete'
       end
 
@@ -61,7 +61,7 @@ describe 'shared/_org_autocomplete.html.erb' do
 
     describe 'uses specified values for all locals' do
       before do
-        Rails.configuration.x.dmproadmap.application.restrict_orgs = false
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = false
         @hash = {
           col_size: Faker::Number.number,
           default_org: create(:org),
@@ -143,7 +143,7 @@ describe 'shared/_org_autocomplete.html.erb' do
   end
 
   it 'does not display the custom Org checkbox if :allow_custom_org_entry is false' do
-    Rails.configuration.x.dmproadmap.application.restrict_orgs = true
+    Rails.configuration.x.dmproadmap.application_restrict_orgs = true
     render partial: 'shared/org_autocomplete'
     expect(rendered.include?('<conditional>')).to be(false)
     expect(rendered.include?('name="org_autocomplete[not_in_list]"')).to be(false)

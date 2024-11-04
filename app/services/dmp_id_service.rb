@@ -113,7 +113,7 @@ class DmpIdService
 
     # Returns whether or not there is an active DMP ID minting service
     def minting_service_defined?
-      Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration && minter.present? &&
+      Rails.configuration.x.dmproadmap.enable_dmp_id_registration && minter.present? &&
         minter.api_base_url.present?
     end
 

@@ -143,7 +143,7 @@ class Answer < ApplicationRecord
 
     # Retrieve the percentage of answered questions that determines if a plan can
     # be considered complete. If this answer completes the plan then update the Plan
-    target_percentage = Rails.configuration.x.dmproadmap.plans.default_percentage_answered || 50.0
+    target_percentage = Rails.configuration.x.dmproadmap.plans_default_percentage_answered || 50.0
     if plan.percent_answered > target_percentage && !plan.complete
       plan.update!(complete: true)
     else

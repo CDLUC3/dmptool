@@ -65,7 +65,7 @@ module Api
         raise Pundit::NotAuthorizedError unless Api::V0::PlansPolicy.new(@user, nil).index?
 
         if params[:per_page].present?
-          max_pages = Rails.configuration.x.dmproadmap.application.api_max_page_size
+          max_pages = Rails.configuration.x.dmproadmap.application_api_max_page_size
           params[:per_page] = max_pages if params[:per_page].to_i > max_pages
         end
 
@@ -96,7 +96,7 @@ module Api
         plan_ids = extract_param_list(params, 'plan')
         @plans = @plans.where(id: plan_ids) if plan_ids.present?
         # apply pagination after filtering
-        max_per_page = Rails.configuration.x.dmproadmap.application.api_max_page_size
+        max_per_page = Rails.configuration.x.dmproadmap.application_api_max_page_size
         page = params.fetch('page', 1).to_i
         per_page = params.fetch('per_page', max_per_page).to_i
         per_page = max_per_page if @per_page > max_per_page

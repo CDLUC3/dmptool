@@ -6,13 +6,13 @@ RSpec.describe DmpIdService do
   include Helpers::ConfigHelper
 
   before do
-    @original_enabled = Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration
+    @original_enabled = Rails.configuration.x.dmproadmap.enable_dmp_id_registration
     @original_name = Rails.configuration.x.dmproadmap.datacite.name
     @original_active = Rails.configuration.x.dmproadmap.datacite.active
     @original_desc = Rails.configuration.x.dmproadmap.datacite.description
     @orignal_landing = Rails.configuration.x.dmproadmap.datacite.landing_page_url
 
-    Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = true
+    Rails.configuration.x.dmproadmap.enable_dmp_id_registration = true
 
     # Using Datacite for these tests
     Rails.configuration.x.dmproadmap.datacite.active = true
@@ -30,7 +30,7 @@ RSpec.describe DmpIdService do
   end
 
   after do
-    Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = @original_enabled
+    Rails.configuration.x.dmproadmap.enable_dmp_id_registration = @original_enabled
     Rails.configuration.x.dmproadmap.datacite.name = @original_name
     Rails.configuration.x.dmproadmap.datacite.active = @original_active
     Rails.configuration.x.dmproadmap.datacite.description = @original_desc

@@ -24,7 +24,7 @@ end
 module DmpRoadmap
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.2
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -42,9 +42,6 @@ module DmpRoadmap
     # --------------------------------#
     # OVERRIDES TO DEFAULT RAILS CONFIG #
     # --------------------------------#
-    # Ensure that Zeitwerk knows to load our classes in the lib directory
-    # config.eager_load_paths << config.root.join('lib')
-
     # CVE-2022-32224: add some compatibility with YAML.safe_load
     # Rails 5,6,7 are using YAML.safe_load as the default YAML deserializer
     config.active_record.yaml_column_permitted_classes = [ActiveSupport::HashWithIndifferentAccess, Symbol, Date, Time]

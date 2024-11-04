@@ -88,7 +88,7 @@ class User < ApplicationRecord
 
   ##
   # User Notification Preferences
-  serialize :prefs, type: Hash
+  serialize :prefs, type: Hash, coder: JSON
 
   # default user language to the default language
   attribute :language_id, :integer, default: -> { Language.default&.id }

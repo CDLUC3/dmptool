@@ -103,6 +103,7 @@ class DmproadmapConfig < Anyway::Config
               :organisation_helpdesk_email,
               :organisation_google_maps_link,
               :organisation_name,
+              organisation_phone,
               :organisation_telephone,
               :organisation_url,
               :plans_default_percentage_answered,

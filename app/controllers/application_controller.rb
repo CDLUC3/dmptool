@@ -147,8 +147,8 @@ class ApplicationController < ActionController::Base
   # Sign out of Shibboleth SP local session too.
   # -------------------------------------------------------------
   def after_sign_out_path_for(resource_or_scope)
-    url = "#{Rails.configuration.x.shibboleth&.logout_url}#{root_url}"
-    return url if Rails.configuration.x.shibboleth&.enabled
+    url = "#{Rails.configuration.x.dmproadmap.shibboleth&.logout_url}#{root_url}"
+    return url if Rails.configuration.x.dmproadmap.shibboleth&.enabled
 
     super
   end

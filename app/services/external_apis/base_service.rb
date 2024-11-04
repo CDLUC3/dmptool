@@ -120,7 +120,7 @@ module ExternalApis
       # Retrieves the helpdesk email from dmproadmap.rb initializer or uses the contact page url
       def app_email
         dflt = Rails.application.routes.url_helpers.contact_us_url || ''
-        Rails.configuration.x.organisation.fetch(:helpdesk_email, dflt)
+        Rails.configuration.x.dmproadmap.organisation.fetch(:helpdesk_email, dflt)
       end
 
       # Makes a GET request to the specified uri with the additional headers.

@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'layouts/application.html.erb' do
   before do
     @app_name = ApplicationService.application_name
-    Rails.configuration.x.application.name = @app_name
+    Rails.configuration.x.dmproadmap.application.name = @app_name
 
     controller.prepend_view_path 'app/views/branded'
   end

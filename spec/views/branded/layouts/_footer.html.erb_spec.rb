@@ -8,7 +8,7 @@ describe 'layouts/_footer.html.erb' do
   end
 
   it 'renders properly' do
-    Rails.configuration.x.dmptool.version = Faker::Number.number
+    Rails.configuration.x.dmproadmap.dmptool.version = Faker::Number.number
     render
     expect(rendered.include?('<footer class="c-footer">')).to be(true)
     expect(rendered.include?('class="c-logo-cdl"')).to be(true)
@@ -21,6 +21,6 @@ describe 'layouts/_footer.html.erb' do
     expect(rendered.include?('Accessibility')).to be(true)
     expect(rendered.include?('Site Map')).to be(true)
     expect(rendered.include?('class="c-copyright"')).to be(true)
-    expect(rendered.include?("Version: #{Rails.configuration.x.dmptool.version}")).to be(true)
+    expect(rendered.include?("Version: #{Rails.configuration.x.dmproadmap.dmptool.version}")).to be(true)
   end
 end

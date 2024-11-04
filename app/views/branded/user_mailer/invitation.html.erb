@@ -39,7 +39,7 @@
     <%= render partial: 'email_signature',
                locals: {
                  tool_name: ApplicationService.application_name,
-                 helpdesk_email: Rails.configuration.x.helpdesk_email,
+                 helpdesk_email: Rails.configuration.x.dmproadmap.helpdesk_email,
                  allow_change_prefs: false
                } %>
   <% else %>

@@ -76,7 +76,7 @@ module DmptoolHelper
     cached = Rails.cache.read('rss')
     return cached unless cached.nil?
 
-    resp = HTTParty.get(Rails.configuration.x.application.blog_rss)
+    resp = HTTParty.get(Rails.configuration.x.dmproadmap.application.blog_rss)
     return [] unless resp.code == 200
 
     rss = RSS::Parser.parse(resp.body, false).items.first(4)

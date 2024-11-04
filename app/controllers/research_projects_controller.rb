@@ -36,7 +36,7 @@ class ResearchProjectsController < ApplicationController
 
   # Retrieve the Cache expiration seconds
   def expiry
-    expiration = Rails.configuration.x.cache.research_projects_expiration
+    expiration = Rails.configuration.x.dmproadmap.cache.research_projects_expiration
     (expiration.presence || 1.day)
   end
 end

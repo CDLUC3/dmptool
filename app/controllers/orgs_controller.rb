@@ -47,7 +47,7 @@ class OrgsController < ApplicationController
       attrs[:managed] = attrs[:managed] == '1'
 
       # Handle Shibboleth identifier if that is enabled
-      if Rails.configuration.x.shibboleth.use_filtered_discovery_service
+      if Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service
         shib = IdentifierScheme.by_name('shibboleth').first
 
         if shib.present? && attrs[:identifiers_attributes].present?
@@ -92,7 +92,7 @@ class OrgsController < ApplicationController
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   # This action is used by installations that have the following config enabled:
-  #   Rails.configuration.x.shibboleth.use_filtered_discovery_service
+  #   Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service
   # rubocop:disable Metrics/AbcSize
   def shibboleth_ds
     unless current_user.nil?
@@ -120,8 +120,8 @@ class OrgsController < ApplicationController
   # GET /orgs/shibboleth_ds/:id
   # POST /orgs/shibboleth_ds/:id
   def shibboleth_ds_passthru
-    # This action is used ONLY if Rails.configuration.x.shibboleth.use_filtered_discovery_service
-    # is true! It will attempt to redirect the user to the Rails.configuration.x.shibboleth.login_url
+    # This action is used ONLY if Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service
+    # is true! It will attempt to redirect the user to the Rails.configuration.x.dmproadmap.shibboleth.login_url
     # you have defined with the Org's entity_id (editable in the Super Admin's 'Edit Org' page)
     skip_authorization
 
@@ -172,7 +172,7 @@ class OrgsController < ApplicationController
   end
 
   def shib_login_url
-    Rails.configuration.x.shibboleth.login_url
+    Rails.configuration.x.dmproadmap.shibboleth.login_url
   end
 
   def shib_callback_url

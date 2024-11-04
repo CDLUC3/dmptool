@@ -12,7 +12,7 @@ module Users
       if org.present?
         entity_id = org.identifier_for_scheme(scheme: 'shibboleth')
         if entity_id.present?
-          shib_login = Rails.configuration.x.shibboleth.login_url
+          shib_login = Rails.configuration.x.dmproadmap.shibboleth.login_url
           target = user_shibboleth_omniauth_callback_url.gsub('http:', 'https:')
 
           # If this is part of an API V2 Oauth workflow, we need to pass the pre_auth

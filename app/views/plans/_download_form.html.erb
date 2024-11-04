@@ -1,5 +1,5 @@
 <%
- download_coversheet_tickbox_checked = Rails.configuration.x.plans.download_coversheet_tickbox_checked || false
+ download_coversheet_tickbox_checked = Rails.configuration.x.dmproadmap.plans.download_coversheet_tickbox_checked || false
 %>
 <%= form_tag(plan_export_path(@plan), method: :get, target: '_blank', id: 'download_form') do |f| %>
 

@@ -42,7 +42,7 @@ class RegistryOrgsController < ApplicationController
   def find_by_search_term(term:, **options)
     return [] if term.blank?
 
-    restricting = Rails.configuration.x.application.restrict_orgs
+    restricting = Rails.configuration.x.dmproadmap.application.restrict_orgs
 
     # If the known_only flag was not set use the default setting from the config
     known_only = options.fetch(:known_only, restricting)

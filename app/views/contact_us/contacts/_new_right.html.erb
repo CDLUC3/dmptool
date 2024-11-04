@@ -1,23 +1,23 @@
 <!-- new_right template -->
 <address>
-  <strong><%= Rails.configuration.x.organisation.name %></strong><br>
-  <% [Rails.configuration.x.organisation.address.fetch(:line1, ""),
-      Rails.configuration.x.organisation.address.fetch(:line2, ""),
-      Rails.configuration.x.organisation.address.fetch(:line3, ""),
-      Rails.configuration.x.organisation.address.fetch(:line4, ""),
-      Rails.configuration.x.organisation.address.fetch(:country, "")].compact.each do |addr_line| %>
+  <strong><%= Rails.configuration.x.dmproadmap.organisation.name %></strong><br>
+  <% [Rails.configuration.x.dmproadmap.organisation.address.fetch(:line1, ""),
+      Rails.configuration.x.dmproadmap.organisation.address.fetch(:line2, ""),
+      Rails.configuration.x.dmproadmap.organisation.address.fetch(:line3, ""),
+      Rails.configuration.x.dmproadmap.organisation.address.fetch(:line4, ""),
+      Rails.configuration.x.dmproadmap.organisation.address.fetch(:country, "")].compact.each do |addr_line| %>
 <% if addr_line.present? %>
   <%= addr_line.is_a?(Array) ? addr_line.join(' ') : addr_line %><br>
 <% end %>
 <% end %>
 </address>
 <%
-telephone=Rails.configuration.x.organisation.telephone
+telephone=Rails.configuration.x.dmproadmap.organisation.telephone
 if telephone.present? %>
   <strong><%= "#{_('Helpline')} #{telephone}" %></strong>
 <% end %>
 <%
-email=Rails.configuration.x.organisation.email
+email=Rails.configuration.x.dmproadmap.organisation.email
 if email.present? %>
   <address>
     <strong><%= _('Email') %></strong>
@@ -25,7 +25,7 @@ if email.present? %>
     </address>
 <% end %>
 <%
-link=Rails.configuration.x.organisation.google_maps_link
+link=Rails.configuration.x.dmproadmap.organisation.google_maps_link
 if link.present? %>
   <iframe
     width="90%"

@@ -10,21 +10,21 @@ describe 'api/v1/datasets/_show.json.jbuilder' do
     end
 
     it 'does not include :preservation_statement if config is false' do
-      Rails.configuration.x.madmp.extract_preservation_statements_from_themed_questions = false
+      Rails.configuration.x.dmproadmap.madmp.extract_preservation_statements_from_themed_questions = false
       render partial: 'api/v1/datasets/show', locals: { output: @output }
       json = JSON.parse(rendered).with_indifferent_access
       expect(json[:preservation_statement]).to eql('')
     end
 
     it 'does not include :security_and_privacy if config is false' do
-      Rails.configuration.x.madmp.extract_security_privacy_statements_from_themed_questions = false
+      Rails.configuration.x.dmproadmap.madmp.extract_security_privacy_statements_from_themed_questions = false
       render partial: 'api/v1/datasets/show', locals: { output: @output }
       json = JSON.parse(rendered).with_indifferent_access
       expect(json[:security_and_privacy]).to eql([])
     end
 
     it 'does not include :data_quality_assurance if config is false' do
-      Rails.configuration.x.madmp.extract_data_quality_statements_from_themed_questions = false
+      Rails.configuration.x.dmproadmap.madmp.extract_data_quality_statements_from_themed_questions = false
       render partial: 'api/v1/datasets/show', locals: { output: @output }
       json = JSON.parse(rendered).with_indifferent_access
       expect(json[:data_quality_assurance]).to eql('')
@@ -33,9 +33,9 @@ describe 'api/v1/datasets/_show.json.jbuilder' do
 
   context 'config has enabled madmp options' do
     before do
-      Rails.configuration.x.madmp.extract_preservation_statements_from_themed_questions = true
-      Rails.configuration.x.madmp.extract_security_privacy_statements_from_themed_questions = true
-      Rails.configuration.x.madmp.extract_data_quality_statements_from_themed_questions = true
+      Rails.configuration.x.dmproadmap.madmp.extract_preservation_statements_from_themed_questions = true
+      Rails.configuration.x.dmproadmap.madmp.extract_security_privacy_statements_from_themed_questions = true
+      Rails.configuration.x.dmproadmap.madmp.extract_data_quality_statements_from_themed_questions = true
 
       @plan = create(:plan)
       @output = create(:research_output, plan: @plan)

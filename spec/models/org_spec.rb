@@ -70,7 +70,7 @@ RSpec.describe Org do
 
       context 'when Org has same abbr as dmproadmap.rb initializer setting' do
         let!(:org) do
-          abbrev = Rails.configuration.x.organisation.abbreviation
+          abbrev = Rails.configuration.x.dmproadmap.organisation.abbreviation
           create(:org, abbreviation: abbrev)
         end
 
@@ -345,14 +345,14 @@ RSpec.describe Org do
 
   describe '#org_admin_plans' do
     before do
-      @original_reg = Rails.configuration.x.plans.org_admins_read_all
+      @original_reg = Rails.configuration.x.dmproadmap.plans.org_admins_read_all
     end
 
     after do
-      Rails.configuration.x.plans.org_admins_read_all = @original_reg
+      Rails.configuration.x.dmproadmap.plans.org_admins_read_all = @original_reg
     end
 
-    Rails.configuration.x.plans.org_admins_read_all = true
+    Rails.configuration.x.dmproadmap.plans.org_admins_read_all = true
     subject { org.org_admin_plans }
 
     let!(:org) { create(:org) }
@@ -404,8 +404,8 @@ RSpec.describe Org do
 
     context 'read_all is false, visibility private and user org_admin' do
       before do
-        @original_reg = Rails.configuration.x.plans.org_admins_read_all
-        Rails.configuration.x.plans.org_admins_read_all = false
+        @original_reg = Rails.configuration.x.dmproadmap.plans.org_admins_read_all
+        Rails.configuration.x.dmproadmap.plans.org_admins_read_all = false
         @perm = build(:perm)
         @perm.name = 'grant_permissions'
         user.perms << @perm
@@ -414,7 +414,7 @@ RSpec.describe Org do
       end
 
       after do
-        Rails.configuration.x.plans.org_admins_read_all = @original_reg
+        Rails.configuration.x.dmproadmap.plans.org_admins_read_all = @original_reg
       end
 
       it { is_expected.not_to include(plan) }
@@ -422,8 +422,8 @@ RSpec.describe Org do
 
     context 'read_all is false, visibility public and user org_admin' do
       before do
-        @original_reg = Rails.configuration.x.plans.org_admins_read_all
-        Rails.configuration.x.plans.org_admins_read_all = false
+        @original_reg = Rails.configuration.x.dmproadmap.plans.org_admins_read_all
+        Rails.configuration.x.dmproadmap.plans.org_admins_read_all = false
         @perm = build(:perm)
         @perm.name = 'grant_permissions'
         user.perms << @perm
@@ -432,7 +432,7 @@ RSpec.describe Org do
       end
 
       after do
-        Rails.configuration.x.plans.org_admins_read_all = @original_reg
+        Rails.configuration.x.dmproadmap.plans.org_admins_read_all = @original_reg
       end
 
       it { is_expected.to include(plan) }

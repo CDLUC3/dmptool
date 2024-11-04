@@ -35,7 +35,7 @@ module Dmptool
       @email = @api_client.contact_email || @api_client.user.email
 
       I18n.with_locale I18n.default_locale do
-        mail(to: Rails.configuration.x.application.admin_emails,
+        mail(to: Rails.configuration.x.dmproadmap.application.admin_emails,
              subject: format(_('%{tool_name} new API registration'), tool_name: tool_name))
       end
     end
@@ -43,7 +43,7 @@ module Dmptool
 
     # Sends the error message out to the administrators
     def notify_administrators(message)
-      administrators = Rails.configuration.x.application.admin_emails
+      administrators = Rails.configuration.x.dmproadmap.application.admin_emails
       return false if administrators.blank?
 
       @message = message

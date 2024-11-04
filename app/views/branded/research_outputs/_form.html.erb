@@ -116,7 +116,7 @@ repository_tooltip = _("Repositories preserve, manage, and provide access to man
     </div>
   </div>
 
-  <% if Rails.configuration.x.madmp.enable_repository_selection && Repository.all.any? %>
+  <% if Rails.configuration.x.dmproadmap.madmp.enable_repository_selection && Repository.all.any? %>
     <div class="form-group row">
       <div class="col-md-12">
         <span class="col-md-12">
@@ -143,7 +143,7 @@ repository_tooltip = _("Repositories preserve, manage, and provide access to man
     </div>
   <% end %>
 
-  <% if Rails.configuration.x.madmp.enable_metadata_standard_selection && MetadataStandard.all.any? %>
+  <% if Rails.configuration.x.dmproadmap.madmp.enable_metadata_standard_selection && MetadataStandard.all.any? %>
     <div class="form-group row">
       <div class="col-md-12">
         <span class="col-md-12">
@@ -212,7 +212,7 @@ repository_tooltip = _("Repositories preserve, manage, and provide access to man
     </div>
   </div>
 
-  <% if Rails.configuration.x.madmp.enable_license_selection && License.all.any? %>
+  <% if Rails.configuration.x.dmproadmap.madmp.enable_license_selection && License.all.any? %>
     <div class="form-group row license-selection">
       <%= render partial: "research_outputs/licenses/form",
                 locals: { research_output: research_output, presenter: presenter, readonly: readonly } %>

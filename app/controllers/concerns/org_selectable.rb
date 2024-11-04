@@ -54,9 +54,9 @@ module OrgSelectable
                                                 registry_org.org_id.present?
 
       # Return nothing if we are not allowing users to create orgs
-      return {} if Rails.configuration.x.application.restrict_orgs &&
+      return {} if Rails.configuration.x.dmproadmap.application.restrict_orgs &&
                    current_user.blank?
-      return {} if Rails.configuration.x.application.restrict_orgs &&
+      return {} if Rails.configuration.x.dmproadmap.application.restrict_orgs &&
                    (current_user.present? && !current_user.can_super_admin?)
 
       # If it matches a RegistryOrg convert it to an Org OR initialize a new Org
@@ -87,7 +87,7 @@ module OrgSelectable
       return org if org.present? && (!managed_only || (managed_only && org.managed?))
 
       # Skip if restrict_orgs is set to true! (unless its a Super Admin)
-      if (user.present? && user.can_super_admin?) || !Rails.configuration.x.application.restrict_orgs
+      if (user.present? && user.can_super_admin?) || !Rails.configuration.x.dmproadmap.application.restrict_orgs
         # fetch from the ror table
         registry_org = RegistryOrg.where('LOWER(name) = ?', name.downcase).first
 
@@ -121,7 +121,7 @@ module OrgSelectable
       return org if org.present? && (!managed_only || (managed_only && org.managed?))
 
       # Skip if restrict_orgs is set to true! (unless its a Super Admin)
-      if (user.present? && user.can_super_admin?) || !Rails.configuration.x.application.restrict_orgs
+      if (user.present? && user.can_super_admin?) || !Rails.configuration.x.dmproadmap.application.restrict_orgs
         # fetch from the ror table
         registry_org = RegistryOrg.where('LOWER(name) = ?', name.downcase).first
 

@@ -127,7 +127,7 @@ class RelatedIdentifier < ApplicationRecord
   def load_citation
     # Only attempt to load the citation if that functionality has been enabled in the
     # config, this is a DOI and its either a new record or the value has changed
-    return unless Rails.configuration.x.madmp.enable_citation_lookup && identifier_type == 'doi' && citation.blank?
+    return unless Rails.configuration.x.dmproadmap.madmp.enable_citation_lookup && identifier_type == 'doi' && citation.blank?
 
     CitationJob.set(wait: 1.second).perform_later(related_identifier: self)
   end

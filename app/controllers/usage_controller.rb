@@ -15,7 +15,7 @@ class UsageController < ApplicationController
     total_plans(args: min_max_dates(args: args))
     total_users(args: min_max_dates(args: args))
     total_dmp_ids
-    @separators = Rails.configuration.x.application.csv_separators
+    @separators = Rails.configuration.x.dmproadmap.application.csv_separators
     @funder = current_user.org.funder?
     @filtered = args[:filtered]
   end

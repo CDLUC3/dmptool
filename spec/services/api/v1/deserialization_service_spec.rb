@@ -6,11 +6,11 @@ RSpec.describe Api::V1::DeserializationService do
   include Helpers::IdentifierHelper
 
   before do
-    @original_restrict = Rails.configuration.x.application.restrict_orgs
+    @original_restrict = Rails.configuration.x.dmproadmap.application.restrict_orgs
   end
 
   after do
-    Rails.configuration.x.application.restrict_orgs = @original_restrict
+    Rails.configuration.x.dmproadmap.application.restrict_orgs = @original_restrict
   end
 
   describe 'object_from_identifier(clazz:, json:)' do
@@ -147,12 +147,12 @@ RSpec.describe Api::V1::DeserializationService do
     end
 
     it 'returns nil if :name matches the RegistryOrg but it has no Org and we :restrict_orgs' do
-      Rails.configuration.x.application.restrict_orgs = true
+      Rails.configuration.x.dmproadmap.application.restrict_orgs = true
       expect(described_class.name_to_org(name: @registry_org.name)).to be_nil
     end
 
     it 'returns a new Org if :name matches the RegistryOrg but it has no Org' do
-      Rails.configuration.x.application.restrict_orgs = false
+      Rails.configuration.x.dmproadmap.application.restrict_orgs = false
       result = described_class.name_to_org(name: @registry_org.name)
       expect(result.is_a?(Org)).to be(true)
       expect(result.new_record?).to be(true)

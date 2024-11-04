@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'users/mailer/reset_password_instructions' do
   before do
     controller.prepend_view_path 'app/views/branded'
-    Rails.configuration.x.organisation.contact_us_url = nil
+    Rails.configuration.x.dmproadmap.organisation.contact_us_url = nil
   end
 
   it 'renders correctly' do

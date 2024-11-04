@@ -7,31 +7,31 @@ module ExternalApis
     class << self
       # Retrieve the config settings from the initializer
       def landing_page_url
-        Rails.configuration.x.spdx&.landing_page_url || super
+        Rails.configuration.x.dmproadmap.spdx&.landing_page_url || super
       end
 
       def api_base_url
-        Rails.configuration.x.spdx&.api_base_url || super
+        Rails.configuration.x.dmproadmap.spdx&.api_base_url || super
       end
 
       def max_pages
-        Rails.configuration.x.spdx&.max_pages || super
+        Rails.configuration.x.dmproadmap.spdx&.max_pages || super
       end
 
       def max_results_per_page
-        Rails.configuration.x.spdx&.max_results_per_page || super
+        Rails.configuration.x.dmproadmap.spdx&.max_results_per_page || super
       end
 
       def max_redirects
-        Rails.configuration.x.spdx&.max_redirects || super
+        Rails.configuration.x.dmproadmap.spdx&.max_redirects || super
       end
 
       def active?
-        Rails.configuration.x.spdx&.active || super
+        Rails.configuration.x.dmproadmap.spdx&.active || super
       end
 
       def list_path
-        Rails.configuration.x.spdx&.list_path
+        Rails.configuration.x.dmproadmap.spdx&.list_path
       end
 
       # Retrieves the full list of license from the SPDX Github repository.

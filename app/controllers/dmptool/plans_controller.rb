@@ -126,7 +126,7 @@ module Dmptool
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
     def create_plan(plan:, params:)
       plan.visibility = if params['visibility'].blank?
-                          Rails.configuration.x.plans.default_visibility
+                          Rails.configuration.x.dmproadmap.plans.default_visibility
                         else
                           plan_params[:visibility]
                         end

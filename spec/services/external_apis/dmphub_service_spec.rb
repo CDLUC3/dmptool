@@ -7,12 +7,12 @@ RSpec.describe ExternalApis::DmphubService, type: :model do
   include Helpers::IdentifierHelper
 
   before do
-    @original_active = Rails.configuration.x.dmphub.active
-    @original_url = Rails.configuration.x.dmphub.api_base_url
-    @orignal_enabled = Rails.configuration.x.madmp.enable_dmp_id_registration
-    Rails.configuration.x.dmphub.active = true
-    Rails.configuration.x.dmphub.api_base_url = 'https://api.test.dmphub.org/'
-    Rails.configuration.x.madmp.enable_dmp_id_registration = true
+    @original_active = Rails.configuration.x.dmproadmap.dmphub.active
+    @original_url = Rails.configuration.x.dmproadmap.dmphub.api_base_url
+    @orignal_enabled = Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration
+    Rails.configuration.x.dmproadmap.dmphub.active = true
+    Rails.configuration.x.dmproadmap.dmphub.api_base_url = 'https://api.test.dmphub.org/'
+    Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = true
     unless Language.where(default_language: true).any?
       # Org model requires a language so make sure the default is set
       create(:language, default_language: true)
@@ -29,16 +29,16 @@ RSpec.describe ExternalApis::DmphubService, type: :model do
   end
 
   after do
-    Rails.configuration.x.dmphub.active = @original_active
-    Rails.configuration.x.dmphub.api_base_url = @original_url
-    Rails.configuration.x.madmp.enable_dmp_id_registration = @orignal_enabled
+    Rails.configuration.x.dmproadmap.dmphub.active = @original_active
+    Rails.configuration.x.dmproadmap.dmphub.api_base_url = @original_url
+    Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = @orignal_enabled
   end
 
   describe '#mint_dmp_id' do
     it 'returns nil if the DMPHubService is not active' do
-      Rails.configuration.x.dmphub.active = false
+      Rails.configuration.x.dmproadmap.dmphub.active = false
       expect(described_class.mint_dmp_id(plan: @plan)).to be_nil
-      Rails.configuration.x.dmphub.active = @original_active
+      Rails.configuration.x.dmproadmap.dmphub.active = @original_active
     end
 
     it 'returns nil if :auth returns nil' do
@@ -72,9 +72,9 @@ RSpec.describe ExternalApis::DmphubService, type: :model do
 
   describe '#update_dmp_id(plan:)' do
     it 'returns nil if the DMPHubService is not active' do
-      Rails.configuration.x.dmphub.active = false
+      Rails.configuration.x.dmproadmap.dmphub.active = false
       expect(described_class.update_dmp_id(plan: @plan)).to be_nil
-      Rails.configuration.x.dmphub.active = @original_active
+      Rails.configuration.x.dmproadmap.dmphub.active = @original_active
     end
 
     it 'returns nil if :auth returns nil' do

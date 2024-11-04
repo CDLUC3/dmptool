@@ -35,7 +35,7 @@ module Helpers
     end
 
     def stub_orcid(success: true)
-      url = Rails.configuration.x.orcid_api_base_url
+      url = Rails.configuration.x.dmproadmap.orcid_api_base_url
       url = url.gsub('%{id}', '[0-9\\-]*')
       if success
         stub_request(:post, %r{#{url}/.*}).to_return(status: 201, body: mocked_orcid_response, headers: {})
@@ -79,7 +79,7 @@ module Helpers
 
     def mock_shib_login(user:, successful: true)
       url = Faker::Internet.url(scheme: 'https', path: '').to_s
-      Rails.configuration.x.shibboleth.login_url = url
+      Rails.configuration.x.dmproadmap.shibboleth.login_url = url
       # Rails.rou
       stub_request(:get, url)
         .to_return(

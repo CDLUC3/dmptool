@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <% if Rails.configuration.x.google_analytics.tracker_root.present? %>
-      <% root_abbr = Rails.configuration.x.google_analytics.tracker_root %>
+    <% if Rails.configuration.x.dmproadmap.google_analytics.tracker_root.present? %>
+      <% root_abbr = Rails.configuration.x.dmproadmap.google_analytics.tracker_root %>
       <% root_org = Org.where(abbreviation: root_abbr).first %>
       <% if root_org.tracker.present? %>
         <% root_code = root_org.tracker.code %>

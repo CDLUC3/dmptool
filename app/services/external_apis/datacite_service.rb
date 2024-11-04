@@ -5,62 +5,62 @@ module ExternalApis
   class DataciteService < BaseDmpIdService
     class << self
       def name
-        Rails.configuration.x.datacite&.name
+        Rails.configuration.x.dmproadmap.datacite&.name
       end
 
       def description
-        Rails.configuration.x.datacite&.description
+        Rails.configuration.x.dmproadmap.datacite&.description
       end
 
       # Retrieve the config settings from the initializer
       def landing_page_url
-        Rails.configuration.x.datacite&.landing_page_url || super
+        Rails.configuration.x.dmproadmap.datacite&.landing_page_url || super
       end
 
       def api_base_url
-        Rails.configuration.x.datacite&.api_base_url || super
+        Rails.configuration.x.dmproadmap.datacite&.api_base_url || super
       end
 
       def max_pages
-        Rails.configuration.x.datacite&.max_pages || super
+        Rails.configuration.x.dmproadmap.datacite&.max_pages || super
       end
 
       def max_results_per_page
-        Rails.configuration.x.datacite&.max_results_per_page || super
+        Rails.configuration.x.dmproadmap.datacite&.max_results_per_page || super
       end
 
       def max_redirects
-        Rails.configuration.x.datacite&.max_redirects || super
+        Rails.configuration.x.dmproadmap.datacite&.max_redirects || super
       end
 
       def active?
-        Rails.configuration.x.datacite&.active || super
+        Rails.configuration.x.dmproadmap.datacite&.active || super
       end
 
       def client_id
-        Rails.configuration.x.datacite&.repository_id
+        Rails.configuration.x.dmproadmap.datacite&.repository_id
       end
 
       def client_secret
-        Rails.configuration.x.datacite&.password
+        Rails.configuration.x.dmproadmap.datacite&.password
       end
 
       def mint_path
-        Rails.configuration.x.datacite&.mint_path
+        Rails.configuration.x.dmproadmap.datacite&.mint_path
       end
 
       def update_path
-        Rails.configuration.x.datacite&.update_path
+        Rails.configuration.x.dmproadmap.datacite&.update_path
       end
 
       def shoulder
-        Rails.configuration.x.datacite&.shoulder
+        Rails.configuration.x.dmproadmap.datacite&.shoulder
       end
 
       # The callback_path is the API endpoint to send updates to once the Plan has changed
       # or been versioned
       def callback_path
-        Rails.configuration.x.datacite&.callback_path
+        Rails.configuration.x.dmproadmap.datacite&.callback_path
       end
 
       # Create a new DMP ID
@@ -161,8 +161,8 @@ module ExternalApis
 
       def auth
         {
-          username: Rails.configuration.x.datacite.repository_id,
-          password: Rails.configuration.x.datacite.password
+          username: Rails.configuration.x.dmproadmap.datacite.repository_id,
+          password: Rails.configuration.x.dmproadmap.datacite.password
         }
       end
 

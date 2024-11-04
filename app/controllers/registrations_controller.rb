@@ -52,7 +52,7 @@ class RegistrationsController < Devise::RegistrationsController
     #   oauth = session["devise.#{scheme.name.downcase}_data"] unless session["devise.#{scheme.name.downcase}_data"].nil?
     # end
 
-    # blank_org = if Rails.configuration.x.application.restrict_orgs
+    # blank_org = if Rails.configuration.x.dmproadmap.application.restrict_orgs
     #               sign_up_params[:org_id]['id'].blank?
     #             else
     #               sign_up_params[:org_id].blank?
@@ -102,7 +102,7 @@ class RegistrationsController < Devise::RegistrationsController
     #   end
 
     #   # Determine if reCAPTCHA is enabled and if so verify it
-    #   use_recaptcha = Rails.configuration.x.recaptcha.enabled || false
+    #   use_recaptcha = Rails.configuration.x.dmproadmap.recaptcha.enabled || false
     #   if (!use_recaptcha || verify_recaptcha(model: resource)) && resource.save
     #
     #     if resource.active_for_authentication?
@@ -162,7 +162,7 @@ class RegistrationsController < Devise::RegistrationsController
   # end
 
   # def do_update(require_password = true, confirm = false)
-  #   restrict_orgs = Rails.configuration.x.application.restrict_orgs
+  #   restrict_orgs = Rails.configuration.x.dmproadmap.application.restrict_orgs
   #   mandatory_params = true
   #   # added to by below, overwritten otherwise
   #   message = _('Save Unsuccessful. ')

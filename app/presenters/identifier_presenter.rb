@@ -38,7 +38,7 @@ class IdentifierPresenter
     # Shibboleth Org identifiers are only for use by installations that have
     # a curated list of Orgs that can use institutional login
     if @identifiable.is_a?(Org) &&
-       !Rails.configuration.x.shibboleth.use_filtered_discovery_service
+       !Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service
       schemes = schemes.reject { |scheme| scheme.name.casecmp('shibboleth').zero? }
     end
     schemes

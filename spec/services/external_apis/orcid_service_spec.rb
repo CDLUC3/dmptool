@@ -7,18 +7,18 @@ RSpec.describe ExternalApis::OrcidService, type: :model do
   include Helpers::Webmocks
 
   before do
-    @original_allow = Rails.configuration.x.allow_dmp_id_minting
-    @original_active = Rails.configuration.x.orcid.active
-    @original_base_url = Rails.configuration.x.orcid.api_base_url
-    @original_landing = Rails.configuration.x.orcid.landing_page_url
-    @original_callback = Rails.configuration.x.orcid.callback_path
-    @original_work = Rails.configuration.x.orcid.work_path
-    Rails.configuration.x.allow_dmp_id_minting = true
-    Rails.configuration.x.orcid.active = true
-    Rails.configuration.x.orcid.api_base_url = 'https://api.sandbox.orcid.org/v3.0/'
-    Rails.configuration.x.orcid.landing_page_url = Faker::Internet.url
-    Rails.configuration.x.orcid.callback_path = "/#{Faker::Lorem.word}/%{put_code}"
-    Rails.configuration.x.orcid.work_path = "/%{id}/#{Faker::Lorem.word}"
+    @original_allow = Rails.configuration.x.dmproadmap.allow_dmp_id_minting
+    @original_active = Rails.configuration.x.dmproadmap.orcid.active
+    @original_base_url = Rails.configuration.x.dmproadmap.orcid.api_base_url
+    @original_landing = Rails.configuration.x.dmproadmap.orcid.landing_page_url
+    @original_callback = Rails.configuration.x.dmproadmap.orcid.callback_path
+    @original_work = Rails.configuration.x.dmproadmap.orcid.work_path
+    Rails.configuration.x.dmproadmap.allow_dmp_id_minting = true
+    Rails.configuration.x.dmproadmap.orcid.active = true
+    Rails.configuration.x.dmproadmap.orcid.api_base_url = 'https://api.sandbox.orcid.org/v3.0/'
+    Rails.configuration.x.dmproadmap.orcid.landing_page_url = Faker::Internet.url
+    Rails.configuration.x.dmproadmap.orcid.callback_path = "/#{Faker::Lorem.word}/%{put_code}"
+    Rails.configuration.x.dmproadmap.orcid.work_path = "/%{id}/#{Faker::Lorem.word}"
 
     @scheme = orcid_scheme
     @plan = create(:plan, :creator)
@@ -36,12 +36,12 @@ RSpec.describe ExternalApis::OrcidService, type: :model do
   end
 
   after do
-    Rails.configuration.x.allow_dmp_id_minting = @original_allow
-    Rails.configuration.x.orcid.active = @original_active
-    Rails.configuration.x.orcid.api_base_url = @original_base_url
-    Rails.configuration.x.orcid.landing_page_url = @original_landing
-    Rails.configuration.x.orcid.callback_path = @original_callback
-    Rails.configuration.x.orcid.work_path = @original_work
+    Rails.configuration.x.dmproadmap.allow_dmp_id_minting = @original_allow
+    Rails.configuration.x.dmproadmap.orcid.active = @original_active
+    Rails.configuration.x.dmproadmap.orcid.api_base_url = @original_base_url
+    Rails.configuration.x.dmproadmap.orcid.landing_page_url = @original_landing
+    Rails.configuration.x.dmproadmap.orcid.callback_path = @original_callback
+    Rails.configuration.x.dmproadmap.orcid.work_path = @original_work
   end
 
   describe '#add_work(user:, plan:)' do

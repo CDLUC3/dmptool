@@ -271,8 +271,8 @@ token_permission_types.each{ |tpt| TokenPermissionType.find_or_create_by(tpt) }
 # -------------------------------------------------------
 region = Region.first
 orgs = [
-  {name: Rails.configuration.x.organisation.name,
-   abbreviation: Rails.configuration.x.organisation.abbreviation,
+  {name: Rails.configuration.x.dmproadmap.organisation.name,
+   abbreviation: Rails.configuration.x.dmproadmap.organisation.abbreviation,
    org_type: 4, links: {"org":[]},
    language: default_language, region: region,
    token_permission_types: TokenPermissionType.all,
@@ -300,7 +300,7 @@ users = [
    surname: "Admin",
    password: "password123",
    password_confirmation: "password123",
-   org: Org.find_by(abbreviation: Rails.configuration.x.organisation.abbreviation),
+   org: Org.find_by(abbreviation: Rails.configuration.x.dmproadmap.organisation.abbreviation),
    language: default_language,
    perms: Perm.all,
    accept_terms: true,
@@ -344,7 +344,7 @@ users.each{ |u| User.create!(u) unless User.find_by(email: u[:email]) }
 # -------------------------------------------------------
 guidance_groups = [
   {name: "Generic Guidance (provided by the example curation centre)",
-   org: Org.find_by(abbreviation: Rails.configuration.x.organisation.abbreviation),
+   org: Org.find_by(abbreviation: Rails.configuration.x.dmproadmap.organisation.abbreviation),
    optional_subset: true,
    published: true},
   {name: "Government Agency Advice (Funder specific guidance)",
@@ -466,7 +466,7 @@ templates = [
   {title: "My Curation Center's Default Template",
    description: "The default template",
    published: true,
-   org: Org.find_by(abbreviation: Rails.configuration.x.organisation.abbreviation),
+   org: Org.find_by(abbreviation: Rails.configuration.x.dmproadmap.organisation.abbreviation),
    is_default: true, locale: default_locale,
    version: 0,
    visibility: Template.visibilities[:publicly_visible],

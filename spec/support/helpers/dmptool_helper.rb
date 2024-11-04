@@ -1,40 +1,40 @@
 # frozen_string_literal: true
 
 # Set basic config settings
-Rails.configuration.x.application.admin_emails = 'admin@example.com'
-Rails.configuration.x.application.api_documentation_overview_url = 'http://localhost:3000/docs'
-Rails.configuration.x.application.api_max_page_size = 20
-Rails.configuration.x.application.archived_accounts_email_suffix = 'test'
-Rails.configuration.x.application.blog_rss = 'https://blog.example.org/feed/'
-Rails.configuration.x.application.csv_separators = ','
-Rails.configuration.x.application.name = 'Test App'
-Rails.configuration.x.application.restrict_orgs = false
+Rails.configuration.x.dmproadmap.application.admin_emails = 'admin@example.com'
+Rails.configuration.x.dmproadmap.application.api_documentation_overview_url = 'http://localhost:3000/docs'
+Rails.configuration.x.dmproadmap.application.api_max_page_size = 20
+Rails.configuration.x.dmproadmap.application.archived_accounts_email_suffix = 'test'
+Rails.configuration.x.dmproadmap.application.blog_rss = 'https://blog.example.org/feed/'
+Rails.configuration.x.dmproadmap.application.csv_separators = ','
+Rails.configuration.x.dmproadmap.application.name = 'Test App'
+Rails.configuration.x.dmproadmap.application.restrict_orgs = false
 
-Rails.configuration.x.cache.org_selection_expiration = 1.day
-Rails.configuration.x.cache.research_projects_expiration = 1.day
+Rails.configuration.x.dmproadmap.cache.org_selection_expiration = 1.day
+Rails.configuration.x.dmproadmap.cache.research_projects_expiration = 1.day
 
-Rails.configuration.x.madmp.enable_citation_lookup = false
-Rails.configuration.x.madmp.enable_dmp_id_registration = false
-Rails.configuration.x.madmp.enable_orcid_publication = false
-Rails.configuration.x.madmp.extract_data_quality_statements_from_themed_questions = false
-Rails.configuration.x.madmp.extract_preservation_statements_from_themed_questions = false
-Rails.configuration.x.madmp.extract_security_privacy_statements_from_themed_questions = false
+Rails.configuration.x.dmproadmap.madmp.enable_citation_lookup = false
+Rails.configuration.x.dmproadmap.madmp.enable_dmp_id_registration = false
+Rails.configuration.x.dmproadmap.madmp.enable_orcid_publication = false
+Rails.configuration.x.dmproadmap.madmp.extract_data_quality_statements_from_themed_questions = false
+Rails.configuration.x.dmproadmap.madmp.extract_preservation_statements_from_themed_questions = false
+Rails.configuration.x.dmproadmap.madmp.extract_security_privacy_statements_from_themed_questions = false
 
-Rails.configuration.x.organisation.abbreviation = 'TEST'
-Rails.configuration.x.organisation.do_not_reply_email = 'do-not-reply@example.com'
-Rails.configuration.x.organisation.helpdesk_email = 'help@example.com'
-Rails.configuration.x.organisation.email = 'org@example.com'
+Rails.configuration.x.dmproadmap.organisation.abbreviation = 'TEST'
+Rails.configuration.x.dmproadmap.organisation.do_not_reply_email = 'do-not-reply@example.com'
+Rails.configuration.x.dmproadmap.organisation.helpdesk_email = 'help@example.com'
+Rails.configuration.x.dmproadmap.organisation.email = 'org@example.com'
 
-Rails.configuration.x.plans.default_percentage_answered = 50
-Rails.configuration.x.plans.default_visibility = 1
-Rails.configuration.x.plans.org_admins_read_all = true
-Rails.configuration.x.plans.super_admins_read_all = true
+Rails.configuration.x.dmproadmap.plans.default_percentage_answered = 50
+Rails.configuration.x.dmproadmap.plans.default_visibility = 1
+Rails.configuration.x.dmproadmap.plans.org_admins_read_all = true
+Rails.configuration.x.dmproadmap.plans.super_admins_read_all = true
 
-Rails.configuration.x.recaptcha.enabled = false
-Rails.configuration.x.results_per_page = 20
+Rails.configuration.x.dmproadmap.recaptcha.enabled = false
+Rails.configuration.x.dmproadmap.results_per_page = 20
 
-Rails.configuration.x.shibboleth&.enabled = true
-Rails.configuration.x.shibboleth.use_filtered_discovery_service = true
+Rails.configuration.x.dmproadmap.shibboleth&.enabled = true
+Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service = true
 
 module Helpers
   module DmptoolHelper
@@ -50,8 +50,8 @@ module Helpers
     def shibbolize_org(org:)
       return nil if org.blank?
 
-      Rails.configuration.x.shibboleth.enabled = true
-      Rails.configuration.x.shibboleth.use_filtered_discovery_service = true
+      Rails.configuration.x.dmproadmap.shibboleth.enabled = true
+      Rails.configuration.x.dmproadmap.shibboleth.use_filtered_discovery_service = true
       create_shibboleth_entity_id(org: org)
     end
 

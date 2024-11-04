@@ -8,35 +8,35 @@ module ExternalApis
     class << self
       # Retrieve the config settings from the initializer
       def landing_page_url
-        Rails.configuration.x.re3data&.landing_page_url || super
+        Rails.configuration.x.dmproadmap.re3data&.landing_page_url || super
       end
 
       def api_base_url
-        Rails.configuration.x.re3data&.api_base_url || super
+        Rails.configuration.x.dmproadmap.re3data&.api_base_url || super
       end
 
       def max_pages
-        Rails.configuration.x.re3data&.max_pages || super
+        Rails.configuration.x.dmproadmap.re3data&.max_pages || super
       end
 
       def max_results_per_page
-        Rails.configuration.x.re3data&.max_results_per_page || super
+        Rails.configuration.x.dmproadmap.re3data&.max_results_per_page || super
       end
 
       def max_redirects
-        Rails.configuration.x.re3data&.max_redirects || super
+        Rails.configuration.x.dmproadmap.re3data&.max_redirects || super
       end
 
       def active?
-        Rails.configuration.x.re3data&.active || super
+        Rails.configuration.x.dmproadmap.re3data&.active || super
       end
 
       def list_path
-        Rails.configuration.x.re3data&.list_path
+        Rails.configuration.x.dmproadmap.re3data&.list_path
       end
 
       def repository_path
-        Rails.configuration.x.re3data&.repository_path
+        Rails.configuration.x.dmproadmap.re3data&.repository_path
       end
 
       # Retrieves the full list of repositories from the re3data API as XML.

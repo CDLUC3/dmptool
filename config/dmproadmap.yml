@@ -186,17 +186,13 @@ default: &default
   # please refer to: https://github.com/ror-community/ror-api
   ror_active: true
   ror_api_base_url: 'https://api.ror.org/'
-  ror_checksum_file: Rails.root.join('tmp', 'ror', 'checksum.txt')
   ror_download_url: 'https://zenodo.org/api/communities/ror-data/records?q=&sort=newest'
-  ror_file_dir: Rails.root.join('tmp', 'ror')
-  ror_full_catalog_file: Rails.root.join('tmp', 'ror', 'ror.json')
   ror_heartbeat_path: 'heartbeat'
   ror_landing_page_url: 'https://ror.org/'
   ror_max_pages: 2
   ror_max_redirects: 3
   ror_max_results_per_page: 20
   ror_search_path: 'organizations'
-  ror_zip_file: Rails.root.join('tmp', 'ror', 'latest-ror-data.zip')
 
   # These configuration settings are used to communicate with the SPDX License repository.
   # Licenses are loaded via a Rake task and stored in the local :licenses DB table.

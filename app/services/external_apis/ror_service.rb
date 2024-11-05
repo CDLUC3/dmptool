@@ -22,19 +22,19 @@ module ExternalApis
       end
 
       def full_catalog_file
-        Rails.configuration.x.dmproadmap.ror_full_catalog_file
+        Rails.root.join('tmp', 'ror', 'ror.json')
       end
 
       def file_dir
-        Rails.configuration.x.dmproadmap.ror_file_dir
+        Rails.root.join('tmp', 'ror')
       end
 
       def checksum_file
-        Rails.configuration.x.dmproadmap.ror_checksum_file
+        Rails.root.join('tmp', 'ror', 'checksum.txt')
       end
 
       def zip_file
-        Rails.configuration.x.dmproadmap.ror_zip_file
+        Rails.root.join('tmp', 'ror', 'latest-ror-data.zip')
       end
 
       def active?

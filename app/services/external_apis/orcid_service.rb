@@ -13,27 +13,27 @@ module ExternalApis
     class << self
       # Retrieve the config settings from the initializer
       def landing_page_url
-        Rails.configuration.x.dmproadmap.orcid&.landing_page_url || super
+        Rails.configuration.x.dmproadmap.orcid_landing_page_url || super
       end
 
       def api_base_url
-        Rails.configuration.x.dmproadmap.orcid&.api_base_url || super
+        Rails.configuration.x.dmproadmap.orcid_api_base_url || super
       end
 
       def active?
-        Rails.configuration.x.dmproadmap.orcid&.active || super
+        Rails.configuration.x.dmproadmap.orcid_active || super
       end
 
       def name
-        Rails.configuration.x.dmproadmap.orcid&.name
+        Rails.configuration.x.dmproadmap.orcid_name
       end
 
       def work_path
-        Rails.configuration.x.dmproadmap.orcid&.work_path
+        Rails.configuration.x.dmproadmap.orcid_work_path
       end
 
       def callback_path
-        Rails.configuration.x.dmproadmap.orcid&.callback_path
+        Rails.configuration.x.dmproadmap.orcid_callback_path
       end
 
       # Create a new DOI

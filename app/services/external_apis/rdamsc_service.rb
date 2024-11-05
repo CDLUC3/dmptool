@@ -13,39 +13,39 @@ module ExternalApis
     class << self
       # Retrieve the config settings from the initializer
       def landing_page_url
-        Rails.configuration.x.dmproadmap.rdamsc&.landing_page_url || super
+        Rails.configuration.x.dmproadmap.rdamsc_landing_page_url || super
       end
 
       def api_base_url
-        Rails.configuration.x.dmproadmap.rdamsc&.api_base_url || super
+        Rails.configuration.x.dmproadmap.rdamsc_api_base_url || super
       end
 
       def max_pages
-        Rails.configuration.x.dmproadmap.rdamsc&.max_pages || super
+        Rails.configuration.x.dmproadmap.rdamsc_max_pages || super
       end
 
       def max_results_per_page
-        Rails.configuration.x.dmproadmap.rdamsc&.max_results_per_page || super
+        Rails.configuration.x.dmproadmap.rdamsc_max_results_per_page || super
       end
 
       def max_redirects
-        Rails.configuration.x.dmproadmap.rdamsc&.max_redirects || super
+        Rails.configuration.x.dmproadmap.rdamsc_max_redirects || super
       end
 
       def active?
-        Rails.configuration.x.dmproadmap.rdamsc&.active || super
+        Rails.configuration.x.dmproadmap.rdamsc_active || super
       end
 
       def schemes_path
-        Rails.configuration.x.dmproadmap.rdamsc&.schemes_path
+        Rails.configuration.x.dmproadmap.rdamsc_schemes_path
       end
 
       def thesaurus_path
-        Rails.configuration.x.dmproadmap.rdamsc&.thesaurus_path
+        Rails.configuration.x.dmproadmap.rdamsc_thesaurus_path
       end
 
       def thesaurai
-        Rails.configuration.x.dmproadmap.rdamsc&.thesaurai
+        Rails.configuration.x.dmproadmap.rdamsc_thesaurai
       end
 
       def fetch_metadata_standards

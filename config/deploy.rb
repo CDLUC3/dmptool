@@ -78,6 +78,7 @@ namespace :deploy do
       FileUtils.mkdir_p(font_dir) unless Dir.exist?(font_dir)
       execute "cp #{release_path}/app/assets/fonts/Tinos-*.ttf #{font_dir}"
       execute "cp #{release_path}/app/assets/fonts/Roboto-*.ttf #{font_dir}"
+      execute "cp #{release_path}/node_modules/@fortawesome/fontawesome-free/webfonts/fa-*.* #{font_dir}"
       execute "fc-cache -f -v"
 
       # See if these can be managed via an rpm

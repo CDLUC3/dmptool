@@ -80,7 +80,7 @@ class PublicPagesController < ApplicationController
               bottom: @formatting.fetch(:margin, {}).fetch(:bottom, '25px'),
               left: @formatting.fetch(:margin, {}).fetch(:left, '25px')
             },
-            display_url: Rails.configuration.x.dmproadmap.hosts.first || 'http://localhost:3000/'#,
+            display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'#,
           }
 
           pdf = Grover.new(html, **grover_options).to_pdf

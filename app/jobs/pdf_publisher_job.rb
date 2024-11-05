@@ -17,7 +17,7 @@ class PdfPublisherJob < ApplicationJob
       file_name = Zaru.sanitize!(obj.title).strip.gsub(/\s+/, '_')[0, 100]
       grover_options = {
         margin:  { top: '25px', right: '25px', bottom: '25px', left: '25px' },
-        display_url: Rails.configuration.x.dmproadmap.hosts.first || 'http://localhost:3000/'#,
+        display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'#,
       }
       pdf = Grover.new(html, **grover_options).to_pdf
 
@@ -49,7 +49,7 @@ class PdfPublisherJob < ApplicationJob
           bottom: '96px',
           left: '96px'
         },
-        display_url: Rails.configuration.x.dmproadmap.hosts.first || 'http://localhost:3000/'
+        display_url: Rails.configuration.x.hosts.first || 'http://localhost:3000/'
       }
 
       pdf = Grover.new(html, **grover_options).to_pdf

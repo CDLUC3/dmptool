@@ -50,6 +50,7 @@ class DmproadmapConfig < Anyway::Config
               :dmphub_client_id,
               :dmphub_client_secret,
               :dmphub_landing_page_url,
+              :dmptool_version,
               :do_not_reply_email,
               :doi_active,
               :doi_api_base_url,

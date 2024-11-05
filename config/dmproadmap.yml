@@ -58,6 +58,9 @@ default: &default
   rails_max_threads: 5
   rails_serve_static_files: true
 
+  # Placeholder for the DMPTool version number. This gets updated when Capistrano deploys
+  dmptool_version: "v5"
+
   # Determines how long to cache results for OrgSelection::SearchService
   cache_org_selection_expiration: "86_400"
   # Determines how long to cache results for the ResearchProjectsController

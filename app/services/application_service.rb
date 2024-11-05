@@ -7,7 +7,7 @@ class ApplicationService
     # the Rails application name
     def application_name
       default = Rails.application.class.name.split('::').first
-      Rails.configuration.x.dmproadmap.application.fetch(:application_name, default)
+      Rails.configuration.x.dmproadmap.fetch(:application_name, default)
     end
 
     # Use the Rails secret key to encrypt information. Some typical use cases for this

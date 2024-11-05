@@ -26,10 +26,10 @@
 // we are using the Datepicker and Sortable at the very least
 @use "../../../node_modules/jquery-ui-sass/assets/sass/jquery-ui.scss";
 
-@use '@fortawesome/fontawesome-free/scss/fontawesome';
+@use '../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
 // Uncomment this line if you plan on using brand icons (Twitter, Github ...)
-@use '@fortawesome/fontawesome-free/scss/regular';
-@use '@fortawesome/fontawesome-free/scss/solid';
+@use '../../../node_modules/@fortawesome/fontawesome-free/scss/regular';
+@use '../../../node_modules/@fortawesome/fontawesome-free/scss/solid';
 
 // DMPTool additional styling that is not part of the dmptool-ui repo
 // Import new DMPTool v5 styling

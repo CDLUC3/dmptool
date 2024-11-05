@@ -46,7 +46,7 @@ default: &default
   #   an ENV variable (`DMPROADMAP_VARIABLE_NAME`)
 
   # ============================
-  # = Base Rails configuration =
+  #: Base Rails configuration =
   # ============================
 
   # See https://guides.rubyonrails.org/v5.0/configuring.html
@@ -64,7 +64,7 @@ default: &default
   cache_research_projects_expiration: "86_400"
 
   # ==========================
-  # = Database configuration =
+  #: Database configuration =
   # ==========================
 
   # See https://guides.rubyonrails.org/v5.0/configuring.html#configuring-a-database
@@ -76,7 +76,7 @@ default: &default
   database_password:
 
   # =========================
-  # = Locales configuration =
+  #: Locales configuration =
   # =========================
 
   locales_default: "en-US"
@@ -84,7 +84,7 @@ default: &default
   locales_gettext_join_character: "_"
 
   # ===================================
-  # = Security configuration (Devise) =
+  #: Security configuration (Devise) =
   # ===================================
 
   # Security configuration used by the Devise gem to encrypt/decrypt passwords
@@ -93,7 +93,7 @@ default: &default
   devise_pepper:
 
   # ==========================================
-  # = Image upload configuration (Dragonfly) =
+  #: Image upload configuration (Dragonfly) =
   # ==========================================
 
   # Org logo store configuration.
@@ -107,8 +107,15 @@ default: &default
   dragonfly_url_scheme: "s3"
 
   # ======================================
-  # = External Api service configuration =
+  #: External Api service configuration =
   # ======================================
+  # Used by DMPRoadmap NOT DMPTool (we use the DMPHub instead which is defined below)
+  doi_active: false
+  doi_landing_page_url: 'https://my.doi.org/'
+  doi_api_base_url: 'https://my.doi.org/api/'
+  doi_auth_path: 'auth_path'
+  doi_heartbeat_path: 'heartbeat'
+  doi_mint_path: 'doi'
 
   # DataCite (populate if you're using them as your DOI registrar)
   datacite_active: false
@@ -152,19 +159,57 @@ default: &default
   dmphub_callback_path: 'dmps/%{dmp_id}'
   dmphub_callback_method: 'patch'
 
+  # These configuration settings are used to communicate with the Open Aire Research Project Registry API.
+  # For more information about the API and to verify that your configuration settings are correct.
+  open_aire_active: false
+  open_aire_api_base_url: 'https://api.openaire.eu/'
+  # The api_url should contain `%s. This is where the funder is appended!
+  open_aire_search_path: 'projects/dspace/%s/ALL/ALL'
+  open_aire_default_funder: 'H2020'
+
+  # Credentials for RDA Metadata Standards Catalog (RDAMSC). To disable this feature, simply set 'active' to false
+  rdamsc_active: true
+  rdamsc_landing_page_url: 'http://rdamsc.bath.ac.uk'
+  rdamsc_api_base_url: 'https://rdamsc.bath.ac.uk/'
+  rdamsc_schemes_path: 'api2/m'
+  rdamsc_thesaurus_path: 'api2/thesaurus/concepts'
+
+  # Credentials for minting DOIs via re3data. To disable this feature, simply set 'active' to false
+  re3data_active: true
+  re3data_landing_page_url: 'https://www.re3data.org/'
+  re3data_api_base_url: 'https://www.re3data.org/api/v1/'
+  re3data_list_path: 'repositories'
+  re3data_repository_path: 'repository/'
+
+  # These configuration settings are used to communicate with the Research Organization Registry (ROR) API.
+  # For more information about the API and to verify that your configuration settings are correct,
+  # please refer to: https://github.com/ror-community/ror-api
+  ror_active: true
+  ror_api_base_url: 'https://api.ror.org/'
+  ror_checksum_file: Rails.root.join('tmp', 'ror', 'checksum.txt')
+  ror_download_url: 'https://zenodo.org/api/communities/ror-data/records?q=&sort=newest'
+  ror_file_dir: Rails.root.join('tmp', 'ror')
+  ror_full_catalog_file: Rails.root.join('tmp', 'ror', 'ror.json')
+  ror_heartbeat_path: 'heartbeat'
+  ror_landing_page_url: 'https://ror.org/'
+  ror_max_pages: 2
+  ror_max_redirects: 3
+  ror_max_results_per_page: 20
+  ror_search_path: 'organizations'
+  ror_zip_file: Rails.root.join('tmp', 'ror', 'latest-ror-data.zip')
+
+  # These configuration settings are used to communicate with the SPDX License repository.
+  # Licenses are loaded via a Rake task and stored in the local :licenses DB table.
+  # Please refer to: http://spdx.org/licenses/
+  spdx_active: true
+  spdx_landing_page_url: 'http://spdx.org/licenses/'
+  spdx_api_base_url: 'https://raw.githubusercontent.com/spdx/license-list-data/'
+  spdx_list_path: 'master/json/licenses.json'
+
   # Matomo tracking
   enable_matomo: true
   matomo_url: 'matomo.my.org'
   matomo_sit_id: 1
-
-  # The OpenAire API is used to retrieve grant ids on the Project Details page
-  openaire_active: false
-
-  # The re3data API is used to retrieve repositories for selection on the Research Outputs page
-  re3data_active: true
-
-  # The SPDX License API is used to license information for selection on the Research Outputs page
-  spdx_active: true
 
   # ORCID provides identifiers for people.
   orcid_active: true
@@ -210,7 +255,7 @@ default: &default
   usersnap_key:
 
   # ============================
-  # = Shibboleth configuration =
+  #: Shibboleth configuration =
   # ============================
 
   # Enable shibboleth as an alternative authentication method
@@ -231,7 +276,7 @@ default: &default
   shibboleth_use_filtered_discovery_service: false
 
   # ===================
-  # = Sign in options =
+  #: Sign in options =
   # ===================
 
   # The order in which to display the sign in options (e.g. Shib first, then email + password)
@@ -240,7 +285,7 @@ default: &default
     - "shared/authentication/sign_in_form"
 
   # ==================================
-  # = Base application configuration =
+  #: Base application configuration =
   # ==================================
 
   # This name is used throughout the system to identify your application. (e.g. in
@@ -271,7 +316,7 @@ default: &default
   results_per_page: 10
 
   # =================================
-  # = Contact us page configuration =
+  #: Contact us page configuration =
   # =================================
 
   # Uncomment the following line if you want to redirect your users to an
@@ -313,7 +358,7 @@ default: &default
   organisation_google_maps_link:
 
   # =====================
-  # = API configuration =
+  #: API configuration =
   # =====================
 
   # The largest page size allowed in requests to the API (all versions)
@@ -329,7 +374,7 @@ default: &default
   api_documentation_overview_url: "https://github.com/CDLUC3/dmptool/wiki/API-Overview"
 
   # =============================
-  # = Static page configuration =
+  #: Static page configuration =
   # =============================
 
   # The link to your release notes
@@ -346,7 +391,7 @@ default: &default
   application_welcome_links: []
 
   # =================
-  # = Plan defaults =
+  #: Plan defaults =
   # =================
 
   # The default visibility a plan receives when it is created.
@@ -389,7 +434,7 @@ default: &default
   application_include_footer_in_pdfs: false
 
   # ======================================= #
-  # = maDMP / Networked DMP functionality = #
+  #: maDMP / Networked DMP functionality: #
   # ======================================= #
 
   # Whether or not to require contributor names and/or emails.
@@ -447,7 +492,7 @@ default: &default
   enable_orcid_publication: true
 
   # ============================
-  # = User preference defaults =
+  #: User preference defaults =
   # ============================
 
   # The default user email preferences used when a new account is created

@@ -34,7 +34,7 @@
   </div>
   <div class="col-md-6">
     <%# If the OpenAire grant typeahead if enabled use it %>
-    <% if Rails.configuration.x.dmproadmap.open_aire.active %>
+    <% if Rails.configuration.x.dmproadmap.open_aire_active %>
       <!-- Using the research_project.json source for typeahead -->
       <%= grant_fields.text_field :name,
                                   value: plan.grant&.value,

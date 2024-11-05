@@ -6,63 +6,63 @@ module ExternalApis
     class << self
       # Retrieve the config settings from the initializer
       def landing_page_url
-        Rails.configuration.x.dmproadmap.dmphub&.landing_page_url || super
+        Rails.configuration.x.dmproadmap.dmphublanding_page_url || super
       end
 
       def api_base_url
-        Rails.configuration.x.dmproadmap.dmphub&.api_base_url || super
+        Rails.configuration.x.dmproadmap.dmphubapi_base_url || super
       end
 
       def auth_url
-        Rails.configuration.x.dmproadmap.dmphub&.auth_url
+        Rails.configuration.x.dmproadmap.dmphubauth_url
       end
 
       def active?
-        Rails.configuration.x.dmproadmap.dmphub&.active || super
+        Rails.configuration.x.dmproadmap.dmphubactive || super
       end
 
       def name
-        Rails.configuration.x.dmproadmap.dmphub&.name
+        Rails.configuration.x.dmproadmap.dmphubname
       end
 
       def description
-        Rails.configuration.x.dmproadmap.dmphub&.description
+        Rails.configuration.x.dmproadmap.dmphubdescription
       end
 
       def client_id
-        Rails.configuration.x.dmproadmap.dmphub&.client_id
+        Rails.configuration.x.dmproadmap.dmphubclient_id
       end
 
       def client_secret
-        Rails.configuration.x.dmproadmap.dmphub&.client_secret
+        Rails.configuration.x.dmproadmap.dmphubclient_secret
       end
 
       def token_path
-        Rails.configuration.x.dmproadmap.dmphub&.token_path
+        Rails.configuration.x.dmproadmap.dmphubtoken_path
       end
 
       def fetch_path
-        Rails.configuration.x.dmproadmap.dmphub&.fetch_path
+        Rails.configuration.x.dmproadmap.dmphubfetch_path
       end
 
       def mint_path
-        Rails.configuration.x.dmproadmap.dmphub&.mint_path
+        Rails.configuration.x.dmproadmap.dmphubmint_path
       end
 
       def update_path
-        Rails.configuration.x.dmproadmap.dmphub&.update_path
+        Rails.configuration.x.dmproadmap.dmphubupdate_path
       end
 
       def delete_path
-        Rails.configuration.x.dmproadmap.dmphub&.delete_path
+        Rails.configuration.x.dmproadmap.dmphubdelete_path
       end
 
       def narrative_path
-        Rails.configuration.x.dmproadmap.dmphub&.narrative_path
+        Rails.configuration.x.dmproadmap.dmphubnarrative_path
       end
 
       def citation_path
-        Rails.configuration.x.dmproadmap.dmphub&.citation_path
+        Rails.configuration.x.dmproadmap.dmphubcitation_path
       end
 
       def caller_name
@@ -74,11 +74,11 @@ module ExternalApis
       end
 
       def callback_path
-        Rails.configuration.x.dmproadmap.dmphub&.callback_path || super
+        Rails.configuration.x.dmproadmap.dmphubcallback_path || super
       end
 
       def callback_method
-        Rails.configuration.x.dmproadmap.dmphub&.callback_method&.downcase&.to_sym || super
+        Rails.configuration.x.dmproadmap.dmphubcallback_method&.downcase&.to_sym || super
       end
 
       # Proxy a call to one of the funder API searches that resides in the DMPHub AWS based API Gateway

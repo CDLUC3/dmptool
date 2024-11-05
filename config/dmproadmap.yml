@@ -115,7 +115,22 @@ default: &default
   datacite_shoulder: "10.1234"
   datacite_api_base_url: "https://api.test.datacite.org/"
   datacite_landing_page_url: "https://doi.org/"
-  # You should also check the config/initializers/external_apis/datacite.rb config
+  # The following 2 values are used to tie the service to its IdentifierScheme. Make sure the :name if lowercase
+  dmproadmap.datacite_name: "datacite"
+  datacite_description: "The DataCite REST API: https://support.datacite_org/docs/api-create-dois"
+  # Credentials for minting DMP IDs via DataCite. To disable this feature, simply set 'active' to false
+  datacite_mint_path: "dois"
+  datacite_update_path: "dois/"
+  dmproadmap.datacite_delete_path: "dois/"
+  # Define your organization as the hosting institution for the DataCite record. Datacite defines this as:
+  #    "Typically, the organisation allowing the resource to be available on the
+  #     internet through the provision of its hardware/software/operating support."
+  datacite_hosting_institution: "My Curation Centre (MCC)"
+  datacite_hosting_institution_identifier: "https://ror.org/12345"
+  # The following should be defined in the credentials file for security
+  datacite_repository_id: "1234567890"
+  datacite_password: "abcd1234"
+  datacite_shoulder: "12.12345/12"
 
   # DMPHub is a DMP metadata repository that will mint DMP IDs and provide a landing page for them.
   # See https://github.com/CDLUC3/dmphub
@@ -123,7 +138,19 @@ default: &default
   dmphub_url: "https://api.dmphub.uc3prd.cdlib.net/"
   dmphub_landing_page_url: "https://dmphub.uc3prd.cdlib.net/dmps/"
   dmphub_auth_url: 'https://auth.dmphub.uc3prd.cdlib.net/'
-  # You should also check the config/initializers/external_apis/dmphub.rb config
+  dmphub_name: 'dmphub'
+  dmphub_description: 'A DMPHub based DOI minting service: https://github.com/CDLUC3/dmphub'
+  # Credentials for minting DOIs via a DMPHub system: https://github.com/CDLUC3/dmphub
+  # To disable this feature, simply set 'active' to false
+  dmphub_token_path: 'oauth2/token'
+  dmphub_fetch_path: 'dmps/%{dmp_id}'
+  dmphub_mint_path: 'dmps'
+  dmphub_update_path: 'dmps/%{dmp_id}'
+  dmphub_delete_path: 'dmps/%{dmp_id}'
+  dmphub_narrative_path: 'narratives?dmp_id=%{dmp_id}'
+  dmphub_citation_path: 'citations'
+  dmphub_callback_path: 'dmps/%{dmp_id}'
+  dmphub_callback_method: 'patch'
 
   # Matomo tracking
   enable_matomo: true
@@ -140,6 +167,13 @@ default: &default
   spdx_active: true
 
   # ORCID provides identifiers for people.
+  orcid_active: true
+  # The following value is used to tie the service to its IdentifierScheme. Make sure the :name if lowercase
+  orcid_name: 'orcid'
+  # Credentials for the ORCID member API are pulled in from the Devise omniauth config
+  # To disable this feature, simply set 'active' to false
+  orcid_work_path: '%{id}/work/'
+  orcid_callback_path: 'work/%{put_code}'
   # See the public api docs https://info.orcid.org/documentation/features/public-api/
   # Or the member api docs https://info.orcid.org/documentation/features/member-api/
   orcid_sandbox: true

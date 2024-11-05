@@ -7,41 +7,41 @@ RSpec.describe DmpIdService do
 
   before do
     @original_enabled = Rails.configuration.x.dmproadmap.enable_dmp_id_registration
-    @original_name = Rails.configuration.x.dmproadmap.datacite.name
-    @original_active = Rails.configuration.x.dmproadmap.datacite.active
-    @original_desc = Rails.configuration.x.dmproadmap.datacite.description
-    @orignal_landing = Rails.configuration.x.dmproadmap.datacite.landing_page_url
+    @original_name = Rails.configuration.x.dmproadmap.datacite_name
+    @original_active = Rails.configuration.x.dmproadmap.datacite_active
+    @original_desc = Rails.configuration.x.dmproadmap.datacite_description
+    @orignal_landing = Rails.configuration.x.dmproadmap.datacite_landing_page_url
 
     Rails.configuration.x.dmproadmap.enable_dmp_id_registration = true
 
     # Using Datacite for these tests
-    Rails.configuration.x.dmproadmap.datacite.active = true
-    Rails.configuration.x.dmproadmap.datacite.name = 'datacite'
-    Rails.configuration.x.dmproadmap.datacite.description = Faker::Lorem.sentence
-    Rails.configuration.x.dmproadmap.datacite.landing_page_url = "#{Faker::Internet.url}/"
+    Rails.configuration.x.dmproadmap.datacite_active = true
+    Rails.configuration.x.dmproadmap.datacite_name = 'datacite'
+    Rails.configuration.x.dmproadmap.datacite_description = Faker::Lorem.sentence
+    Rails.configuration.x.dmproadmap.datacite_landing_page_url = "#{Faker::Internet.url}/"
 
     @scheme = create(
       :identifier_scheme,
-      name: Rails.configuration.x.dmproadmap.datacite.name,
-      identifier_prefix: Rails.configuration.x.dmproadmap.datacite.landing_page_url,
-      description: Rails.configuration.x.dmproadmap.datacite.description,
+      name: Rails.configuration.x.dmproadmap.datacite_name,
+      identifier_prefix: Rails.configuration.x.dmproadmap.datacite_landing_page_url,
+      description: Rails.configuration.x.dmproadmap.datacite_description,
       for_plans: true
     )
   end
 
   after do
     Rails.configuration.x.dmproadmap.enable_dmp_id_registration = @original_enabled
-    Rails.configuration.x.dmproadmap.datacite.name = @original_name
-    Rails.configuration.x.dmproadmap.datacite.active = @original_active
-    Rails.configuration.x.dmproadmap.datacite.description = @original_desc
-    Rails.configuration.x.dmproadmap.datacite.landing_page_url = @orignal_landing
+    Rails.configuration.x.dmproadmap.datacite_name = @original_name
+    Rails.configuration.x.dmproadmap.datacite_active = @original_active
+    Rails.configuration.x.dmproadmap.datacite_description = @original_desc
+    Rails.configuration.x.dmproadmap.datacite_landing_page_url = @orignal_landing
   end
 
   describe '#mint_dmp_id(plan:)' do
     before do
       @plan = build(:plan)
       @dmp_id = SecureRandom.uuid
-      @qualified_dmp_id = "#{Rails.configuration.x.dmproadmap.datacite.landing_page_url}#{@dmp_id}"
+      @qualified_dmp_id = "#{Rails.configuration.x.dmproadmap.datacite_landing_page_url}#{@dmp_id}"
       stub_x_section(section_sym: :dmphub, open_struct: OpenStruct.new(active: true))
     end
 

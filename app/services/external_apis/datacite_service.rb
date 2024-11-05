@@ -161,8 +161,8 @@ module ExternalApis
 
       def auth
         {
-          username: Rails.configuration.x.dmproadmap.datacite.repository_id,
-          password: Rails.configuration.x.dmproadmap.datacite.password
+          username: Rails.configuration.x.dmproadmap.datacite_repository_id,
+          password: Rails.configuration.x.dmproadmap.datacite_password
         }
       end
 

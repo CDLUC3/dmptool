@@ -39,8 +39,8 @@ module Helpers
     end
 
     def orcid_scheme
-      name = Rails.configuration.x.dmproadmap.orcid.name || 'orcid'
-      landing_page = Rails.configuration.x.dmproadmap.orcid.landing_page_url || 'https://orcid.org/'
+      name = Rails.configuration.x.dmproadmap.orcid_name || 'orcid'
+      landing_page = Rails.configuration.x.dmproadmap.orcid_landing_page_url || 'https://orcid.org/'
       scheme = IdentifierScheme.find_by(name: name)
       scheme.update(identifier_prefix: landing_page) if scheme.present?
       return scheme if scheme.present?

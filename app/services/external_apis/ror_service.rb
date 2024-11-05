@@ -10,43 +10,43 @@ module ExternalApis
     class << self
       # Retrieve the config settings from the initializer
       def landing_page_url
-        Rails.configuration.x.dmproadmap.ror&.landing_page_url || super
+        Rails.configuration.x.dmproadmap.ror_landing_page_url || super
       end
 
       def api_base_url
-        Rails.configuration.x.dmproadmap.ror&.api_base_url || super
+        Rails.configuration.x.dmproadmap.ror_api_base_url || super
       end
 
       def download_url
-        Rails.configuration.x.dmproadmap.ror&.download_url
+        Rails.configuration.x.dmproadmap.ror_download_url
       end
 
       def full_catalog_file
-        Rails.configuration.x.dmproadmap.ror&.full_catalog_file
+        Rails.configuration.x.dmproadmap.ror_full_catalog_file
       end
 
       def file_dir
-        Rails.configuration.x.dmproadmap.ror&.file_dir
+        Rails.configuration.x.dmproadmap.ror_file_dir
       end
 
       def checksum_file
-        Rails.configuration.x.dmproadmap.ror&.checksum_file
+        Rails.configuration.x.dmproadmap.ror_checksum_file
       end
 
       def zip_file
-        Rails.configuration.x.dmproadmap.ror&.zip_file
+        Rails.configuration.x.dmproadmap.ror_zip_file
       end
 
       def active?
-        Rails.configuration.x.dmproadmap.ror&.active || super
+        Rails.configuration.x.dmproadmap.ror_active || super
       end
 
       def heartbeat_path
-        Rails.configuration.x.dmproadmap.ror&.heartbeat_path
+        Rails.configuration.x.dmproadmap.ror_heartbeat_path
       end
 
       def search_path
-        Rails.configuration.x.dmproadmap.ror&.search_path
+        Rails.configuration.x.dmproadmap.ror_search_path
       end
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

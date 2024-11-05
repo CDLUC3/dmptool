@@ -8,19 +8,19 @@ module ExternalApis
     class << self
       # Retrieve the config settings from the initializer
       def api_base_url
-        Rails.configuration.x.dmproadmap.open_aire&.api_base_url || super
+        Rails.configuration.x.dmproadmap.open_aire_api_base_url || super
       end
 
       def active?
-        Rails.configuration.x.dmproadmap.open_aire&.active || super
+        Rails.configuration.x.dmproadmap.open_aire_active || super
       end
 
       def search_path
-        Rails.configuration.x.dmproadmap.open_aire&.search_path || super
+        Rails.configuration.x.dmproadmap.open_aire_search_path || super
       end
 
       def default_funder
-        Rails.configuration.x.dmproadmap.open_aire&.default_funder
+        Rails.configuration.x.dmproadmap.open_aire_default_funder
       end
 
       # Search the OpenAire API for the specified Funder OR the Default Funder

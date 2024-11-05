@@ -18,7 +18,7 @@ module ExternalApis
       end
 
       def active?
-        Rails.configuration.x.dmproadmap.dmphubactive || super
+        Rails.configuration.x.dmproadmap.dmphub_active || super
       end
 
       def name

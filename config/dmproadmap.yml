@@ -330,8 +330,6 @@ default: &default
   organisation_url: "https://example.org/"
   # Your organisation's legal (official) name - used in the copyright portion of the footer
   organisation_copywrite_name: "My institution's official name"
-  # Your organisation's helpdesk email
-  email_from_address: "my.organization@email.edu"
   # Your organisation's help desk email
   organisation_helpdesk_email: "helpdesk@email.edu"
   # Your organisation's do not reply email

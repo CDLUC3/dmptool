@@ -126,7 +126,7 @@ namespace :dmptool_assets do
   task :copy_fontawesome do
     on roles(:app), wait: 1 do
       font_dir = "#{release_path}/public/fonts"
-      execute "cp #{release_path}/node_modules/@fortawesome/fontawesome-free/webfonts/fa-*.* #{font_dir}
+      execute "cp #{release_path}/node_modules/@fortawesome/fontawesome-free/webfonts/fa-*.* #{font_dir}"
     end
   end
 end

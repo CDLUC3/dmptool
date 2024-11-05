@@ -43,6 +43,7 @@ namespace :deploy do
   before :compile_assets, 'deploy:retrieve_credentials'
 
   after :deploy, 'dmptool_assets:copy_robots'
+  after :deploy, 'dmptool_assets:copy_fontawesome'
 
   after :deploy, 'git:version'
   after :deploy, 'cleanup:remove_example_configs'
@@ -78,7 +79,6 @@ namespace :deploy do
       FileUtils.mkdir_p(font_dir) unless Dir.exist?(font_dir)
       execute "cp #{release_path}/app/assets/fonts/Tinos-*.ttf #{font_dir}"
       execute "cp #{release_path}/app/assets/fonts/Roboto-*.ttf #{font_dir}"
-      execute "cp #{release_path}/node_modules/@fortawesome/fontawesome-free/webfonts/fa-*.* #{font_dir}"
       execute "fc-cache -f -v"
 
       # See if these can be managed via an rpm
@@ -119,6 +119,14 @@ namespace :dmptool_assets do
   task :copy_robots do
     on roles(:app), wait: 1 do
       execute "cp -r #{release_path}/config/robots.txt #{release_path}/public/robots.txt"
+    end
+  end
+
+  desc 'Copy over the fontawesome fonts'
+  task :copy_fontawesome do
+    on roles(:app), wait: 1 do
+      font_dir = "#{release_path}/public/fonts"
+      execute "cp #{release_path}/node_modules/@fortawesome/fontawesome-free/webfonts/fa-*.* #{font_dir}
     end
   end
 end

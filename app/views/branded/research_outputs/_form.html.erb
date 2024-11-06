@@ -14,7 +14,7 @@ repository_tooltip = _("Repositories preserve, manage, and provide access to man
   <div class="form-group row">
     <div class="col-md-12">
       <span class="col-md-3"><%= label(:output_type, _("Type"), class: "control-label") %></span>
-      <span class="col-md-5 output-type-description <%= research_output.other? ? "" : "hidden" %>">
+      <span class="col-md-5 output-type-description <%= research_output.research_output_type == 'other' ? "" : "hidden" %>">
         <%= f.label(:output_type_description, _("Please describe the output type"), class: "control-label") %>
       </span>
     </div>

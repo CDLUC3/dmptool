@@ -14,7 +14,7 @@ RSpec.describe Pref do
 
   describe '.default_settings' do
     it 'returns Rails configuration for preferences' do
-      expect(described_class.default_settings).to eql(Rails.configuration.x.dmproadmap.application_preferences)
+      expect(described_class.default_settings).to eql(Rails.configuration.x.dmproadmap.preferences)
       expect(described_class.default_settings).not_to be_nil
     end
   end

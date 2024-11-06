@@ -10,19 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_21_160500) do
-
-  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -30,11 +29,11 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
@@ -45,8 +44,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.integer "org_id"
     t.text "text"
     t.integer "type", default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "versionable_id", limit: 36
     t.index ["org_id"], name: "fk_rails_aca7521f72"
     t.index ["question_id"], name: "index_annotations_on_question_id"
@@ -58,8 +57,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.integer "plan_id"
     t.integer "user_id"
     t.integer "question_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "lock_version", default: 0
     t.index ["plan_id"], name: "fk_rails_84a6005a3e"
     t.index ["plan_id"], name: "index_answers_on_plan_id"
@@ -82,9 +81,9 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "contact_email"
     t.string "client_id", null: false
     t.string "client_secret", null: false
-    t.datetime "last_access"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "last_access", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "org_id"
     t.text "redirect_uri"
     t.string "scopes", default: "", null: false
@@ -101,8 +100,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.text "activity"
     t.bigint "logable_id"
     t.string "logable_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["api_client_id"], name: "index_api_logs_on_api_client_id"
     t.index ["change_type"], name: "index_api_logs_on_change_type"
     t.index ["logable_id", "logable_type", "change_type"], name: "index_api_logs_on_logable_and_change_type"
@@ -115,8 +114,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.integer "number"
     t.text "remove_data"
     t.text "webhook_data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["question_id"], name: "index_conditions_on_question_id"
   end
 
@@ -127,8 +126,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.integer "roles", null: false
     t.integer "org_id"
     t.integer "plan_id", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["email"], name: "index_contributors_on_email"
     t.index ["name", "id", "org_id"], name: "index_contrib_id_and_org_id"
     t.index ["org_id"], name: "index_contributors_on_org_id"
@@ -136,18 +135,18 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.index ["roles"], name: "index_contributors_on_roles"
   end
 
-  create_table "delayed_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "delayed_jobs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
     t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
+    t.datetime "run_at", precision: nil
+    t.datetime "locked_at", precision: nil
+    t.datetime "failed_at", precision: nil
     t.string "locked_by"
     t.string "queue"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
@@ -155,17 +154,17 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "name"
     t.string "code"
     t.integer "org_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["org_id"], name: "index_departments_on_org_id"
   end
 
-  create_table "drafts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "drafts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "draft_id"
     t.json "metadata", null: false
     t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "dmp_id"
     t.string "publisher_job_status", default: "success"
     t.index ["draft_id"], name: "index_drafts_on_draft_id"
@@ -175,8 +174,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.integer "plan_id"
     t.integer "user_id"
     t.string "format"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "phase_id"
   end
 
@@ -185,10 +184,10 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "external_service_name", null: false
     t.string "access_token", null: false
     t.string "refresh_token"
-    t.datetime "expires_at"
-    t.datetime "revoked_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "expires_at", precision: nil
+    t.datetime "revoked_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["expires_at"], name: "index_external_api_access_tokens_on_expires_at"
     t.index ["external_service_name"], name: "index_external_api_access_tokens_on_external_service_name"
     t.index ["user_id", "external_service_name"], name: "index_external_tokens_on_user_and_service"
@@ -198,8 +197,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
   create_table "guidance_groups", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.integer "org_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "optional_subset", default: false, null: false
     t.boolean "published", default: false, null: false
     t.index ["org_id"], name: "index_guidance_groups_on_org_id"
@@ -208,17 +207,17 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
   create_table "guidances", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.text "text"
     t.integer "guidance_group_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "published"
     t.index ["guidance_group_id"], name: "index_guidances_on_guidance_group_id"
   end
 
-  create_table "hidden_dmps", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "hidden_dmps", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "dmp_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["dmp_id", "user_id"], name: "index_hidden_dmps_on_dmp_id_and_user_id", unique: true
     t.index ["dmp_id"], name: "index_hidden_dmps_on_dmp_id"
     t.index ["user_id"], name: "index_hidden_dmps_on_user_id"
@@ -228,8 +227,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "name"
     t.string "description"
     t.boolean "active"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "logo_url"
     t.string "identifier_prefix"
     t.integer "context"
@@ -242,9 +241,9 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.integer "identifier_scheme_id"
     t.integer "identifiable_id"
     t.string "identifiable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "last_sync_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "last_sync_at", precision: nil
     t.index ["identifiable_type", "identifiable_id"], name: "index_identifiers_on_identifiable_type_and_identifiable_id"
     t.index ["identifier_scheme_id", "identifiable_id", "identifiable_type"], name: "index_identifiers_on_scheme_and_type_and_id"
     t.index ["identifier_scheme_id", "value"], name: "index_identifiers_on_identifier_scheme_id_and_value"
@@ -263,8 +262,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "uri"
     t.boolean "osi_approved", default: false
     t.boolean "deprecated", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identifier", "osi_approved", "deprecated"], name: "index_license_on_identifier_and_criteria"
     t.index ["identifier"], name: "index_licenses_on_identifier"
     t.index ["uri"], name: "index_licenses_on_uri"
@@ -277,8 +276,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "uri"
     t.json "locations"
     t.json "related_entities"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "metadata_standards_research_outputs", charset: "utf8mb3", force: :cascade do |t|
@@ -294,8 +293,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.boolean "archived", default: false, null: false
     t.integer "answer_id"
     t.integer "archived_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["answer_id"], name: "index_notes_on_answer_id"
     t.index ["user_id"], name: "fk_rails_7f2323ad43"
   end
@@ -303,8 +302,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
   create_table "notification_acknowledgements", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.integer "user_id"
     t.integer "notification_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["notification_id"], name: "index_notification_acknowledgements_on_notification_id"
     t.index ["user_id"], name: "index_notification_acknowledgements_on_user_id"
   end
@@ -317,8 +316,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.boolean "dismissable"
     t.date "starts_at"
     t.date "expires_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "enabled", default: true
   end
 
@@ -328,8 +327,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "token", null: false
     t.integer "expires_in", null: false
     t.text "redirect_uri", null: false
-    t.datetime "created_at", null: false
-    t.datetime "revoked_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "revoked_at", precision: nil
     t.string "scopes", default: "", null: false
     t.index ["application_id"], name: "fk_rails_b4b53e07b8"
     t.index ["resource_owner_id"], name: "index_oauth_access_grants_on_resource_owner_id"
@@ -342,8 +341,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "token", null: false
     t.string "refresh_token"
     t.integer "expires_in"
-    t.datetime "revoked_at"
-    t.datetime "created_at", null: false
+    t.datetime "revoked_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
     t.string "scopes"
     t.string "previous_refresh_token", default: "", null: false
     t.index ["application_id"], name: "fk_rails_732cb83ab7"
@@ -360,9 +359,9 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "contact_email"
     t.string "uid", default: "", null: false
     t.string "secret", default: "", null: false
-    t.datetime "last_access"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "last_access", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "redirect_uri"
     t.string "callback_uri"
     t.integer "callback_method", default: 0
@@ -381,8 +380,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
   create_table "org_token_permissions", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.integer "org_id"
     t.integer "token_permission_type_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["org_id"], name: "index_org_token_permissions_on_org_id"
     t.index ["token_permission_type_id"], name: "fk_rails_2aa265f538"
   end
@@ -391,8 +390,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "name"
     t.string "abbreviation"
     t.string "target_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_other", default: false, null: false
     t.integer "region_id"
     t.integer "language_id"
@@ -415,8 +414,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
 
   create_table "perms", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "phases", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
@@ -424,8 +423,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.text "description"
     t.integer "number"
     t.integer "template_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.boolean "modifiable"
     t.string "versionable_id", limit: 36
     t.index ["template_id"], name: "index_phases_on_template_id"
@@ -435,8 +434,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
   create_table "plans", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "title"
     t.integer "template_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "grant_number"
     t.string "identifier"
     t.text "description"
@@ -454,8 +453,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.integer "org_id"
     t.integer "funder_id"
     t.integer "grant_id"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.datetime "start_date", precision: nil
+    t.datetime "end_date", precision: nil
     t.boolean "ethical_issues"
     t.text "ethical_issues_description"
     t.string "ethical_issues_report"
@@ -463,8 +462,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.bigint "research_domain_id"
     t.boolean "featured", default: false
     t.bigint "language_id"
-    t.datetime "feedback_start_at"
-    t.datetime "feedback_end_at"
+    t.datetime "feedback_start_at", precision: nil
+    t.datetime "feedback_end_at", precision: nil
     t.string "dmp_id"
     t.string "narrative_url"
     t.string "subscriber_job_status", default: "success"
@@ -496,15 +495,15 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "description"
     t.integer "question_id"
     t.integer "number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "question_formats", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "option_based", default: false
     t.integer "formattype", default: 0
   end
@@ -514,8 +513,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "text"
     t.integer "number"
     t.boolean "is_default"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "versionable_id", limit: 36
     t.index ["question_id"], name: "index_question_options_on_question_id"
     t.index ["versionable_id"], name: "index_question_options_on_versionable_id"
@@ -526,8 +525,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.text "default_value"
     t.integer "number"
     t.integer "section_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "question_format_id"
     t.boolean "option_comment_display", default: true
     t.boolean "modifiable"
@@ -561,9 +560,9 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.json "acronyms"
     t.json "aliases"
     t.json "country"
-    t.datetime "file_timestamp"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "file_timestamp", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "api_target"
     t.text "api_guidance"
     t.string "api_auth_target"
@@ -581,8 +580,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.integer "relation_type", null: false
     t.bigint "identifiable_id"
     t.string "identifiable_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "value", null: false
     t.integer "work_type", default: 0
     t.text "citation"
@@ -598,8 +597,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "homepage"
     t.string "contact"
     t.json "info"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "uri", null: false
     t.index ["homepage"], name: "index_repositories_on_homepage"
     t.index ["name"], name: "index_repositories_on_name"
@@ -616,8 +615,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "identifier", null: false
     t.string "label", null: false
     t.bigint "parent_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["parent_id"], name: "index_research_domains_on_parent_id"
   end
 
@@ -629,12 +628,12 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.boolean "is_default"
     t.text "description"
     t.integer "access", default: 0, null: false
-    t.datetime "release_date"
+    t.datetime "release_date", precision: nil
     t.boolean "personal_data"
     t.boolean "sensitive_data"
     t.bigint "byte_size"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "license_id"
     t.string "research_output_type", default: "dataset", null: false
     t.index ["license_id"], name: "index_research_outputs_on_license_id"
@@ -644,8 +643,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
   create_table "roles", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "plan_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "access", default: 0, null: false
     t.boolean "active", default: true
     t.index ["plan_id"], name: "index_roles_on_plan_id"
@@ -656,8 +655,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "title"
     t.text "description"
     t.integer "number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "phase_id"
     t.boolean "modifiable"
     t.string "versionable_id", limit: 36
@@ -668,8 +667,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
   create_table "sessions", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "session_id", limit: 64, null: false
     t.text "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
@@ -679,8 +678,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.text "value"
     t.integer "target_id", null: false
     t.string "target_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["target_id", "target_type"], name: "settings_target"
   end
 
@@ -689,8 +688,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.date "date", null: false
     t.string "type", null: false
     t.integer "org_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "details"
     t.boolean "filtered", default: false
   end
@@ -701,34 +700,34 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "callback_uri"
     t.bigint "subscriber_id"
     t.string "subscriber_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "last_notified"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "last_notified", precision: nil
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["subscriber_id", "subscriber_type", "plan_id"], name: "index_subscribers_on_identifiable_and_plan_id"
   end
 
-  create_table "template_licenses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "template_licenses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "template_id"
     t.bigint "license_id"
     t.index ["license_id"], name: "index_template_licenses_on_license_id"
     t.index ["template_id"], name: "index_template_licenses_on_template_id"
   end
 
-  create_table "template_metadata_standards", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "template_metadata_standards", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "template_id"
     t.bigint "metadata_standard_id"
     t.index ["metadata_standard_id"], name: "index_template_metadata_standards_on_metadata_standard_id"
     t.index ["template_id"], name: "index_template_metadata_standards_on_template_id"
   end
 
-  create_table "template_output_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "template_id"
+  create_table "template_output_types", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "template_id"
     t.string "research_output_type"
     t.index ["template_id"], name: "index_template_output_types_on_template_id"
   end
 
-  create_table "template_repositories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "template_repositories", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "template_id"
     t.bigint "repository_id"
     t.index ["repository_id"], name: "index_template_repositories_on_repository_id"
@@ -742,8 +741,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.integer "org_id"
     t.string "locale"
     t.boolean "is_default"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "version"
     t.integer "visibility"
     t.integer "customization_of"
@@ -772,8 +771,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
   create_table "themes", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "locale"
   end
 
@@ -787,15 +786,15 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
   create_table "token_permission_types", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "token_type"
     t.text "text_description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "trackers", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.integer "org_id"
     t.string "code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["org_id"], name: "index_trackers_on_org_id"
   end
 
@@ -803,24 +802,24 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "firstname"
     t.string "surname"
     t.string "email", limit: 80, default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "encrypted_password"
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "invitation_token"
-    t.datetime "invitation_created_at"
-    t.datetime "invitation_sent_at"
-    t.datetime "invitation_accepted_at"
+    t.datetime "invitation_created_at", precision: nil
+    t.datetime "invitation_sent_at", precision: nil
+    t.datetime "invitation_accepted_at", precision: nil
     t.string "other_organisation"
     t.boolean "accept_terms"
     t.integer "org_id"
@@ -833,7 +832,7 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
     t.string "ldap_username"
     t.boolean "active", default: true
     t.integer "department_id"
-    t.datetime "last_api_access"
+    t.datetime "last_api_access", precision: nil
     t.integer "invitation_plan_id"
     t.string "ui_token"
     t.index ["department_id"], name: "fk_rails_f29bf9cdf2"
@@ -851,6 +850,8 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "annotations", "orgs"
+  add_foreign_key "annotations", "questions"
   add_foreign_key "answers", "plans"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
@@ -885,6 +886,7 @@ ActiveRecord::Schema.define(version: 2024_06_21_160500) do
   add_foreign_key "template_licenses", "templates"
   add_foreign_key "template_metadata_standards", "metadata_standards"
   add_foreign_key "template_metadata_standards", "templates"
+  add_foreign_key "template_output_types", "templates"
   add_foreign_key "template_repositories", "repositories"
   add_foreign_key "template_repositories", "templates"
   add_foreign_key "templates", "orgs"

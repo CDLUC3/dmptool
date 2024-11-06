@@ -32,6 +32,6 @@ class Pref < ApplicationRecord
   #
   # Returns Hash
   def self.default_settings
-    Rails.configuration.x.dmproadmap.application_preferences
+    Rails.configuration.x.dmproadmap.preferences
   end
 end

@@ -20,16 +20,16 @@
 // @use "utils";
 
 // Pull in the webpacker managed copy of Bootstrap Stylesheets
-@import "../../../node_modules/bootstrap-select/sass/bootstrap-select.scss";
+@use "bootstrap-select/sass/bootstrap-select";
 
 // Pull in the webapcker managed copy of JQuery-UI Stylesheets
 // we are using the Datepicker and Sortable at the very least
-@import "../../../node_modules/jquery-ui-sass/assets/sass/jquery-ui.scss";
+@use "jquery-ui-sass/assets/sass/jquery-ui";
 
-@import '../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+@use '@fortawesome/fontawesome-free/scss/fontawesome';
 // Uncomment this line if you plan on using brand icons (Twitter, Github ...)
-@import '../../../node_modules/@fortawesome/fontawesome-free/scss/regular';
-@import '../../../node_modules/@fortawesome/fontawesome-free/scss/solid';
+@use '@fortawesome/fontawesome-free/scss/regular';
+@use '@fortawesome/fontawesome-free/scss/solid';
 
 // DMPTool additional styling that is not part of the dmptool-ui repo
 // Import new DMPTool v5 styling

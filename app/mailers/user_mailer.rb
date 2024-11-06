@@ -19,7 +19,7 @@ class UserMailer < ActionMailer::Base
     @email_subject  = format(_('Query or feedback related to %{tool_name}'), tool_name: tool_name)
     # Override the default Rails route helper for the contact_us page IF an alternate contact_us
     # url was defined in the dmproadmap.rb initializer file
-    @contact_us     = Rails.application.config.x.organisation.contact_us_url || contact_us_url
+    @contact_us     = Rails.application.config.x.dmproadmap.contact_us_url || contact_us_url
     @helpdesk_email = helpdesk_email(org: @user.org)
 
     I18n.with_locale I18n.default_locale do

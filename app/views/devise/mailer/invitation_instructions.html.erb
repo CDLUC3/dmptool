@@ -1,7 +1,7 @@
 <%
   tool_name = ApplicationService.application_name
   link = accept_invitation_url(@resource, :invitation_token => @token)
-  contact_us = (Rails.configuration.x.dmproadmap.organisation_contact_us_url || contact_us_url)
+  contact_us = (Rails.configuration.x.dmproadmap.contact_us_url || contact_us_url)
   email_subject = _('Query or feedback related to %{tool_name}') %{ :tool_name => tool_name }
   user_name = User.find_by(email: @resource.email).nil? ?  @resource.email : User.find_by(email: @resource.email).name(false)
   inviter =  @resource.invited_by

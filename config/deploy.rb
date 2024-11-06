@@ -125,7 +125,7 @@ namespace :dmptool_assets do
   desc 'Copy over the Fontawesome webfonts'
   task :copy_fontawesome do
     on roles(:app), wait: 1 do
-      execute "mkdir -p #{release_path/p[ublic/webfonts]}"
+      execute "mkdir -p #{release_path}/public/webfonts"
       execute "cp -r #{release_path}/node_modules/@fortawesome/fontawesome-free/webfonts/fa-*.* #{release_path}/public/webfonts"
     end
   end

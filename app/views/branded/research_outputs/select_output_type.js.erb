@@ -7,7 +7,7 @@ if (outputTypeForm.length > 0) {
   var outputTypeSpans = outputTypeForm.find('.output-type-description');
   var outputTypeDescription = outputTypeForm.find('#research_output_output_type_description');
 
-  <% if @research_output.other? %>
+  <% if @research_output.research_output_type == 'other' %>
     outputTypeSpans.removeClass('hidden');
     outputTypeDescription.attr('aria-required', 'true');
   <% else %>

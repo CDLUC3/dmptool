@@ -145,9 +145,10 @@ default: &default
   # DMPHub is a DMP metadata repository that will mint DMP IDs and provide a landing page for them.
   # See https://github.com/CDLUC3/dmphub
   dmphub_active: true
-  dmphub_url: "https://api.dmphub.uc3prd.cdlib.net/"
-  dmphub_landing_page_url: "https://dmphub.uc3prd.cdlib.net/dmps/"
-  dmphub_auth_url: 'https://auth.dmphub.uc3prd.cdlib.net/'
+  dmphub_url: "https://api.dmphub.uc3dev.cdlib.net/"
+  dmphubapi_base_url: "https://api.dmphub.uc3dev.cdlib.net/"
+  dmphub_landing_page_url: "https://dmphub.uc3dev.cdlib.net/dmps/"
+  dmphub_auth_url: 'https://auth.dmphub.uc3dev.cdlib.net/'
   dmphub_name: 'dmphub'
   dmphub_description: 'A DMPHub based DOI minting service: https://github.com/CDLUC3/dmphub'
   # Credentials for minting DOIs via a DMPHub system: https://github.com/CDLUC3/dmphub

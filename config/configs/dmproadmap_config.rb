@@ -48,6 +48,7 @@ class DmproadmapConfig < Anyway::Config
               :dmphub_active,
               :dmphub_auth_url,
               :dmphub_url,
+              :dmphubapi_base_url,
               :dmphub_client_id,
               :dmphub_client_secret,
               :dmphub_landing_page_url,

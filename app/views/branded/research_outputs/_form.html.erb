@@ -34,13 +34,13 @@ repository_tooltip = _("Repositories preserve, manage, and provide access to man
                        selected: (research_output.research_output_type.present? ? research_output.research_output_type : "" )
                      }, opts %>
       </span>
-      <span class="col-md-5 output-type-description <%= research_output.other? ? "" : "hidden" %>">
+      <span class="col-md-5 output-type-description <%= research_output.research_output_type == 'other' ? "" : "hidden" %>">
         <% if readonly %>
           <%= f.text_field :output_type_description, class: "form-control", disabled: "disabled",
-                           aria: { required: research_output.other? } %>
+                           aria: { required: research_output.research_output_type == 'other' } %>
         <% else %>
           <%= f.text_field :output_type_description, class: "form-control",
-                                                    aria: { required: research_output.other? } %>
+                                                    aria: { required: research_output.research_output_type == 'other' } %>
         <% end %>
       </span>
     </div>

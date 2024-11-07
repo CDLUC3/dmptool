@@ -6,15 +6,15 @@ module ExternalApis
     class << self
       # Retrieve the config settings from the initializer
       def landing_page_url
-        Rails.configuration.x.dmproadmap.dmphublanding_page_url || super
+        Rails.configuration.x.dmproadmap.dmphub_landing_page_url || super
       end
 
       def api_base_url
-        Rails.configuration.x.dmproadmap.dmphubapi_base_url || super
+        Rails.configuration.x.dmproadmap.dmphub_api_base_url || super
       end
 
       def auth_url
-        Rails.configuration.x.dmproadmap.dmphubauth_url
+        Rails.configuration.x.dmproadmap.dmphub_auth_url
       end
 
       def active?

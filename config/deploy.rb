@@ -43,7 +43,6 @@ namespace :deploy do
   before :compile_assets, 'deploy:retrieve_credentials'
 
   after :deploy, 'dmptool_assets:copy_robots'
-  after :deploy, 'dmptool_assets:copy_fontawesome'
 
   after :deploy, 'git:version'
   after :deploy, 'cleanup:remove_example_configs'
@@ -119,14 +118,6 @@ namespace :dmptool_assets do
   task :copy_robots do
     on roles(:app), wait: 1 do
       execute "cp -r #{release_path}/config/robots.txt #{release_path}/public/robots.txt"
-    end
-  end
-
-  desc 'Copy over the Fontawesome webfonts'
-  task :copy_fontawesome do
-    on roles(:app), wait: 1 do
-      execute "mkdir -p #{release_path}/public/webfonts"
-      execute "cp -r #{release_path}/node_modules/@fortawesome/fontawesome-free/webfonts/fa-*.* #{release_path}/public/webfonts"
     end
   end
 end

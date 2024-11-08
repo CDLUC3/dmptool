@@ -4,6 +4,7 @@ defaults: &defaults
   database: <%= Rails.configuration.x.dmproadmap.database_name %>
   pool: <%= Rails.configuration.x.dmproadmap.database_pool_size %>
   host: <%= Rails.configuration.x.dmproadmap.database_host %>
+  port: <%= Rails.configuration.x.dmproadmap.database_port %>
   username: <%= Rails.configuration.x.dmproadmap.database_username %>
   password: <%= Rails.configuration.x.dmproadmap.database_password %>
 

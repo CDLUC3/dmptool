@@ -72,11 +72,7 @@ default: &default
 
   # See https://guides.rubyonrails.org/v5.0/configuring.html#configuring-a-database
   database_adapter: "mysql2"
-  database_name: "my_app"
-  database_host: "localhost"
   database_pool_size: 16
-  database_username: "root"
-  database_password:
 
   # =========================
   #: Locales configuration =

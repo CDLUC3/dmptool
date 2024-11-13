@@ -37,9 +37,6 @@ module Dmptool
       attrs = plan_params
 
       rattrs = related_identifier_params
-
-pp rattrs
-
       # Save the related_identifiers first. For some reason Rails is auto deleting them and then re-adding
       # if you just pass in the params as is :/
       #

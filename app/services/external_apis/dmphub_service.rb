@@ -452,13 +452,14 @@ module ExternalApis
         scopes = "#{auth_url}#{scope_env}.read #{auth_url}#{scope_env}.write"
         creds = Base64.strict_encode64("#{client_id}:#{client_secret}")
         Rails.logger.debug "DmphubService Auth Info: URL: #{auth_url}, ENV: #{Rails.env}, CLIENT ID: #{client_id}"
+        Rails.logger.debug "Scopes: #{scopes}, token path: #{token_path}"
 
         opts = {
           follow_redirects: true,
           limit: 6,
           headers: {
             'authorization': "Basic #{creds}",
-            'Server-Agent': "#{caller_name} (#{client_id})",
+            'Server-Agent': "dmptool (#{client_id})",
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json'
           },

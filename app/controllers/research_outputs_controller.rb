@@ -126,9 +126,11 @@ class ResearchOutputsController < ApplicationController
   # GET  /plans/:id/license_selection
   def select_license
     @plan = Plan.find_by(id: params[:plan_id])
+
     @research_output = ResearchOutput.new(
-      plan: @plan, license_id: output_params[:license_id]
+      plan: @plan, license_id: output_params[:research_output][:license_id]
     )
+
     authorize @research_output
   end
 

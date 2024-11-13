@@ -130,7 +130,7 @@ RSpec.describe ExternalApis::BaseService do
 
     describe '#app_name' do
       it 'defaults to the Rails.application.class.name' do
-        Rails.configuration.x.dmproadmap.application.delete(:name)
+        Rails.configuration.x.dmproadmap.delete(:application_name)
         expected = ApplicationService.application_name
         expect(described_class.send(:app_name)).to eql(expected)
       end
@@ -143,16 +143,16 @@ RSpec.describe ExternalApis::BaseService do
 
     describe '#app_email' do
       it 'defaults to the contact_us url' do
-        helpdesk_email = Rails.configuration.x.dmproadmap.organisation.helpdesk_email
-        Rails.configuration.x.dmproadmap.organisation.delete(:helpdesk_email)
+        helpdesk_email = Rails.configuration.x.dmproadmap.organisation_helpdesk_email
+        Rails.configuration.x.dmproadmap.delete(:organisation_helpdesk_email)
         expected = Rails.application.routes.url_helpers.contact_us_url
         expect(described_class.send(:app_email)).to eql(expected)
         # Set it back so we don't mess up other tests!
-        Rails.configuration.x.dmproadmap.organisation.helpdesk_email = helpdesk_email
+        Rails.configuration.x.dmproadmap.organisation_helpdesk_email = helpdesk_email
       end
 
       it 'returns the help_desk email defined in dmproadmap.rb initializer' do
-        expect(described_class.send(:app_email)).to eql(Rails.configuration.x.dmproadmap.organisation.helpdesk_email)
+        expect(described_class.send(:app_email)).to eql(Rails.configuration.x.dmproadmap.organisation_helpdesk_email)
       end
     end
 

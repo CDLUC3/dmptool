@@ -54,7 +54,7 @@ class Template < ApplicationRecord
   # that are meant for external use will be publicly visible. This allows a
   # funder to create 'funder' as well as organisational templates. The default
   # template should also always be publicly_visible.
-  enum visibility: { organisationally_visible: 0, publicly_visible: 1 }
+  enum :visibility, { organisationally_visible: 0, publicly_visible: 1 }
 
   # Stores links as an JSON object:
   # {funder: [{"link":"www.example.com","text":"foo"}, ...],

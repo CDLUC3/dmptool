@@ -91,14 +91,14 @@ gem 'rollbar', group: :rollbar, require: false
 
 # A simple, fast Mysql library for Ruby, binding to libmysql
 # (http://github.com/brianmario/mysql2)
-gem 'mysql2' #, "0.5.6", group: :mysql, require: false
+gem 'mysql2'
 
 # Pg is the Ruby interface to the {PostgreSQL
 # RDBMS}[http://www.postgresql.org/](https://bitbucket.org/ged/ruby-pg)
 gem 'pg', group: :pgsql, require: false
 
 # Bit fields for ActiveRecord (https://github.com/pboling/flag_shih_tzu)
-gem 'flag_shih_tzu' # , "~> 0.3.23"
+gem 'flag_shih_tzu'
 
 # ======== #
 # SECURITY #

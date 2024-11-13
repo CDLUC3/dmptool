@@ -55,19 +55,19 @@ class RelatedIdentifier < ApplicationRecord
   # =========
 
   # Broad categories to identify the type of work the related identifier represents
-  enum work_type: { article: 0, dataset: 1, preprint: 2, software: 3, supplemental_information: 4,
+  enum :work_type, { article: 0, dataset: 1, preprint: 2, software: 3, supplemental_information: 4,
                     paper: 5, book: 6, protocol: 7, preregistration: 8,
                     traditional_knowledge_labels_and_notices: 9, metadata: 10, output_management_plan: 11 }
 
   # The type of identifier based on the DataCite metadata schema
-  enum identifier_type: { ark: 0, arxiv: 1, bibcode: 2, doi: 3, ean13: 4, eissn: 5, handle: 6,
+  enum :identifier_type, { ark: 0, arxiv: 1, bibcode: 2, doi: 3, ean13: 4, eissn: 5, handle: 6,
                           igsn: 7, isbn: 8, issn: 9, istc: 10, lissn: 11, lsid: 12, pmid: 13,
                           purl: 14, upc: 15, url: 16, urn: 17, w3id: 18, other: 19 }
 
   # The relationship type between the related item and the Plan
   # Note that the 'references' value is changed to 'does_reference' in this list
   # because 'references' conflicts with an ActiveRecord method
-  enum relation_type: { is_cited_by: 0, cites: 1, is_supplement_to: 2, is_supplemented_by: 3,
+  enum :relation_type, { is_cited_by: 0, cites: 1, is_supplement_to: 2, is_supplemented_by: 3,
                         is_continued_by: 4, continues: 5, is_described_by: 6, describes: 7,
                         has_metadata: 8, is_metadata_for: 9, has_version: 10, is_version_of: 11,
                         is_new_version_of: 12, is_previous_version_of: 13, is_part_of: 14,

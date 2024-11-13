@@ -8,7 +8,7 @@ $(() => {
       const selectionsBlock = $(`#${selectionsBlockId}`);
       const id = `999${Math.floor(Math.random() * 999)}`;
       const fieldId = `${context}_attributes_${id}`;
-      const fieldName = `${context}_attributes[${id}]]`;
+      const fieldName = `${context}_attributes[${id}]`;
 
       const customItemBlock = $('<div class="modal-search-result col-md-12"/>');
       const link = `<a href="${uri}" target="_blank" class="has-new-window-popup-info">${uri}</a>`;
@@ -21,11 +21,11 @@ $(() => {
       `;
 
       customItemBlock.append(`<div class="modal-search-result-label">${title} ${removeButton}</div>`)
-                     .append(`<p>${description}</p>`)
-                     .append(`<p><strong>Repository URL:</strong> ${link}</p>`)
-                     .append(titleField)
-                     .append(descField)
-                     .append(uriField);
+        .append(`<p>${description}</p>`)
+        .append(`<p><strong>Repository URL:</strong> ${link}</p>`)
+        .append(titleField)
+        .append(descField)
+        .append(uriField);
 
       selectionsBlock.append(customItemBlock);
 
@@ -43,8 +43,8 @@ $(() => {
       const errBlock = form.find('.custom-item-errors')
 
       if (nameField.length <= 0 || nameField.val().length <= 3 ||
-          uriField.length < 0 || uriField.val().length <= 3 ||
-          descrField.length < 0 || descrField.val().length <= 3) {
+        uriField.length < 0 || uriField.val().length <= 3 ||
+        descrField.length < 0 || descrField.val().length <= 3) {
         errBlock.removeClass('hidden');
         return false;
       } else {

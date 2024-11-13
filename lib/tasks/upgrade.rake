@@ -459,7 +459,7 @@ namespace :upgrade do
   # rubocop:disable Layout/LineLength
   desc 'Org.contact_email is now required, sets any nil values to the helpdesk email defined in dmproadmap.rb initializer'
   task check_org_contact_emails: :environment do
-    email = Rails.configuration.x.dmproadmap.organisation.helpdesk_email
+    email = Rails.configuration.x.dmproadmap.organisation_helpdesk_email
     name = Rails.configuration.x.dmproadmap.organisation_name
 
     if email.present? && name.present?
@@ -510,7 +510,7 @@ namespace :upgrade do
     puts "Checking for existence of an 'Other' org. Unaffiliated users should be affiliated with this org"
 
     # Get the helpdesk email from the dmproadmap.rb initializer
-    email = Rails.configuration.x.dmproadmap.organisation.helpdesk_email
+    email = Rails.configuration.x.dmproadmap.organisation_helpdesk_email
     name = Rails.configuration.x.dmproadmap.organisation_name
     email = 'other.organisation@example.org' if email.blank?
     name = 'Helpdesk' if name.blank?

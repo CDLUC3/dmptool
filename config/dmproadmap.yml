@@ -62,9 +62,9 @@ default: &default
   dmptool_version: "v5"
 
   # Determines how long to cache results for OrgSelection::SearchService
-  cache_org_selection_expiration: "86_400"
+  cache_org_selection_expiration: 86_400
   # Determines how long to cache results for the ResearchProjectsController
-  cache_research_projects_expiration: "86_400"
+  cache_research_projects_expiration: 86_400
 
   # ==========================
   #: Database configuration =
@@ -142,7 +142,7 @@ default: &default
   # See https://github.com/CDLUC3/dmphub
   dmphub_active: true
   dmphub_url: "https://api.dmphub.uc3dev.cdlib.net/"
-  dmphubapi_base_url: "https://api.dmphub.uc3dev.cdlib.net/"
+  dmphub_api_base_url: "https://api.dmphub.uc3dev.cdlib.net/"
   dmphub_landing_page_url: "https://dmphub.uc3dev.cdlib.net/dmps/"
   dmphub_auth_url: 'https://auth.dmphub.uc3dev.cdlib.net/'
   dmphub_name: 'dmphub'
@@ -365,7 +365,7 @@ default: &default
     v2: "https://github.com/CDLUC3/dmptool/wiki/api-v2-documentation"
 
   # The current landing page for API documentation
-  api_documentation_overview_url: "https://github.com/CDLUC3/dmptool/wiki/API-Overview"
+  application_api_documentation_overview_url: "https://github.com/CDLUC3/dmptool/wiki/API-Overview"
 
   # =============================
   #: Static page configuration =

@@ -131,7 +131,7 @@ describe RegistryOrg do
       end
 
       it 'correctly initializes the Org' do
-        email = Rails.configuration.x.dmproadmap.organisation.helpdesk_email
+        email = Rails.configuration.x.dmproadmap.organisation_helpdesk_email
         app_name = Faker::Company.name
         ApplicationService.stubs(:application_name).returns(app_name)
         result = @registry_org.to_org

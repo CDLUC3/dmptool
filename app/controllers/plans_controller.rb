@@ -415,7 +415,7 @@ class PlansController < ApplicationController
             _('Your DMP ID was registered but we were unable to add it to your ORCID record as a new work.')
           else
             format(_("Something went wrong and we were unable to acquire a DMP ID for your plan. Please try again. If the problem /
-              persists please contact the help desk at %{helpdesk_email}"), helpdesk_email: Rails.configuration.x.dmproadmap.organisation.helpdesk_email)
+              persists please contact the help desk at %{helpdesk_email}"), helpdesk_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email)
           end
     # rubocop:enable Layout/LineLength
     redirect_to publish_plan_path(@plan), alert: msg

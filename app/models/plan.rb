@@ -94,9 +94,9 @@ class Plan < ApplicationRecord
   # ==============
 
   # public is a Ruby keyword so using publicly
-  enum visibility: { organisationally_visible: 0, publicly_visible: 1, is_test: 2, privately_visible: 3 }
+  enum :visibility, { organisationally_visible: 0, publicly_visible: 1, is_test: 2, privately_visible: 3 }
 
-  enum funding_status: { planned: 0, funded: 1, denied: 2 }
+  enum :funding_status, { planned: 0, funded: 1, denied: 2 }
 
   alias_attribute :name, :title
 

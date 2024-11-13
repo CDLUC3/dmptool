@@ -99,7 +99,7 @@ RSpec.describe OrgSelectable do
           expected = {
             org_attributes: {
               abbreviation: registry_org.acronyms.first.upcase,
-              contact_email: Rails.configuration.x.dmproadmap.organisation.helpdesk_email,
+              contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
               contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
               is_other: false,
               links: JSON.parse({ org: [{ link: registry_org.home_page, text: 'Home Page' }] }.to_json),
@@ -157,7 +157,7 @@ RSpec.describe OrgSelectable do
           expected = {
             org_attributes: {
               abbreviation: registry_org.acronyms.first.upcase,
-              contact_email: Rails.configuration.x.dmproadmap.organisation.helpdesk_email,
+              contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
               contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
               is_other: false,
               links: JSON.parse({ org: [{ link: registry_org.home_page, text: 'Home Page' }] }.to_json),
@@ -174,7 +174,7 @@ RSpec.describe OrgSelectable do
           expected = {
             org_attributes: {
               abbreviation: @custom_name.split.map(&:first).map(&:upcase).join,
-              contact_email: Rails.configuration.x.dmproadmap.organisation.helpdesk_email,
+              contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
               contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
               is_other: false,
               links: JSON.parse({ org: [] }.to_json),
@@ -219,7 +219,7 @@ RSpec.describe OrgSelectable do
         expected = {
           org_attributes: {
             abbreviation: registry_org.acronyms.first.upcase,
-            contact_email: Rails.configuration.x.dmproadmap.organisation.helpdesk_email,
+            contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
             contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
             is_other: false,
             links: JSON.parse({ org: [{ link: registry_org.home_page, text: 'Home Page' }] }.to_json),
@@ -280,7 +280,7 @@ RSpec.describe OrgSelectable do
         expected = {
           org_attributes: {
             abbreviation: registry_org.acronyms.first.upcase,
-            contact_email: Rails.configuration.x.dmproadmap.organisation.helpdesk_email,
+            contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
             contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
             is_other: false,
             links: JSON.parse({ org: [{ link: registry_org.home_page, text: 'Home Page' }] }.to_json),
@@ -297,7 +297,7 @@ RSpec.describe OrgSelectable do
         expected = {
           org_attributes: {
             abbreviation: @custom_name.split.map(&:first).map(&:upcase).join,
-            contact_email: Rails.configuration.x.dmproadmap.organisation.helpdesk_email,
+            contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
             contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
             is_other: false,
             links: JSON.parse({ org: [] }.to_json),
@@ -595,7 +595,7 @@ RSpec.describe OrgSelectable do
       it 'uses the :helpdesk_email if org.contact_email is nil' do
         @org.contact_email = nil
         result = @controller.send(:org_to_attributes, org: @org)[:org_attributes]
-        expect(result[:contact_email]).to eql(Rails.configuration.x.dmproadmap.organisation.helpdesk_email)
+        expect(result[:contact_email]).to eql(Rails.configuration.x.dmproadmap.organisation_helpdesk_email)
       end
 
       it 'uses the Application name if org.contact_name is nil' do
@@ -615,7 +615,7 @@ RSpec.describe OrgSelectable do
       it 'creates a new Org' do
         contact_email = Faker::Internet.email
         app = Faker::Lorem.word
-        Rails.configuration.x.dmproadmap.organisation.helpdesk_email = contact_email
+        Rails.configuration.x.dmproadmap.organisation_helpdesk_email = contact_email
         Rails.configuration.x.dmproadmap.application_name = app
 
         new_name = Faker::Movies::StarWars.unique.character.split.last

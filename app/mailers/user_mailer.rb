@@ -208,7 +208,7 @@ class UserMailer < ActionMailer::Base
     @api_client = api_client
     return if @api_client.contact_email.blank?
 
-    @api_docs = Rails.configuration.x.dmproadmap.application.api_documentation_overview_url
+    @api_docs = Rails.configuration.x.dmproadmap.application_api_documentation_overview_url
 
     @name = (@api_client.contact_name.presence || @api_client.contact_email)
 

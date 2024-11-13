@@ -18,7 +18,7 @@
   <p><%= _("We will hold the personal data you provided us for as long as you continue using the %{application_name} service. Your personal data can be removed from this service upon request to the %{application_name} team within a period of 30 days.") %
           { application_name: ApplicationService.application_name } %></p>
   <p><%= sanitize _("If you have any questions, please contact the %{application_name} team at: <a href='mailto:%{helpdesk_email}'>%{helpdesk_email}</a>") %
-              { application_name: ApplicationService.application_name, :helpdesk_email => Rails.configuration.x.dmproadmap.organisation.helpdesk_email } %></p>
+              { application_name: ApplicationService.application_name, :helpdesk_email => Rails.configuration.x.dmproadmap.organisation_helpdesk_email } %></p>
   <hr>
 
   <h2 class="fontsize-h3">Revisions</h2>

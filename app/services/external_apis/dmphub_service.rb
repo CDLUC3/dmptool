@@ -66,7 +66,7 @@ module ExternalApis
       end
 
       def caller_name
-        ApplicationService.application_name.split('-').first.to_sym
+        "dmptool"
       end
 
       def api_client

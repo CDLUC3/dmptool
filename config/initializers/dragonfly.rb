@@ -7,8 +7,8 @@ require 'dragonfly/s3_data_store' unless Rails.env.test?
 # Configure
 Dragonfly.app.configure do
   plugin :imagemagick,
-    convert_command: '/dmp/apps/dmptool/current/bin/convert',
-    identify_command: '/dmp/apps/dmptool/current/bin/identify'
+    convert_command: Rails.root.join('bin', 'convert'),
+    identify_command: Rails.root.join('bin', 'identify')
 
   secret Rails.configuration.x.dmproadmap.dragonfly_secret
 

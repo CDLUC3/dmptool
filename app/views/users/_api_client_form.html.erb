@@ -67,6 +67,9 @@
 
       <% if f.object.logo.present? %>
         <div class="clearfix"></div>
+
+<% puts f.object.inspect %>
+
         <%= image_tag logo_url_for_org(f.object), alt: "#{f.object.name} #{_('logo')}", class: "org-logo" %>
         <div class="org-logo-controls checkbox">
           <%= f.label :remove_logo do %>

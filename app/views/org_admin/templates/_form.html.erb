@@ -18,11 +18,11 @@
   <%= f.label :visibility, class: 'control-label' %>
 
   <div class="checkbox">
-    <%= f.radio_button(:visibility, ::Template.visibilities[:organisationally_visible]) %>
+    <%= f.radio_button(:visibility, :organisationally_visible) %>
     <span>&nbsp;<%= _('for internal %{org_name} use only') % { org_name: f.object.org.name } %></span>
   </div>
   <div class="checkbox">
-    <%= f.radio_button(:visibility, ::Template.visibilities[:publicly_visible]) %>
+    <%= f.radio_button(:visibility, :publicly_visible) %>
     <span>&nbsp;<%= _('for all users') %></span>
   </div>
 </div>

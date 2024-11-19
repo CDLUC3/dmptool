@@ -12,7 +12,7 @@ module Dmptool
       end
 
       def default_contact_email
-        Rails.configuration.x.organisation.helpdesk_email
+        Rails.configuration.x.dmproadmap.organisation_helpdesk_email
       end
 
       def participating

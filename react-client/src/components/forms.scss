@@ -1,3 +1,5 @@
+@use "./responsive";
+
 /* Form components, and buttons */
 button,
 input[type="button"],
@@ -53,6 +55,7 @@ input[type="submit"] {
     outline-width: 0px !important;
     box-shadow: none !important;
   }
+
   &:focus {
     outline-offset: 3px;
     outline-color: #11057b;
@@ -76,7 +79,7 @@ input[type="submit"] {
   justify-content: end;
   padding: 0.5rem;
 
-  & > * {
+  &>* {
     margin: 0.5rem;
   }
 }
@@ -98,7 +101,7 @@ input[type="submit"] {
 
   justify-content: space-between;
 
-  @include device(tablet) {
+  @include responsive.device(tablet) {
     flex-direction: row;
   }
 
@@ -110,7 +113,7 @@ input[type="submit"] {
 .dmpui-field-group {
   margin-bottom: 2rem;
 
-  @include device(tablet) {
+  @include responsive.device(tablet) {
     margin-bottom: 1.5rem;
   }
 
@@ -130,7 +133,10 @@ input[type="submit"] {
     margin-bottom: 0.4rem;
     line-height: 1.5;
     color: #555 !important;
-    &::first-letter { text-transform: capitalize; }
+
+    &::first-letter {
+      text-transform: capitalize;
+    }
   }
 
   .dmpui-field-error {
@@ -190,6 +196,7 @@ input[type="submit"] {
     min-height: 10rem;
     line-height: normal;
   }
+
   select {
     box-sizing: border-box;
     border: 1px solid var(--form-field-border-color);
@@ -209,7 +216,7 @@ input[type="submit"] {
       box-shadow: inset 0 0 0 0dvi !important;
     }
 
-     &:focus {
+    &:focus {
       outline-offset: 3px;
       outline-color: #11057b;
       outline-width: 1px;
@@ -273,7 +280,8 @@ input[type="submit"] {
     &:hover {
       outline: none !important;
     }
-    &:focus-within{
+
+    &:focus-within {
       outline: 1px solid var(--dmpui-brand-blue-500) !important;
     }
 
@@ -310,4 +318,3 @@ input[type="submit"] {
   top: 10px;
   right: -30px;
 }
-

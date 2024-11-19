@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
 
   include Dmptool::Mailer
 
-  default from: Rails.configuration.x.organisation.do_not_reply_email || Rails.configuration.x.organisation.email
+  default from: Rails.configuration.x.dmproadmap.organisation_do_not_reply_email || Rails.configuration.x.dmproadmap.organisation_email
 
   # rubocop:disable Metrics/AbcSize
   def welcome_notification(user)
@@ -19,7 +19,7 @@ class UserMailer < ActionMailer::Base
     @email_subject  = format(_('Query or feedback related to %{tool_name}'), tool_name: tool_name)
     # Override the default Rails route helper for the contact_us page IF an alternate contact_us
     # url was defined in the dmproadmap.rb initializer file
-    @contact_us     = Rails.application.config.x.organisation.contact_us_url || contact_us_url
+    @contact_us     = Rails.application.config.x.dmproadmap.contact_us_url || contact_us_url
     @helpdesk_email = helpdesk_email(org: @user.org)
 
     I18n.with_locale I18n.default_locale do
@@ -129,8 +129,8 @@ class UserMailer < ActionMailer::Base
     @helpdesk_email = helpdesk_email(org: @plan.org)
 
     I18n.with_locale I18n.default_locale do
-      sender = Rails.configuration.x.organisation.do_not_reply_email ||
-               Rails.configuration.x.organisation.email
+      sender = Rails.configuration.x.dmproadmap.organisation_do_not_reply_email ||
+               Rails.configuration.x.dmproadmap.organisation_email
 
       mail(to: recipient.email,
            from: sender,
@@ -208,7 +208,7 @@ class UserMailer < ActionMailer::Base
     @api_client = api_client
     return if @api_client.contact_email.blank?
 
-    @api_docs = Rails.configuration.x.application.api_documentation_overview_url
+    @api_docs = Rails.configuration.x.dmproadmap.application_api_documentation_overview_url
 
     @name = (@api_client.contact_name.presence || @api_client.contact_email)
 

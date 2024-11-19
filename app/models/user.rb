@@ -88,7 +88,7 @@ class User < ApplicationRecord
 
   ##
   # User Notification Preferences
-  serialize :prefs, Hash
+  serialize :prefs, type: Hash, coder: JSON
 
   # default user language to the default language
   attribute :language_id, :integer, default: -> { Language.default&.id }
@@ -484,7 +484,8 @@ class User < ApplicationRecord
   # Returns boolean
   # rubocop:disable Metrics/AbcSize
   def archive
-    suffix = Rails.configuration.x.application.fetch(:archived_accounts_email_suffix, '@example.org')
+    suffix = Rails.configuration.x.dmproadmap.application_archived_accounts_email_suffix
+    suffix = '@example.org' if suffix.nil?
     self.firstname = 'Deleted'
     self.surname = 'User'
     self.email = User.unique_random(field_name: 'email',

@@ -138,7 +138,7 @@ class NewPlanTemplateStructure < ActiveRecord::Migration[4.2]
     #   Then migrate all customised plans
     # migrate most current template into templates (org facing)
     proj_number = 0
-    
+
     if table_exists?('projects') && table_exists?('templates') && table_exists?('answers') &&
               table_exists?('comments') && table_exists?('sections') && table_exists?('new_plan')
       # migrating uncustomised plans
@@ -162,7 +162,7 @@ class NewPlanTemplateStructure < ActiveRecord::Migration[4.2]
           phases = dmptemplate.phases               # select phases for project
           temp_match = false                        # flag for if we found a matching template
 
-          puts "checking for matching templates for #{dmptemplate.title} customised by #{project.organisation.name}" unless project.organisation.nil?
+          puts "checking for matching templates for #{dmptemplate.title} customised by #{project.organisation_name}" unless project.organisation.nil?
           puts "checking for matching templates for #{dmptemplate.title} uncustomised" unless project.organisation.present?
           possible_templates = project.organisation.nil? ?
             Template.includes(:new_phases).where(dmptemplate_id: dmptemplate.id, organisation_id: dmptemplate.organisation_id) :
@@ -184,7 +184,7 @@ class NewPlanTemplateStructure < ActiveRecord::Migration[4.2]
           # this section handles for customisations
           unless temp_match     # no matches found, init template & phase & sections & questions & themes & options
             puts "creating new template for #{dmptemplate.title}" unless project.organisation.present?
-            puts "creating new template for #{dmptemplate.title} customised by #{project.organisation.name}" unless project.organisation.nil?
+            puts "creating new template for #{dmptemplate.title} customised by #{project.organisation_name}" unless project.organisation.nil?
             modifiable = project.organisation.nil? || project.organisation_id == dmptemplate.organisation_id
             template = initTemplate(dmptemplate, modifiable, project.organisation_id)      # needs to select next version of temp based on old_temp_id
             # some differences between a customised and un-customised template
@@ -277,7 +277,7 @@ class NewPlanTemplateStructure < ActiveRecord::Migration[4.2]
       end
 
     end
-    
+
     # indexes on join tables at the end
     change_table :new_answers_question_options do |t|
       t.index [:new_answer_id, :question_option_id], name: 'answer_question_option_index'
@@ -331,7 +331,7 @@ def initTemplate(dmptemp, modifiable, organisation_id)
       0 : Template.where(dmptemplate_id: dmptemp.id, organisation_id: template.organisation_id).pluck(:version).max + 1
     puts "NEW TEMPLATE: \n  title: #{template.title} \n  version: #{template.version} \n  others_present? #{Template.where(dmptemplate_id: dmptemp.id).count}"
     return template
-    
+
   else
     return nil
   end

@@ -10,50 +10,50 @@
 // NOTE: We need to stick to the !default format below, to ensure variables can be set in
 // other files for individual deployments.
 
-// Forms
-$input-border-radius: 0px !default;
+:root {
+  // Forms
+  --input-border-radius: 0px; // !default;
 
 
-// Navbar
-$navbar-border-radius: 0px !default;
+  // Navbar
+  --navbar-border-radius: 0px; // !default;
 
-// Buttons
-$btn-border-radius-base: 0px !default;
+  // Buttons
+  --btn-border-radius-base: 0px; // !default;
 
-$btn-primary-color: $color-primary-text !default;
+  --btn-primary-color: var(--color-primary-text); // !default;
 
-$btn-default-color: $color-primary-text !default;
+  --btn-default-color: var(--color-primary-text); // !default;
 
-// Panels
-$panel-border-radius: 0px !default;
+  // Panels
+  --panel-border-radius: 0px; // !default;
 
 
-// from colors:
+  // from colors:
 
-$dropdown-inverse-bg: $color-navbar-background !default;
-$dropdown-inverse-border: $color-dropdown-inverse-border !default;
-$dropdown-inverse-text: $color-dropdown-inverse-text !default;
-$dropdown-inverse-text-hoover: $color-dropdown-inverse-text-hover !default;
-$dropdown-inverse-bg-hoover: $color-navbar-background-active !default;
+  --dropdown-inverse-bg: var(--color-navbar-background); // !default;
+  --dropdown-inverse-border: var(--color-dropdown-inverse-border); // !default;
+  --dropdown-inverse-text: var(--color-dropdown-inverse-text); // !default;
+  --dropdown-inverse-text-hoover: var(--color-dropdown-inverse-text-hover); // !default;
+  --dropdown-inverse-bg-hoover: var(--color-navbar-background-active); // !default;
 
-// Navbar branding colours
-$navbar-branding-color: $color-navbar-text !default;
-$navbar-branding-bg: $color-navbar-background !default;
-$navbar-branding-border: $color-navbar-border !default;
-$navbar-branding-link-color: $color-navbar-link-text !default;
-$navbar-branding-link-hover-color: $color-navbar-text-hover !default;
-$navbar-branding-link-hover-bg: transparent !default;
-$navbar-branding-link-active-color: $navbar-branding-link-hover-color !default;
-$navbar-branding-link-active-bg: $color-navbar-background-active !default;
-$navbar-branding-link-disabled-color: $color-navbar-text-disabled !default;
-$navbar-branding-link-disabled-bg: transparent !default;
-$navbar-branding-brand-color: $navbar-branding-link-color !default;
-// $navbar-branding-brand-hover-color: #FFFFFF !default;
-// $navbar-branding-brand-hover-bg: transparent !default;
-$navbar-branding-toggle-hover-bg: $color-navbar-background-active !default;
-$navbar-branding-toggle-icon-bar-bg: $color-icon-bar-background !default;
-$navbar-branding-toggle-border-color: $color-navbar-background-active !default;
+  // Navbar branding colours
+  --navbar-branding-color: var(--color-navbar-text); // !default;
+  --navbar-branding-bg: var(--color-navbar-background); // !default;
+  --navbar-branding-border: var(--color-navbar-border); // !default;
+  --navbar-branding-link-color: var(--color-navbar-link-text); // !default;
+  --navbar-branding-link-hover-color: var(--color-navbar-text-hover); // !default;
+  --navbar-branding-link-hover-bg: transparent; // !default;
+  --navbar-branding-link-active-color: var(--navbar-branding-link-hover-color); // !default;
+  --navbar-branding-link-active-bg: var(--color-navbar-background-active); // !default;
+  --navbar-branding-link-disabled-color: var(--color-navbar-text-disabled); // !default;
+  --navbar-branding-link-disabled-bg: transparent; // !default;
+  --navbar-branding-brand-color: var(--navbar-branding-link-color); // !default;
+  --navbar-branding-toggle-hover-bg: var(--color-navbar-background-active); // !default;
+  --navbar-branding-toggle-icon-bar-bg: var(--color-icon-bar-background); // !default;
+  --navbar-branding-toggle-border-color: var(--color-navbar-background-active); // !default;
 
-// org-navbar branding colors
-$navbar-org-link-color: $color-org-navbar-links !default;
-$navbar-org-link-hover-color: $color-org-navbar-links-hover !default;
+  // org-navbar branding colors
+  --navbar-org-link-color: var(--color-org-navbar-links); // !default;
+  --navbar-org-link-hover-color: var(--color-org-navbar-links-hover); // !default;
+}

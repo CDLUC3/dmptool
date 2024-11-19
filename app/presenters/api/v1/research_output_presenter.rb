@@ -53,13 +53,13 @@ module Api
 
         # Disabling rubocop here since a guard clause would make the line too long
         # rubocop:disable Style/GuardClause
-        if Rails.configuration.x.madmp.extract_preservation_statements_from_themed_questions
+        if Rails.configuration.x.dmproadmap.extract_preservation_statements_from_themed_questions
           @preservation_statement = fetch_q_and_a_as_single_statement(themes: %w[Preservation])
         end
-        if Rails.configuration.x.madmp.extract_security_privacy_statements_from_themed_questions
+        if Rails.configuration.x.dmproadmap.extract_security_privacy_statements_from_themed_questions
           @security_and_privacy = fetch_q_and_a(themes: ['Ethics & privacy', 'Storage & security'])
         end
-        if Rails.configuration.x.madmp.extract_data_quality_statements_from_themed_questions
+        if Rails.configuration.x.dmproadmap.extract_data_quality_statements_from_themed_questions
           @data_quality_assurance = fetch_q_and_a_as_single_statement(themes: ['Data Collection'])
         end
         # rubocop:enable Style/GuardClause

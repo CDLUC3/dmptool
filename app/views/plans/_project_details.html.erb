@@ -41,7 +41,7 @@ ethics_report_tooltip = _("Link to a protocol from a meeting with an ethics comm
   </div>
 </div>
 
-<% if Rails.configuration.x.madmp.enable_research_domain %>
+<% if Rails.configuration.x.dmproadmap.enable_research_domain %>
   <div class="form-group">
     <div class="col-md-8">
       <%= form.label(:research_domain_id, _("Research domain"), class: "control-label") %>
@@ -74,7 +74,7 @@ ethics_report_tooltip = _("Link to a protocol from a meeting with an ethics comm
 
 <%# if DOI minting is enabled %>
 <% landing_page = plan.landing_page %>
-<% if Rails.configuration.x.doi&.active && landing_page.present? %>
+<% if Rails.configuration.x.dmproadmap.doi_active && landing_page.present? %>
   <div class="form-group"><!-- identifier -->
     <div class="col-md-12">
       <%= form.label(:identifier, _('Landing page'), class: 'control-label') %>
@@ -104,7 +104,7 @@ ethics_report_tooltip = _("Link to a protocol from a meeting with an ethics comm
   </div>
 <% end %>
 
-<% if Rails.configuration.x.madmp.enable_ethical_issues %>
+<% if Rails.configuration.x.dmproadmap.enable_ethical_issues %>
   <conditional>
     <div class="form-group">
       <div class="col-md-8">
@@ -182,7 +182,7 @@ ethics_report_tooltip = _("Link to a protocol from a meeting with an ethics comm
 
       <div class="col-md-8">
         <%# If the OpenAire grant typeahead if enabled use it %>
-        <% if Rails.configuration.x.open_aire.active %>
+        <% if Rails.configuration.x.dmproadmap.open_aire_active %>
           <!-- Using the research_project.json source for typeahead -->
           <%= grant_fields.text_field :name,
                                       value: plan.grant&.value,

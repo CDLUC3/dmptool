@@ -2,56 +2,57 @@
   Colors
   - to be used as utilities within this file to define text+bg colors
 */
+:root {
+  --color-black: #05042E;
+  --color-white: #fff;
+  --color-blue-dark: #004EAA;
+  --color-blue: #54D8FF;
+  --color-blue-light: #F0FBFF;
+  --color-gold: #FFC845;
+  --color-grey: #F2F2F2;
+  --color-green: #006C6C;
+  --color-red: #D3273E;
 
-$color-black: #05042E;
-$color-white: #fff;
-$color-blue-dark: #004EAA;
-$color-blue: #54D8FF;
-$color-blue-light: #F0FBFF;
-$color-gold: #FFC845;
-$color-grey: #F2F2F2;
-$color-green: #006C6C;
-$color-red: #D3273E;
+  /*
+   variables to define look and feel
+  */
+  --color-primary-background: var(--color-blue-dark);
+  --color-primary-text: var(--color-white);
 
-/*
-  Variables to define look and feel
-*/
-$color-primary-background: $color-blue-dark;
-$color-primary-text: $color-white;
+  --color-secondary-background: var(--color-white);
+  --color-secondary-text: var(--color-blue-dark);
 
-$color-secondary-background: $color-white;
-$color-secondary-text: $color-blue-dark;
+  --color-muted-background: var(--color-grey);
 
-$color-muted-background: $color-grey;
+  /* Bootstrap overrides */
+  --color-navbar-background: var(--color-white);
+  --color-navbar-background-active: var(--color-white);
+  --color-icon-bar-background: var(--color-white);
+  --color-navbar-text: var(--color-blue-dark);
+  --color-navbar-text-hover: var(--color-blue-dark);
+  --color-navbar-text-disabled: var(--color-grey);
+  --color-heading-text: var(--color-black);
+  --color-link-text: var(--color-blue-dark);
+  --color-navbar-link-text: lighten(var(--color-navbar-text), 15%);
+  --color-org-navbar-links: var(--color-blue-dark);
+  --color-org-navbar-links-hover: var(--color-blue-dark);
+  --color-dropdown-inverse-text: var(--color-white);
+  --color-dropdown-inverse-text-hover: var(--color-white);
+  --color-text-red: var(--color-red);
+  --color-text-grey: var(--color-grey);
+  --color-text-black: var(--color-black);
 
-/* Bootstrap overrides */
-$color-navbar-background: $color-white;
-$color-navbar-background-active: $color-white;
-$color-icon-bar-background: $color-white;
-$color-navbar-text: $color-blue-dark;
-$color-navbar-text-hover: $color-blue-dark;
-$color-navbar-text-disabled: $color-grey;
-$color-heading-text: $color-black;
-$color-link-text: $color-blue-dark;
-$color-navbar-link-text: lighten($color-navbar-text, 15%);
-$color-org-navbar-links: $color-blue-dark;
-$color-org-navbar-links-hover: $color-blue-dark;
-$color-dropdown-inverse-text: $color-white;
-$color-dropdown-inverse-text-hover: $color-white;
-$color-text-red: $color-red;
-$color-text-grey: $color-grey;
-$color-text-black: $color-black;
+  // Borders colors
+  --color-border-default: var(--color-blue-dark);
+  --color-border-light: var(--color-blue);
+  --color-dropdown-inverse-border: var(--color-blue-dark);
+  --color-navbar-border: darken(var(--color-navbar-background), 10%);
 
-// Borders colors
-$color-border-default: $color-blue-dark;
-$color-border-light: $color-blue;
-$color-dropdown-inverse-border: $color-blue-dark;
-$color-navbar-border: darken($color-navbar-background, 10%);
+  // Focus colors
+  --color-focus-outline: var(--color-blue);
 
-// Focus colors
-$color-focus-outline: $color-blue;
-
-// Spacing Variables:
-$space-base: 1rem;
-$space-sm: $space-base * 0.5;
-$space-lg: $space-base * 2;
+  // Spacing Variables:
+  --space-base: 16px;
+  --space-sm: 8px;
+  --space-lg: 32px;
+}

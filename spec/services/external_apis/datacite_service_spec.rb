@@ -10,12 +10,12 @@ RSpec.describe ExternalApis::DataciteService, type: :model do
   include Helpers::IdentifierHelper
 
   before do
-    @original_active = Rails.configuration.x.datacite.active
-    @original_url = Rails.configuration.x.datacite.api_base_url
-    @original_enabled = Rails.configuration.x.madmp.enable_dmp_id_registration
-    Rails.configuration.x.madmp.enable_dmp_id_registration = true
-    Rails.configuration.x.datacite.active = true
-    Rails.configuration.x.datacite.api_base_url = 'https://api.test.datacite.org/'
+    @original_active = Rails.configuration.x.dmproadmap.datacite_active
+    @original_url = Rails.configuration.x.dmproadmap.datacite_api_base_url
+    @original_enabled = Rails.configuration.x.dmproadmap.enable_dmp_id_registration
+    Rails.configuration.x.dmproadmap.enable_dmp_id_registration = true
+    Rails.configuration.x.dmproadmap.datacite_active = true
+    Rails.configuration.x.dmproadmap.datacite_api_base_url = 'https://api.test.datacite_org/'
 
     unless Language.where(default_language: true).any?
       # Org model requires a language so make sure the default is set
@@ -30,18 +30,18 @@ RSpec.describe ExternalApis::DataciteService, type: :model do
   end
 
   after do
-    Rails.configuration.x.datacite.active = @original_active
-    Rails.configuration.x.datacite.api_base_url = @original_url
-    Rails.configuration.x.madmp.enable_dmp_id_registration = @original_enabled
+    Rails.configuration.x.dmproadmap.datacite_active = @original_active
+    Rails.configuration.x.dmproadmap.datacite_api_base_url = @original_url
+    Rails.configuration.x.dmproadmap.enable_dmp_id_registration = @original_enabled
   end
 
   describe '#mint_dmp_id' do
     it 'returns nil if the service is not active' do
-      Rails.configuration.x.datacite.active = false
+      Rails.configuration.x.dmproadmap.datacite_active = false
       stub_minting_success!
       dmp_id = described_class.mint_dmp_id(plan: @plan)
       expect(dmp_id).to be_nil
-      Rails.configuration.x.datacite.active = @original_active
+      Rails.configuration.x.dmproadmap.datacite_active = @original_active
     end
 
     xit 'handles the http failure and notifies admins if HTTP response is not 200' do
@@ -61,9 +61,9 @@ RSpec.describe ExternalApis::DataciteService, type: :model do
 
   describe '#update_dmp_id(plan:)' do
     it 'returns false if the DataciteService is not active' do
-      Rails.configuration.x.datacite.active = false
+      Rails.configuration.x.dmproadmap.datacite_active = false
       expect(described_class.update_dmp_id(plan: @plan)).to be(false)
-      Rails.configuration.x.datacite.active = @original_active
+      Rails.configuration.x.dmproadmap.datacite_active = @original_active
     end
 
     it 'returns false if :plan is not present' do
@@ -189,12 +189,12 @@ RSpec.describe ExternalApis::DataciteService, type: :model do
 
       it 'returns the correct username' do
         expect(@hash.include?(:username)).to be(true)
-        expect(@hash[:username]).to eql(Rails.configuration.x.datacite&.repository_id)
+        expect(@hash[:username]).to eql(Rails.configuration.x.dmproadmap.datacite&.repository_id)
       end
 
       it 'returns the correct password' do
         expect(@hash.include?(:password)).to be(true)
-        expect(@hash[:password]).to eql(Rails.configuration.x.datacite&.password)
+        expect(@hash[:password]).to eql(Rails.configuration.x.dmproadmap.datacite&.password)
       end
     end
 
@@ -221,7 +221,7 @@ RSpec.describe ExternalApis::DataciteService, type: :model do
         # DMP checks
         dmp_json = json['data']['attributes']
         expect(dmp_json['prefix']).to eql(described_class.shoulder)
-        expect(dmp_json['schemaVersion']).to eql('http://datacite.org/schema/kernel-4')
+        expect(dmp_json['schemaVersion']).to eql('http://datacite_org/schema/kernel-4')
         expect(dmp_json['titles'].first['title']).to eql(@plan.title)
         expect(dmp_json['descriptions'].first['description']).to eql(@plan.description)
         expect(dmp_json['descriptions'].first['descriptionType']).to eql('Abstract')

@@ -6,8 +6,8 @@ class ApplicationService
     # Returns either the name specified in dmproadmap.rb initializer or
     # the Rails application name
     def application_name
-      default = Rails.application.class.name.split('::').first
-      Rails.configuration.x.application.fetch(:name, default)
+      app_name = Rails.configuration.x.dmproadmap.application_name
+      app_name.nil? ? Rails.application.class.name.split('::').first : app_name
     end
 
     # Use the Rails secret key to encrypt information. Some typical use cases for this

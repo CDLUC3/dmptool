@@ -95,7 +95,7 @@
     </div>
   </div>
 
-  <% if Rails.configuration.x.recaptcha.enabled %>
+  <% if Rails.configuration.x.dmproadmap.recaptcha_enabled %>
     <div id="sign-up-recaptcha" class="c-textfield js-textfield">
       <%= recaptcha_v3(action: 'register', turbolinks: true) %>
     </div>

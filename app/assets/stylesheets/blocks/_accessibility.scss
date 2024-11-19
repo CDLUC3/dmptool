@@ -2,8 +2,10 @@
 @use '../variables/typography' as *;
 
 /* Setting font-family for improving screen legibility */
-body, .tooltip, .popover {
-  font-family: $font-family;
+body,
+.tooltip,
+.popover {
+  font-family: var(--font-family);
 }
 
 /* Text meant only for screen readers. */
@@ -23,49 +25,54 @@ body, .tooltip, .popover {
 
 /* Skip to main content link styling */
 div.skip a {
-  position:absolute;
-  left:-10000px;
-  top:auto;
-  width:1px;
-  height:1px;
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
   overflow: hidden !important;
 }
 
 div.skip a:focus {
-  width:auto;
-  height:auto;
-  overflow:visible !important;
+  width: auto;
+  height: auto;
+  overflow: visible !important;
 }
 
 /** Focus outline required for accessibility */
-a, input, select, .form-control {
+a,
+input,
+select,
+.form-control {
+
   &:focus,
   &:hover,
   &:active {
     outline-style: solid !important;
-    outline-color: $color-focus-outline !important;
+    outline-color: var(--color-focus-outline) !important;
     outline-width: 2px !important;
   }
 }
-  
-  /** button outline-width increased for better visibility of outline */
-  button {
 
-    &:focus,
-    &:hover,
-    &:active {
-      outline-style: solid !important;
-      outline-color: $color-focus-outline !important;
-      outline-width: 3px !important;
-    }
+/** button outline-width increased for better visibility of outline */
+button {
+
+  &:focus,
+  &:hover,
+  &:active {
+    outline-style: solid !important;
+    outline-color: var(--color-focus-outline) !important;
+    outline-width: 3px !important;
   }
-  
-  td {
-    &:focus-within,
-    &:focus,
-    &:hover {
-      outline-style: solid !important;
-      outline-color: $color-focus-outline !important;
-      outline-width: 2px !important;
-    }
+}
+
+td {
+
+  &:focus-within,
+  &:focus,
+  &:hover {
+    outline-style: solid !important;
+    outline-color: var(--color-focus-outline) !important;
+    outline-width: 2px !important;
   }
+}

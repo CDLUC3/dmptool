@@ -1,8 +1,13 @@
-@import "variables";
+@use "variables";
 
 @keyframes bs-notify-fadeOut {
-  0% {opacity: 0.9;}
-  100% {opacity: 0;}
+  0% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 // Mixins
@@ -12,35 +17,37 @@
 
 @mixin box-sizing($fmt) {
   -webkit-box-sizing: $fmt;
-     -moz-box-sizing: $fmt;
-          box-sizing: $fmt;
+  -moz-box-sizing: $fmt;
+  box-sizing: $fmt;
 }
 
 @mixin box-shadow($fmt) {
   -webkit-box-shadow: $fmt;
-          box-shadow: $fmt;
+  box-shadow: $fmt;
 }
 
 @function fade($color, $amnt) {
-  @if $amnt > 1 {
+  @if $amnt >1 {
     $amnt: calc($amnt / 100); // convert to percentage if int
   }
+
   @return rgba($color, $amnt);
 }
 
 // Rules
 select.bs-select-hidden,
-.bootstrap-select > select.bs-select-hidden,
+.bootstrap-select>select.bs-select-hidden,
 select.selectpicker {
   display: none !important;
 }
 
 .bootstrap-select {
-  width: 220px \0; /*IE9 and below*/
+  width: 220px \0;
+  /*IE9 and below*/
   vertical-align: middle;
 
   // The selectpicker button
-  > .dropdown-toggle {
+  >.dropdown-toggle {
     position: relative;
     width: 100%;
     // necessary for proper positioning of caret in Bootstrap 4 (pushes caret to the right)
@@ -56,11 +63,12 @@ select.selectpicker {
     }
 
     &.bs-placeholder {
+
       &,
       &:hover,
       &:focus,
       &:active {
-        color: $input-color-placeholder;
+        color: var(--input-color-placeholder);
       }
 
       &.btn-primary,
@@ -69,17 +77,18 @@ select.selectpicker {
       &.btn-danger,
       &.btn-info,
       &.btn-dark {
+
         &,
         &:hover,
         &:focus,
         &:active {
-          color: $input-alt-color-placeholder;
+          color: var(--input-alt-color-placeholder);
         }
       }
     }
   }
 
-  > select {
+  >select {
     position: absolute !important;
     bottom: 0;
     left: 50%;
@@ -104,13 +113,13 @@ select.selectpicker {
   .has-error & .dropdown-toggle,
   .error & .dropdown-toggle,
   &.is-invalid .dropdown-toggle,
-  .was-validated & select:invalid + .dropdown-toggle {
-    border-color: $color-red-error;
+  .was-validated & select:invalid+.dropdown-toggle {
+    border-color: var(--color-red-error);
   }
 
   &.is-valid .dropdown-toggle,
-  .was-validated & select:valid + .dropdown-toggle {
-    border-color: $color-green-success;
+  .was-validated & select:valid+.dropdown-toggle {
+    border-color: var(--color-green-success);
   }
 
   &.fit-width {
@@ -118,10 +127,10 @@ select.selectpicker {
   }
 
   &:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-    width: $width-default;
+    width: var(--width-default);
   }
 
-  > select.mobile-device:focus + .dropdown-toggle,
+  >select.mobile-device:focus+.dropdown-toggle,
   .dropdown-toggle:focus {
     outline: thin dotted #333333 !important;
     outline: 5px auto -webkit-focus-ring-color !important;
@@ -137,7 +146,7 @@ select.selectpicker {
     border: none;
     height: auto;
 
-    :not(.input-group) > &:not([class*="col-"]) {
+    :not(.input-group)>&:not([class*="col-"]) {
       width: 100%;
     }
 
@@ -194,11 +203,11 @@ select.selectpicker {
   }
 
   &.form-control-sm .dropdown-toggle {
-    padding: $input-padding-y-sm $input-padding-x-sm;
+    padding: var(--input-padding-y-sm) var(--input-padding-x-sm);
   }
 
   &.form-control-lg .dropdown-toggle {
-    padding: $input-padding-y-lg $input-padding-x-lg;
+    padding: var(--input-padding-y-lg) var(--input-padding-x-lg);
   }
 
   // Set the width of the live search (and any other form control within an inline form)
@@ -208,7 +217,7 @@ select.selectpicker {
   }
 
   &.disabled,
-  > .disabled {
+  >.disabled {
     @include cursor-disabled();
 
     &:focus {
@@ -224,7 +233,7 @@ select.selectpicker {
     padding: 0 !important;
 
     .dropdown-menu {
-      z-index: $zindex-select-dropdown;
+      z-index: var(--zindex-select-dropdown);
     }
   }
 
@@ -292,7 +301,7 @@ select.selectpicker {
     min-width: 100%;
     @include box-sizing(border-box);
 
-    > .inner:focus {
+    >.inner:focus {
       outline: none !important;
     }
 
@@ -310,7 +319,7 @@ select.selectpicker {
       position: relative;
 
       &.active small {
-        color: $input-alt-color-placeholder !important;
+        color: var(--input-alt-color-placeholder) !important;
       }
 
       &.disabled a {
@@ -417,9 +426,10 @@ select.selectpicker {
 }
 
 .bootstrap-select.show-menu-arrow {
-  &.open > .dropdown-toggle,
-  &.show > .dropdown-toggle {
-    z-index: ($zindex-select-dropdown + 1);
+
+  &.open>.dropdown-toggle,
+  &.show>.dropdown-toggle {
+    z-index: (var(--zindex-select-dropdown) + 1);
   }
 
   .dropdown-toggle .filter-option {
@@ -427,7 +437,7 @@ select.selectpicker {
       content: '';
       border-left: 7px solid transparent;
       border-right: 7px solid transparent;
-      border-bottom: 7px solid $color-grey-arrow;
+      border-bottom: 7px solid var(--color-grey-arrow);
       position: absolute;
       bottom: -4px;
       left: 9px;
@@ -450,7 +460,7 @@ select.selectpicker {
     &:before {
       bottom: auto;
       top: -4px;
-      border-top: 7px solid $color-grey-arrow;
+      border-top: 7px solid var(--color-grey-arrow);
       border-bottom: 0;
     }
 
@@ -474,8 +484,9 @@ select.selectpicker {
     }
   }
 
-  &.open > .dropdown-toggle .filter-option,
-  &.show > .dropdown-toggle .filter-option {
+  &.open>.dropdown-toggle .filter-option,
+  &.show>.dropdown-toggle .filter-option {
+
     &:before,
     &:after {
       display: block;
@@ -509,7 +520,7 @@ select.selectpicker {
 }
 
 .bs-searchbox {
-  & + .bs-actionsbox {
+  &+.bs-actionsbox {
     padding: 0 8px 4px;
   }
 

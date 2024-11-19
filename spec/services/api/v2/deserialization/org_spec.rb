@@ -6,7 +6,7 @@ RSpec.describe Api::V2::Deserialization::Org do
   include Helpers::IdentifierHelper
 
   before do
-    @original_restrict = Rails.configuration.x.application.restrict_orgs
+    @original_restrict = Rails.configuration.x.dmproadmap.application_restrict_orgs
     # Org requires a language, so make sure a default is available!
     create(:language, default_language: true) unless Language.default
 
@@ -22,7 +22,7 @@ RSpec.describe Api::V2::Deserialization::Org do
   end
 
   after do
-    Rails.configuration.x.application.restrict_orgs = @original_restrict
+    Rails.configuration.x.dmproadmap.application_restrict_orgs = @original_restrict
   end
 
   describe '#deserialize(json: {})' do
@@ -82,20 +82,20 @@ RSpec.describe Api::V2::Deserialization::Org do
       end
 
       it 'does not attempt to find the RegistryOrg by name if the :restrict_orgs is true' do
-        Rails.configuration.x.application.restrict_orgs = true
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = true
         registry_org = create(:registry_org)
         expect(described_class.send(:find_by_name, json: { name: registry_org.name })).to be_nil
       end
 
       it 'finds the matching RegistryOrg by name' do
-        Rails.configuration.x.application.restrict_orgs = false
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = false
         registry_org = create(:registry_org)
         result = described_class.send(:find_by_name, json: { name: registry_org.name })
         expect(result.name).to eql(registry_org.name)
       end
 
       it 'returns nil if no Org or RegistryOrg could be found' do
-        Rails.configuration.x.application.restrict_orgs = false
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = false
         name = Faker::Company.name
         create(:org, name: name)
         create(:registry_org, name: name)
@@ -122,7 +122,7 @@ RSpec.describe Api::V2::Deserialization::Org do
       end
 
       it 'creates and returns a new Org record if the :registry_org does not have one assocciated' do
-        Rails.configuration.x.application.restrict_orgs = false
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = false
         result = described_class.send(:org_from_registry_org!, registry_org: @registry_org)
         expect(Org.all.last).to eql(result)
         expect(@registry_org.reload.org_id).to eql(result.id)

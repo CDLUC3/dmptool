@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<% app_name = "the #{Rails.configuration.x.dmproadmap.name}" %>
+<% app_name = "the #{Rails.configuration.x.dmproadmap.application_name}" %>
 
 <div id="third-party-apps" class="row">
   <% @identifier_schemes.each do |scheme| %>
@@ -34,7 +34,7 @@
 
     <% @tokens.each do |token| %>
       <%
-      app_name = token.application.name.humanize
+      app_name = token.name.humanize
       unlinkconf = _("Are you sure? %{application} will no longer be able to access your DMPs.") % { application: app_name }
       unlinktext = _("Revoke %{application}'s ability to access your data.") % { application: app_name }
       %>
@@ -43,7 +43,7 @@
           <%= image_tag(token.application.logo.thumb('100x100%').url, alt: "#{app_name} logo",
                         class: "org-logo", title: app_name) %>
         <% else %>
-          <%= token.application.name.humanize %>
+          <%= token.name.humanize %>
         <% end %>
 
         <%= link_to '<i class="fas fa-fw fa-times-circle" aria-hidden="true"></i>'.html_safe,

@@ -13,7 +13,7 @@
 class Pref < ApplicationRecord
   ##
   # Serialize prefs to JSON
-  serialize :settings, JSON
+  serialize :settings, type: Hash, coder: JSON
 
   # ================
   # = Associations =
@@ -32,6 +32,6 @@ class Pref < ApplicationRecord
   #
   # Returns Hash
   def self.default_settings
-    Rails.configuration.x.application.preferences
+    Rails.configuration.x.dmproadmap.preferences
   end
 end

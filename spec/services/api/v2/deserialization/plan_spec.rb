@@ -53,7 +53,7 @@ RSpec.describe Api::V2::Deserialization::Plan do
       ],
       dataset: [
         {
-          type: ResearchOutput.output_types.keys.sample,
+          type: ResearchOutput::DEFAULT_OUTPUT_TYPES.sample,
           title: Faker::Lorem.sentence,
           description: Faker::Lorem.paragraph,
           personal_data: %w[yes no unknown].sample,

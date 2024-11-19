@@ -46,12 +46,12 @@ RSpec.describe RegistryOrgsController do
           term: @org.name, known_only: nil, unknown_only: nil, managed_only: nil, funder_only: nil,
           template_owner_only: nil, non_funder_only: nil
         }
-        Rails.configuration.x.application.restrict_orgs = true
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = true
         hash[:known_only] = true
         @controller.expects(:registry_orgs_search).with(**hash).returns([@registry_org])
         @controller.send(:find_by_search_term, term: @org.name)
 
-        Rails.configuration.x.application.restrict_orgs = false
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = false
         hash[:known_only] = false
         @controller.expects(:registry_orgs_search).with(**hash).returns([@registry_org])
         @controller.send(:find_by_search_term, term: @org.name)

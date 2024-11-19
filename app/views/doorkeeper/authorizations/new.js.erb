@@ -9,7 +9,7 @@ oauth_hash = process_oauth
 if (signInBlock.length > 0 && backLink.length > 0) {
   <% if resource.present? && resource.org_id.present? %>
     // User exists so show them the appropriate sign in form
-    <% if Rails.configuration.x.shibboleth_enabled && resource.org.shibbolized? %>
+    <% if Rails.configuration.x.dmproadmap.shibboleth_enabled && resource.org.shibbolized? %>
       <% partial = "/doorkeeper/authorizations/shib_sign_in" %>
     <% else %>
       <% partial = "/doorkeeper/authorizations/sign_in" %>

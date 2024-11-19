@@ -15,10 +15,10 @@ RSpec.describe 'ModalSearchDialog' do
     sign_in @user
     visit root_path
 
-    @original_outputs = Rails.configuration.x.madmp.enable_research_outputs
-    @original_repos = Rails.configuration.x.madmp.enable_repository_selection
-    Rails.configuration.x.madmp.enable_research_outputs = true
-    Rails.configuration.x.madmp.enable_repository_selection = true
+    @original_outputs = Rails.configuration.x.dmproadmap.enable_research_outputs
+    @original_repos = Rails.configuration.x.dmproadmap.enable_repository_selection
+    Rails.configuration.x.dmproadmap.enable_research_outputs = true
+    Rails.configuration.x.dmproadmap.enable_repository_selection = true
 
     click_link @plan.title
     click_link 'Research outputs'
@@ -26,8 +26,8 @@ RSpec.describe 'ModalSearchDialog' do
   end
 
   after do
-    Rails.configuration.x.madmp.enable_research_outputs = @original_outputs
-    Rails.configuration.x.madmp.enable_repository_selection = @original_repos
+    Rails.configuration.x.dmproadmap.enable_research_outputs = @original_outputs
+    Rails.configuration.x.dmproadmap.enable_repository_selection = @original_repos
   end
 
   it 'Modal search opens and closes and allows user to search, select and remove items', :js do

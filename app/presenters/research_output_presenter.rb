@@ -62,9 +62,9 @@ class ResearchOutputPresenter
 
   # Returns whether or not we should capture the byte_size based on the output_type
   def byte_sizable?
-    @research_output.audiovisual? || @research_output.sound? || @research_output.image? ||
-      @research_output.model_representation? ||
-      @research_output.data_paper? || @research_output.dataset? || @research_output.text?
+    output_types_with_byte_size = %w[audiovisual, sound, image, .model_representation, data_paper,
+                                     dataset, text]
+    output_types_with_byte_size.include?(@research_output.research_output_type)
   end
 
   # Returns the options for subjects for the repository filter

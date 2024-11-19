@@ -6,7 +6,7 @@ class OrcidPublisherJob < ApplicationJob
 
   def perform(user:, plan:)
     # Only allow ORCID publication for the DMP ID if it is enabled in the config!
-    if Rails.configuration.x.madmp.enable_orcid_publication
+    if Rails.configuration.x.dmproadmap.enable_orcid_publication
       orcid_access_token = ExternalApiAccessToken.for_user_and_service(user: user, service: 'orcid')
     end
 

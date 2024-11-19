@@ -18,11 +18,11 @@
   <%= f.label :visibility, class: 'control-label' %>
 
   <div class="checkbox">
-    <%= f.radio_button(:visibility, ::Template.visibilities[:organisationally_visible]) %>
+    <%= f.radio_button(:visibility, :organisationally_visible) %>
     <span>&nbsp;<%= _('for internal %{org_name} use only') % { org_name: f.object.org.name } %></span>
   </div>
   <div class="checkbox">
-    <%= f.radio_button(:visibility, ::Template.visibilities[:publicly_visible]) %>
+    <%= f.radio_button(:visibility, :publicly_visible) %>
     <span>&nbsp;<%= _('for all users') %></span>
   </div>
 </div>
@@ -62,7 +62,7 @@
       context: 'funder',
       title: _('Funder Links'),
       links: Hash(f.object.links).fetch('funder', []),
-      max_number_links: Rails.configuration.x.max_number_links_funder.to_i,
+      max_number_links: Rails.configuration.x.dmproadmap.max_number_links_funder.to_i,
       tooltip: _('Add links to funder websites that provide additional information about the requirements for this template') }) %>
   </div>
   <div class="col-xs-8">
@@ -71,7 +71,7 @@
       context: 'sample_plan',
       title: _('Sample Plan Links'),
       links: Hash(f.object.links).fetch('sample_plan', []),
-      max_number_links: Rails.configuration.x.max_number_links_sample_plan.to_i,
+      max_number_links: Rails.configuration.x.dmproadmap.max_number_links_sample_plan.to_i,
       tooltip: _('Add links to sample plans if provided by the funder.') }) %>
   </div>
   <%= hidden_field_tag('template-links', ActiveSupport::JSON.encode(f.object.links)) %>

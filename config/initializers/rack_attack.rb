@@ -33,6 +33,6 @@ Rack::Attack.throttle "logins/ip", limit: 4, period: 30.seconds do |req|
 end
 
 # Throttle attemps to hammer on our contact-us form
-Rack::Attack.throttle "contact-us", limit: 2, period: 30.seconds do |req|
+Rack::Attack.throttle "contact-us", limit: 1, period: 180.seconds do |req|
   req.post? && req.path == "/contacts" && req.ip
 end

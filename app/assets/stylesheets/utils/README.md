@@ -8,10 +8,10 @@ Use this directory to define utility classes for use throughout the app. Example
 }
 
 .red {
-  color: $color-text-red;
+  color: var(--color-text-red);
 }
 
 .border-bottom {
-  border-bottom: thin solid $color-border-default;
+  border-bottom: thin solid var(--color-border-default);
 }
 ```

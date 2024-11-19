@@ -2,14 +2,14 @@
 
 source 'https://rubygems.org'
 
-ruby '>= 3.0'
+ruby '>= 3.2'
 
 # ===========#
 # CORE RAILS #
 # ===========#
 
 # Full-stack web application framework. (http://rubyonrails.org)
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.2'
 
 # TODO: Remove this once Rails addresses the issue with its dependency on mimemagic. Mimemagic had
 #       an MIT license but was using some incompatible GPL license code.
@@ -35,6 +35,14 @@ gem 'turbo-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
+
+# The ultimate text progress bar library for Ruby!
+# (https://github.com/jfelchner/ruby-progressbar)
+gem 'ruby-progressbar'
+
+# Provides Sprockets implementation for Rails 4.x (and beyond) Asset Pipeline.
+# https://github.com/rails/sprockets-rails
+gem 'sprockets-rails'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -83,14 +91,14 @@ gem 'rollbar', group: :rollbar, require: false
 
 # A simple, fast Mysql library for Ruby, binding to libmysql
 # (http://github.com/brianmario/mysql2)
-gem 'mysql2', "0.5.6", group: :mysql, require: false
+gem 'mysql2'
 
 # Pg is the Ruby interface to the {PostgreSQL
 # RDBMS}[http://www.postgresql.org/](https://bitbucket.org/ged/ruby-pg)
 gem 'pg', group: :pgsql, require: false
 
 # Bit fields for ActiveRecord (https://github.com/pboling/flag_shih_tzu)
-gem 'flag_shih_tzu' # , "~> 0.3.23"
+gem 'flag_shih_tzu'
 
 # ======== #
 # SECURITY #
@@ -135,7 +143,7 @@ gem 'jwt'
 gem 'pundit'
 
 # Gem for throttling malicious attacks
-gem 'rack-attack', '~> 6.6', '>= 6.6.1'
+gem 'rack-attack'
 
 # Support for Cross-Origin Resource Sharing (CORS) for Rack compatible web applications.
 # https://github.com/cyu/rack-cors
@@ -245,10 +253,9 @@ gem 'activerecord_json_validator'
 # user input (we're using it for PDF invoice downloads in Noko). (https://github.com/madrobby/zaru)
 gem 'zaru'
 
-# We need to freeze the mail gem version as the recently released 2.8.0 triggers an exception
-# We will need to check if it's fixed when we migrate to Ruby 3.0/3.1
-# See : https://github.com/DMPRoadmap/roadmap/issues/3254
-gem 'mail', '2.7.1'
+# Mail is an internet library for Ruby that is designed to handle email generation, parsing and sending in
+# a simple, rubyesque manner.
+gem 'mail'
 
 # Delayed::Job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
 # See: https://github.com/collectiveidea/delayed_job#active-job
@@ -298,10 +305,6 @@ group :ci, :development do
   # RuboCop is a Ruby code style checking and code formatting tool. It aims to enforce
   # the community-driven Ruby Style Guide.
   gem 'rubocop'
-
-  # RuboCop rules for detecting and autocorrecting undecorated strings for i18n
-  # (gettext and rails-i18n)
-  gem 'rubocop-i18n'
 
   # A collection of RuboCop cops to check for performance optimizations in Ruby code.
   # gem 'rubocop-performance'
@@ -400,7 +403,7 @@ group :development do
 
   # TODO: Unlock this version once the Rails load error is fixed:
   #       https://github.com/BetterErrors/better_errors/issues/523
-  gem 'better_errors', '2.9.1'
+  gem 'better_errors'
 
   # Retrieve the binding of a method's caller. Can also retrieve bindings
   # even further up the stack. (http://github.com/banister/binding_of_caller)

@@ -43,7 +43,7 @@ class PlansController < ApplicationController
     @visibility = if @plan.visibility.present?
                     @plan.visibility.to_s
                   else
-                    Rails.configuration.x.plans.default_visibility
+                    Rails.configuration.x.dmproadmap.plans_default_visibility
                   end
     # Get all of the available funders
     @funders = Org.funder
@@ -359,7 +359,7 @@ class PlansController < ApplicationController
       else
         # rubocop:disable Layout/LineLength
         render status: :forbidden, json: {
-          msg: format(_("Unable to change the plan's status since it is needed at least %{percentage} percentage responded"), percentage: Rails.configuration.x.plans.default_percentage_answered)
+          msg: format(_("Unable to change the plan's status since it is needed at least %{percentage} percentage responded"), percentage: Rails.configuration.x.dmproadmap.plans_default_percentage_answered)
         }
         # rubocop:enable Layout/LineLength
       end
@@ -415,7 +415,7 @@ class PlansController < ApplicationController
             _('Your DMP ID was registered but we were unable to add it to your ORCID record as a new work.')
           else
             format(_("Something went wrong and we were unable to acquire a DMP ID for your plan. Please try again. If the problem /
-              persists please contact the help desk at %{helpdesk_email}"), helpdesk_email: Rails.configuration.x.organisation.helpdesk_email)
+              persists please contact the help desk at %{helpdesk_email}"), helpdesk_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email)
           end
     # rubocop:enable Layout/LineLength
     redirect_to publish_plan_path(@plan), alert: msg

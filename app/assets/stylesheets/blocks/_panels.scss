@@ -3,28 +3,31 @@
 // Override Bootstrap 3.0's Panels
 
 .panel-default {
-  border-color: $color-border-default;
+  border-color: var(--color-border-default);
 }
-.heading-button > .panel-heading, .panel-default > .panel-heading {
-  background-color: $color-primary-background;
-  color: $color-primary-text;
+
+.heading-button>.panel-heading,
+.panel-default>.panel-heading {
+  background-color: var(--color-primary-background);
+  color: var(--color-primary-text);
   border-top-right-radius: 0px;
   border-top-left-radius: 0px;
 }
 
 .empty-section {
-  background-color: $color-grey !important;
+  background-color: var(--color-grey) !important;
   cursor: 'auto' !important;
 }
 
 .panel-title a {
   display: block;
-  padding: 8px calc($grid-gutter-width / 2);
-  margin: -10px calc($grid-gutter-width / -2);
-  background-color: $color-primary-background;
-  color: $color-primary-text;
+  padding: 8px calc(var(--grid-gutter-width) / 2);
+  margin: -10px calc(var(--grid-gutter-width) / -2);
+  background-color: var(--color-primary-background);
+  color: var(--color-primary-text);
 }
-.panel-title > a.reverse {
-  background-color: $color-secondary-background;
-  color: $color-secondary-text;
+
+.panel-title>a.reverse {
+  background-color: var(--color-secondary-background);
+  color: var(--color-secondary-text);
 }

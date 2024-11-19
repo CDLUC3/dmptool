@@ -107,6 +107,7 @@ module Users
 
     # If you have extra params to permit, append them to the sanitizer.
     def configure_sign_in_params
+      params.permit(:language_id, :authenticity_token)
       devise_parameter_sanitizer.permit(:sign_in, keys: authentication_params(type: :sign_in))
     end
 

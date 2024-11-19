@@ -39,10 +39,15 @@ services:
       - "3000"
     environment:
       - RAILS_ENV=development
+      - DMPROADMAP_DATABASE_HOST=mysql
+      - DMPROADMAP_DATABASE_PORT=3306
+      - DMPROADMAP_DATABASE_USERNAME=dmpuser
+      - DMPROADMAP_DATABASE_PASSWORD=abcdefghij
+      - DMPROADMAP_DATABASE_NAME=dmp
       # The first time you startup these docker containers, you will need to uncomment the
       # following FIRST_TIME variable so the MySQL database is properly initialized.
       #
-      #- FIRST_TIME=true
+      # - FIRST_TIME=true
     env_file:
       - .env.dev
     volumes:

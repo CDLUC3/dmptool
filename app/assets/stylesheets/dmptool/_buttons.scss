@@ -7,9 +7,9 @@
 .btn-primary:visited,
 .btn-primary:active:hover,
 .btn-primary.active:hover {
-  background-color: $color-primary-background;
-  border-color: $color-primary-background;
-  color: $color-primary-text;
+  background-color: var(--color-primary-background);
+  border-color: var(--color-primary-background);
+  color: var(--color-primary-text);
   margin: 15px 0;
 }
 
@@ -20,9 +20,9 @@
 .btn-secondary:visited,
 .btn-secondary:active:hover,
 .btn-secondary.active:hover {
-  background-color: $color-secondary-background;
-  border-color: $color-primary-background;
-  color: $color-secondary-text;
+  background-color: var(--color-secondary-background);
+  border-color: var(--color-primary-background);
+  color: var(--color-secondary-text);
   margin: 15px 0;
 }
 
@@ -33,8 +33,8 @@
 .btn-default:visited,
 .btn-default:active:hover,
 .btn-default.active:hover {
-  background-color: $color-primary-background;
-  border-color: $color-primary-background;
-  color: $color-primary-text;
+  background-color: var(--color-primary-background);
+  border-color: var(--color-primary-background);
+  color: var(--color-primary-text);
   margin: 15px 0;
 }

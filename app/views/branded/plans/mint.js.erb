@@ -6,7 +6,7 @@ if (target != undefined) {
 
   <% else %>
     var response = $('.dmp_id-minter-response');
-    response.html(`<%= _("Something went wrong and we were unable to acquire a DMP ID for your plan. Please try again. If the problem persists please contact the help desk at %{helpdesk_email}") % { helpdesk_email: Rails.configuration.x.organisation.helpdesk_email } %>`);
+    response.html(`<%= _("Something went wrong and we were unable to acquire a DMP ID for your plan. Please try again. If the problem persists please contact the help desk at %{helpdesk_email}") % { helpdesk_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email } %>`);
   <% end %>
 }
 toggleSpinner(false);

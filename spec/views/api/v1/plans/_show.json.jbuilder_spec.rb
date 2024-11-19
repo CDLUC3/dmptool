@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'api/v1/plans/_show.json.jbuilder' do
   before do
-    Rails.configuration.x.madmp.enable_dmp_id_registration = true
+    Rails.configuration.x.dmproadmap.enable_dmp_id_registration = true
 
     @plan = create(:plan)
     @data_contact = create(:contributor, data_curation: true, plan: @plan)

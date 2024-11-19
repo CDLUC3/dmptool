@@ -1,13 +1,15 @@
 @use "../../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss" as *;
+
 /* For sticky footer */
 #footer-navbar {
   margin-bottom: 0px;
   position: absolute;
   bottom: 0;
   width: 100%;
-  border-radius:0px;
+  border-radius: 0px;
   z-index: 1;
+
   ul {
-    padding-right: calc($grid-gutter-width / 2);
+    padding-right: calc(var(--grid-gutter-width) / 2);
   }
 }

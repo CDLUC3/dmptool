@@ -30,7 +30,7 @@ managed_only = local_assigns.fetch(:managed_only, false)
 template_owner_only = local_assigns.fetch(:template_owner_only, false)
 
 # Whether or not to allow a user to enter in a custom/other Org
-restricting = Rails.configuration.x.application.restrict_orgs
+restricting = Rails.configuration.x.dmproadmap.application_restrict_orgs
 allow_custom_org_entry = restricting ? false : !local_assigns.fetch(:known_only, false)
 
 # The label to use

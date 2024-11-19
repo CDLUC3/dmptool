@@ -43,7 +43,7 @@ class ApiClient < ApplicationRecord
   extend Dragonfly::Model::Validations
   extend UniqueRandom
 
-  enum callback_methods: { put: 0, post: 1, patch: 2 }
+  CALLBACK_METHODS = %w[put, post, patch]
 
   LOGO_FORMATS = %w[jpeg png gif jpg bmp svg].freeze
 

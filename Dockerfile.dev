@@ -7,25 +7,26 @@ RUN groupadd -g 1000 dmpt && useradd -u 1000 -g 1000 dmpt
 # they were clobbered by a parent image.
 RUN set -ex \
     && RUN_DEPS=" \
-        apt-transport-https autoconf automake build-essential ca-certificates chromium curl \
-        dumb-init fonts-liberation gawk g++ gconf-service git imagemagick \
-        libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libcurl4-gnutls-dev \
-        libdbus-1-3 libexpat1 libffi-dev libfontconfig1 libgdbm-dev libgbm1 libgcc1 \
-        libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libmariadb-dev \
-        libnspr4 libnss3 libreadline-dev libpango-1.0-0 libpangocairo-1.0-0 \
-        libssl-dev libstdc++6 libtool libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
-        libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 \
-        libxrender1 libxss1 libxtst6 libyaml-dev locales lsb-release mtr \
-        shared-mime-info tzdata vim wget xdg-utils xfonts-base \
-        xfonts-75dpi xz-utils yarn \
-        nodejs -qqy \
+    apt-transport-https autoconf automake build-essential ca-certificates chromium curl \
+    dumb-init fonts-liberation gawk g++ gconf-service git imagemagick \
+    libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libcurl4-gnutls-dev \
+    libdbus-1-3 libexpat1 libffi-dev libfontconfig1 libgdbm-dev libgbm1 libgcc1 \
+    libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libmariadb-dev \
+    libnspr4 libnss3 libreadline-dev libpango-1.0-0 libpangocairo-1.0-0 \
+    libssl-dev libstdc++6 libtool libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
+    libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 \
+    libxrender1 libxss1 libxtst6 libyaml-dev locales lsb-release mtr \
+    shared-mime-info tzdata vim wget xdg-utils xfonts-base \
+    xfonts-75dpi xz-utils yarn \
+    python3 make \
+    nodejs -qqy \
     " \
     && seq 1 8 | xargs -I{} mkdir -p /usr/share/man/man{} \
     && apt-get update && apt-get install -y --no-install-recommends $RUN_DEPS \
     && rm -rf /var/lib/apt/lists/*
 
 # Install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_22.x | bash -
 RUN apt-get install -y nodejs
 
 # Install yarn
@@ -51,9 +52,12 @@ RUN gem install bundler -v 2.5
 RUN gem install foreman
 RUN bundle config without pgsql rollbar
 RUN bundle install
-RUN yarn install
 
-# RUN npx puppeteer browsers install chrome
+# Install parcel watcher locally so that it has the correct build
+# RUN npm i -g node-gyp
+# RUN yarn add @parcel/watcher --save-dev
+# RUN yarn add @parcel/watcher-linux-arm64-glibc --save-dev
+RUN yarn install
 
 # Install the fonts needed by Puppeteer to generate PDFs
 RUN mkdir -p /home/dmpt/.local/share/fonts
@@ -66,5 +70,4 @@ USER dmpt
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
 # EXPOSE 25 80 443
-# CMD ["bundle", "exec", "puma", "-C", "config/puma.rb", "-p", "80"]
 CMD ["echo", "Ready…"]

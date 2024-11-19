@@ -208,7 +208,7 @@ module Api
 
         name = json[:name].downcase.split('(').first
         matches = Org.where(managed: true).search(name)
-        matches += RegistryOrg.search(name) unless Rails.configuration.x.application.restrict_orgs
+        matches += RegistryOrg.search(name) unless Rails.configuration.x.dmproadmap.application_restrict_orgs
         matches.any? ? matches.map(&:name) : []
       end
       # rubocop:enable Metrics/AbcSize

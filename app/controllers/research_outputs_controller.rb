@@ -44,6 +44,8 @@ class ResearchOutputsController < ApplicationController
   def create
     args = process_byte_size.merge({ plan_id: @plan.id })
     args = process_nillable_values(args: args)
+    args = process_output_type(args: args)
+
     # Create custom repositories and metadata standards if applicable
     args[:repositories_attributes] = create_custom_repositories(
       existing: args.fetch(:repositories_attributes, []), custom: custom_repo_params
@@ -67,8 +69,10 @@ class ResearchOutputsController < ApplicationController
   # PATCH/PUT /plans/:plan_id/research_outputs/:id
   # rubocop:disable Metrics/AbcSize
   def update
-    args = process_byte_size.merge({ plan_id: @plan.id })
-    args = process_nillable_values(args: args)
+    update_args = process_byte_size.merge({ plan_id: @plan.id })
+    update_args = process_nillable_values(args: update_args)
+    update_args = process_output_type(args: update_args)
+
     authorize @research_output
 
     # Clear any existing repository and metadata_standard selections.
@@ -76,13 +80,14 @@ class ResearchOutputsController < ApplicationController
     @research_output.metadata_standards.clear
 
     # Create custom repositories and metadata standards if applicable
-    args[:repositories_attributes] = create_custom_repositories(
-      existing: args.fetch(:repositories_attributes, []), custom: custom_repo_params
+    update_args[:repositories_attributes] = create_custom_repositories(
+      existing: output_params.fetch(:repositories_attributes, []), custom: custom_repo_params
     )
-    args[:metadata_standards_attributes] = create_custom_standards(
-      existing: args.fetch(:metadata_standards_attributes, []), custom: custom_standard_params
+    update_args[:metadata_standards_attributes] = create_custom_standards(
+      existing: output_params.fetch(:metadata_standards_attributes, []), custom: custom_standard_params
     )
-    if @research_output.update(args)
+
+    if @research_output.update(update_args)
       redirect_to plan_research_outputs_path(@plan),
                   notice: success_message(@research_output, _('saved'))
     else
@@ -121,9 +126,11 @@ class ResearchOutputsController < ApplicationController
   # GET  /plans/:id/license_selection
   def select_license
     @plan = Plan.find_by(id: params[:plan_id])
+
     @research_output = ResearchOutput.new(
-      plan: @plan, license_id: output_params[:license_id]
+      plan: @plan, license_id: output_params[:research_output][:license_id]
     )
+
     authorize @research_output
   end
 
@@ -164,6 +171,14 @@ class ResearchOutputsController < ApplicationController
     authorize @research_output
   end
 
+  def process_output_type(args:)
+    if args[:output_type_description].present? && args[:research_output_type] = 'other'
+      args[:research_output_type] = args[:output_type_description]
+    end
+    args.delete(:output_type_description)
+    args
+  end
+
   # GET /plans/:id/metadata_standard_search
   # rubocop:disable Metrics/AbcSize
   def metadata_standard_search
@@ -189,11 +204,11 @@ class ResearchOutputsController < ApplicationController
   private
 
   def output_params
-    params.require(:research_output)
-          .permit(%i[title abbreviation description research_output_type
-                     sensitive_data personal_data file_size file_size_unit mime_type_id
-                     release_date access coverage_start coverage_end coverage_region
-                     mandatory_attribution license_id],
+    ActionController::Parameters.permit_all_parameters = true
+    params.permit(research_output: %i[title abbreviation description research_output_type output_type_description
+                                      sensitive_data personal_data file_size file_size_unit mime_type_id
+                                      release_date access coverage_start coverage_end coverage_region
+                                      mandatory_attribution license_id],
                   repositories_attributes: %i[id name description uri],
                   metadata_standards_attributes: %i[id name description uri])
   end
@@ -216,7 +231,7 @@ class ResearchOutputsController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def process_byte_size
-    args = output_params
+    args = output_params[:research_output].to_h
 
     if args[:file_size].present?
       byte_size = 0.bytes + case args[:file_size_unit]
@@ -246,16 +261,18 @@ class ResearchOutputsController < ApplicationController
   def create_custom_repositories(existing:, custom:)
     return existing if custom.nil? || custom[:repositories_attributes].nil?
 
-    existing = existing.to_h
+    out = []
     custom[:repositories_attributes].each do |_id, hash|
+      hash = hash.to_h
+      out << hash if hash[:uri].nil? || hash[:name].nil?
       next if hash[:uri].nil? || hash[:name].nil?
 
       repo = Repository.find_by(uri: hash[:uri])
       hash[:info] = '{"types": [],"subjects": []}' if repo.nil?
       repo = Repository.create(hash) if repo.nil?
-      existing[repo.id.to_s] = { id: repo.id } unless repo.nil?
+      out << { id: repo.id } unless repo.nil?
     end
-    existing
+    out
   end
   # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
@@ -264,17 +281,19 @@ class ResearchOutputsController < ApplicationController
   def create_custom_standards(existing:, custom:)
     return existing if custom.nil? || custom[:metadata_standards_attributes].nil?
 
-    existing = existing.to_h
+    out = []
     custom[:metadata_standards_attributes].each do |_id, hash|
+      hash = hash.to_h
+      out << hash if hash[:uri].nil? || hash[:name].nil?
       next if hash[:uri].nil? || hash[:name].nil?
 
       hash[:title] = hash[:name]
       hash.delete(:name)
       standard = MetadataStandard.find_by(uri: hash[:uri])
       standard = MetadataStandard.create(hash) if standard.nil?
-      existing[standard.id.to_s] = { id: standard.id } unless standard.nil?
+      out << { id: standard.id } unless standard.nil?
     end
-    existing
+    out
   end
   # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 

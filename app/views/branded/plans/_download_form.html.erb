@@ -23,7 +23,7 @@
     <fieldset>
       <div class="checkbox">
         <%= label_tag 'export[project_details]' do %>
-          <%= check_box_tag 'export[project_details]', true, Rails.configuration.x.dmproadmap.download_coversheet_tickbox_checked %>
+          <%= check_box_tag 'export[project_details]', true, Rails.configuration.x.dmproadmap.plans_download_coversheet_tickbox_checked %>
           <%= _('include a project details coversheet') %>
         <% end %>
       </div>

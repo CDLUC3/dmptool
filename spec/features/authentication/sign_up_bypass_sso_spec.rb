@@ -8,10 +8,10 @@ RSpec.describe 'Sign up and bypass SSO' do
   include Helpers::IdentifierHelper
 
   before do
-    @original_shib = Rails.configuration.x.shibboleth&.enabled
-    @original_disco = Rails.configuration.x.shibboleth.use_filtered_discovery_service
-    Rails.configuration.x.shibboleth&.enabled = true
-    Rails.configuration.x.shibboleth.use_filtered_discovery_service = true
+    @original_shib = Rails.configuration.x.dmproadmap.shibboleth_enabled
+    @original_disco = Rails.configuration.x.dmproadmap.shibboleth_use_filtered_discovery_service
+    Rails.configuration.x.dmproadmap.shibboleth_enabled = true
+    Rails.configuration.x.dmproadmap.shibboleth_use_filtered_discovery_service = true
     mock_blog
     @email_domain = 'foo.edu'
     @org = create(:org, name: 'Test Org', contact_email: "help-desk@#{@email_domain}")
@@ -21,8 +21,8 @@ RSpec.describe 'Sign up and bypass SSO' do
   end
 
   after do
-    Rails.configuration.x.shibboleth.enabled = @original_shib
-    Rails.configuration.x.shibboleth.use_filtered_discovery_service = @original_disco
+    Rails.configuration.x.dmproadmap.shibboleth_enabled = @original_shib
+    Rails.configuration.x.dmproadmap.shibboleth_use_filtered_discovery_service = @original_disco
   end
 
   it 'does not display bypass link for unknown user with a known email domain for an unshibbolized org', js: true do

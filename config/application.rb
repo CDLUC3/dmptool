@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative "boot"
 
 require "rails/all"
@@ -23,11 +21,15 @@ if ENV.key?('SSM_ROOT_PATH')
   Anyway.loaders.insert_before(:env, :ssm_parameter_store, SsmConfigLoader)
 end
 
-module DMPRoadmap
-  # The DMPRoadmap Rails application
+module DmpRoadmap
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.2
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -37,12 +39,12 @@ module DMPRoadmap
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # If a default column serializer is not defined
+    config.active_record.default_column_serializer = JSON
+
     # --------------------------------#
     # OVERRIDES TO DEFAULT RAILS CONFIG #
     # --------------------------------#
-    # Ensure that Zeitwerk knows to load our classes in the lib directory
-    config.eager_load_paths << config.root.join('lib')
-
     # CVE-2022-32224: add some compatibility with YAML.safe_load
     # Rails 5,6,7 are using YAML.safe_load as the default YAML deserializer
     config.active_record.yaml_column_permitted_classes = [ActiveSupport::HashWithIndifferentAccess, Symbol, Date, Time]

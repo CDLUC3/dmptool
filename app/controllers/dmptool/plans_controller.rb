@@ -36,19 +36,20 @@ module Dmptool
 
       attrs = plan_params
 
+      rattrs = related_identifier_params
       # Save the related_identifiers first. For some reason Rails is auto deleting them and then re-adding
       # if you just pass in the params as is :/
       #
       # So delete removed ones, add new ones, and leave the others alone
-      ids = attrs[:related_identifiers_attributes].to_h.values.compact.map { |item| item['id'] }
+      ids = rattrs[:related_identifiers_attributes].to_h.values.compact.map { |item| item['id'] }
       @plan.related_identifiers.reject { |identifier| ids.include?(identifier.id.to_s) }.each(&:destroy)
 
-      attrs[:related_identifiers_attributes].each do |_idx, related_identifier|
+      rattrs[:related_identifiers_attributes].each do |_idx, related_identifier|
         next if related_identifier[:id].present? || related_identifier[:value].blank?
 
         RelatedIdentifier.create(related_identifier.merge({ identifiable: @plan }))
       end
-      attrs.delete(:related_identifiers_attributes)
+      # attrs.delete(:related_identifiers_attributes)
 
       @plan.grant = plan_params[:grant]
       attrs.delete(:grant)
@@ -123,10 +124,14 @@ module Dmptool
 
     private
 
+    def related_identifier_params
+      params.permit(related_identifiers_attributes: %i[id work_type value])
+    end
+
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
     def create_plan(plan:, params:)
       plan.visibility = if params['visibility'].blank?
-                          Rails.configuration.x.plans.default_visibility
+                          Rails.configuration.x.dmproadmap.plans_default_visibility
                         else
                           plan_params[:visibility]
                         end

@@ -70,8 +70,8 @@ namespace :v4 do
     puts 'value in the new research_outputs.research_output_type field'
 
     ResearchOutput.all.each do |rec|
-      rec.update(research_output_type: rec.output_type_description) if rec.other?
-      next if rec.other?
+      rec.update(research_output_type: rec.output_type_description) if rec.research_output_type == 'other'
+      next if rec.research_output_type == 'other'
 
       rec.update(research_output_type: rec.output_type.to_s)
     end

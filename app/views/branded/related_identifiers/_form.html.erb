@@ -1,8 +1,8 @@
 <%# locals: presenter, related_identifier, tooltip %>
 <%
   id = related_identifier.id.nil? ? 0 : related_identifier.id
-  name_base = "plan[related_identifiers_attributes[#{id}]"
-  id_base = "plan_related_identifiers_attributes_#{id}"
+  name_base = "related_identifiers_attributes[#{id}"
+  id_base = "related_identifiers_attributes_#{id}"
 %>
 
 <div class="row related-work-row <%= related_identifier.new_record? ? "hidden" : "" %>">
@@ -24,15 +24,15 @@
                       include_blank: _("- Please select one -"),
                       selected: related_identifier.work_type,
                       class: "form-control",
-                      name: "plan[related_identifiers_attributes[0][work_type]]",
-                      id: "plan_related_identifiers_attributes_0_work_type"
+                      name: "related_identifiers_attributes[0][work_type]",
+                      id: "related_identifiers_attributes_0_work_type"
                     } %>
     </span>
     <span class="col-md-4">
       <%= url_field_tag :value, related_identifier.value,
                         class: "form-control",
-                        name: "plan[related_identifiers_attributes[0][value]]",
-                        id: "plan_related_identifiers_attributes_0_value" %>
+                        name: "related_identifiers_attributes[0][value]",
+                        id: "related_identifiers_attributes_0_value" %>
     </span>
     <a href="#" class="delete" aria-label="<%= _('Remove this related work') %>">
       <i class="fas fa-times-circle fa-reverse remove-related-work" aria-hidden="true"></i>

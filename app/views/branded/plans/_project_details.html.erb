@@ -9,7 +9,7 @@ ethics_report_tooltip = _("Link to a protocol from a meeting with an ethics comm
 %>
 
 <% dmp_id = plan.dmp_id %>
-<% if Rails.configuration.x.madmp&.enable_dmp_id_registration && dmp_id.present? %>
+<% if Rails.configuration.x.dmproadmap.enable_dmp_id_registration && dmp_id.present? %>
   <div class="form-group"><!-- dmp_id -->
     <div class="col-md-12">
       <label>DMP ID:</label>&nbsp;<%= dmp_id_for_display(dmp_id: plan.dmp_id, without_prefix: true) %>
@@ -47,7 +47,7 @@ ethics_report_tooltip = _("Link to a protocol from a meeting with an ethics comm
   </div>
 </div>
 
-<% if Rails.configuration.x.madmp.enable_research_domain %>
+<% if Rails.configuration.x.dmproadmap.enable_research_domain %>
   <div class="form-group">
     <div class="col-md-8">
       <%= form.label(:research_domain_id, _("Research domain"), class: "control-label") %>
@@ -78,7 +78,7 @@ ethics_report_tooltip = _("Link to a protocol from a meeting with an ethics comm
   </div>
 </div>
 
-<% if Rails.configuration.x.madmp.enable_ethical_issues %>
+<% if Rails.configuration.x.dmproadmap.enable_ethical_issues %>
   <conditional>
     <div class="form-group">
       <div class="col-md-8">
@@ -129,7 +129,7 @@ ethics_report_tooltip = _("Link to a protocol from a meeting with an ethics comm
                               default_org: plan.funder,
                               required: false,
                               div_id: 'funder-org-controls',
-                              known_only: Rails.configuration.x.application.restrict_orgs || false,
+                              known_only: Rails.configuration.x.dmproadmap.application_restrict_orgs || false,
                               funder_only: true,
                               label: _("Funder") } %>
       <% end %>

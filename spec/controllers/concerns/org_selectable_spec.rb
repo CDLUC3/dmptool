@@ -72,7 +72,7 @@ RSpec.describe OrgSelectable do
     context 'Non-namespaced autocomplete' do
       context 'user selected an Org from the list' do
         before do
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           @controller.stubs(:org_selectable_params).returns(@org_selection_params)
         end
 
@@ -99,7 +99,7 @@ RSpec.describe OrgSelectable do
           expected = {
             org_attributes: {
               abbreviation: registry_org.acronyms.first.upcase,
-              contact_email: Rails.configuration.x.organisation.helpdesk_email,
+              contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
               contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
               is_other: false,
               links: JSON.parse({ org: [{ link: registry_org.home_page, text: 'Home Page' }] }.to_json),
@@ -157,7 +157,7 @@ RSpec.describe OrgSelectable do
           expected = {
             org_attributes: {
               abbreviation: registry_org.acronyms.first.upcase,
-              contact_email: Rails.configuration.x.organisation.helpdesk_email,
+              contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
               contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
               is_other: false,
               links: JSON.parse({ org: [{ link: registry_org.home_page, text: 'Home Page' }] }.to_json),
@@ -174,7 +174,7 @@ RSpec.describe OrgSelectable do
           expected = {
             org_attributes: {
               abbreviation: @custom_name.split.map(&:first).map(&:upcase).join,
-              contact_email: Rails.configuration.x.organisation.helpdesk_email,
+              contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
               contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
               is_other: false,
               links: JSON.parse({ org: [] }.to_json),
@@ -191,7 +191,7 @@ RSpec.describe OrgSelectable do
 
     context 'Namespaced autocomplete - user selected an Org from the list' do
       before do
-        Rails.configuration.x.application.restrict_orgs = false
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = false
         @controller.stubs(:org_selectable_params).returns(@funder_selection_params)
         @namespace = { namespace: 'funder_' }
       end
@@ -219,7 +219,7 @@ RSpec.describe OrgSelectable do
         expected = {
           org_attributes: {
             abbreviation: registry_org.acronyms.first.upcase,
-            contact_email: Rails.configuration.x.organisation.helpdesk_email,
+            contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
             contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
             is_other: false,
             links: JSON.parse({ org: [{ link: registry_org.home_page, text: 'Home Page' }] }.to_json),
@@ -235,7 +235,7 @@ RSpec.describe OrgSelectable do
 
     context 'Namespaced autocomplete - user provided a custom Org name' do
       before(:each) do
-        Rails.configuration.x.application.restrict_orgs = false
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = false
         @controller.stubs(:org_selectable_params).returns(@funder_custom_params)
         @custom_name = @funder_custom_params[:org_autocomplete][:funder_user_entered_name]
         @namespace = { namespace: 'funder_' }
@@ -280,7 +280,7 @@ RSpec.describe OrgSelectable do
         expected = {
           org_attributes: {
             abbreviation: registry_org.acronyms.first.upcase,
-            contact_email: Rails.configuration.x.organisation.helpdesk_email,
+            contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
             contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
             is_other: false,
             links: JSON.parse({ org: [{ link: registry_org.home_page, text: 'Home Page' }] }.to_json),
@@ -297,7 +297,7 @@ RSpec.describe OrgSelectable do
         expected = {
           org_attributes: {
             abbreviation: @custom_name.split.map(&:first).map(&:upcase).join,
-            contact_email: Rails.configuration.x.organisation.helpdesk_email,
+            contact_email: Rails.configuration.x.dmproadmap.organisation_helpdesk_email,
             contact_name: format(_('%{app_name} helpdesk'), app_name: ApplicationService.application_name),
             is_other: false,
             links: JSON.parse({ org: [] }.to_json),
@@ -315,7 +315,7 @@ RSpec.describe OrgSelectable do
   describe ':process_org!(namespace: nil)' do
     context 'non-namespaced autocomplete' do
       before do
-        Rails.configuration.x.application.restrict_orgs = false
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = false
         @user = create(:user, org: create(:org))
       end
 
@@ -339,7 +339,7 @@ RSpec.describe OrgSelectable do
 
         it 'returns nil if the Org does not already exist and the config has restrict_orgs set' do
           @controller.stubs(:org_selectable_params).returns(@org_selection_params)
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           expect(@controller.process_org!(user: @user)).to be_nil
         end
       end
@@ -353,21 +353,21 @@ RSpec.describe OrgSelectable do
         end
 
         it 'returns nil if the config has restrict_orgs set' do
-          Rails.configuration.x.application.restrict_orgs = true
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = true
           create(:registry_org, name: @org_term)
           @controller.stubs(:org_selectable_params).returns(@org_selection_params)
           expect(@controller.process_org!(user: @user)).to be_nil
         end
 
         it 'returns nil if the config has restrict_orgs not set but we only want managed' do
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           create(:registry_org, name: @org_term)
           @controller.stubs(:org_selectable_params).returns(@org_selection_params)
           expect(@controller.process_org!(user: @user, managed_only: true)).to be_nil
         end
 
         it 'derives a new Org from the matched RegistryOrg if restrict_orgs is set but user is SuperAdmin' do
-          Rails.configuration.x.application.restrict_orgs = true
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = true
           super_admin = create(:user, :super_admin)
           registry_org = create(:registry_org, name: @org_term)
           @controller.stubs(:org_selectable_params).returns(@org_selection_params)
@@ -404,21 +404,21 @@ RSpec.describe OrgSelectable do
       end
 
       it 'returns nil if no :name_from_params does not return a name' do
-        Rails.configuration.x.application.restrict_orgs = false
+        Rails.configuration.x.dmproadmap.application_restrict_orgs = false
         @controller.stubs(:name_from_params).returns(nil)
         expect(@controller.process_org!(user: @user, namespace: 'funder')).to be_nil
       end
 
       context 'Existing Org' do
         it 'returns the existing Org' do
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           org = create(:org, name: @funder_term)
           @controller.stubs(:org_selectable_params).returns(@funder_selection_params)
           expect(@controller.process_org!(user: @user, namespace: 'funder')).to eql(org)
         end
 
         it 'returns nil if the existing Org if it is not :managed and we restrict that' do
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           @controller.stubs(:org_selectable_params).returns(@funder_selection_params)
           create(:org, name: @funder_term, managed: false)
           expect(@controller.process_org!(user: @user, managed_only: true, namespace: 'funder')).to be_nil
@@ -426,14 +426,14 @@ RSpec.describe OrgSelectable do
 
         it 'returns nil if the Org does not already exist and the config has restrict_orgs set' do
           @controller.stubs(:org_selectable_params).returns(@funder_selection_params)
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           expect(@controller.process_org!(user: @user, namespace: 'funder')).to be_nil
         end
       end
 
       context 'Existing RegistryOrg' do
         it 'return the Org associated with the matching RegistryOrg' do
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           org = create(:org)
           create(:registry_org, org: org, name: @funder_term)
           @controller.stubs(:org_selectable_params).returns(@funder_selection_params)
@@ -441,21 +441,21 @@ RSpec.describe OrgSelectable do
         end
 
         it 'returns nil if the config has restrict_orgs set' do
-          Rails.configuration.x.application.restrict_orgs = true
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = true
           create(:registry_org, name: @funder_term)
           @controller.stubs(:org_selectable_params).returns(@funder_selection_params)
           expect(@controller.process_org!(user: @user, namespace: 'funder')).to be_nil
         end
 
         it 'returns nil if the config has restrict_orgs not set but we only want managed' do
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           create(:registry_org, name: @funder_term)
           @controller.stubs(:org_selectable_params).returns(@funder_selection_params)
           expect(@controller.process_org!(user: @user, managed_only: true, namespace: 'funder')).to be_nil
         end
 
         it 'derives a new Org from the matched RegistryOrg if restrict_orgs is set but user is SuperAdmin' do
-          Rails.configuration.x.application.restrict_orgs = true
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = true
           super_admin = create(:user, :super_admin)
           registry_org = create(:registry_org, name: @funder_term)
           @controller.stubs(:org_selectable_params).returns(@funder_selection_params)
@@ -464,7 +464,7 @@ RSpec.describe OrgSelectable do
         end
 
         it 'derives an Org from the RegistryOrg if restrict_orgs is not set' do
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           registry_org = create(:registry_org, name: @funder_term)
           @controller.stubs(:org_selectable_params).returns(@funder_selection_params)
           org = @controller.process_org!(user: @user, namespace: 'funder')
@@ -474,14 +474,14 @@ RSpec.describe OrgSelectable do
 
       context 'Creates a new Org based on the name provided by the User' do
         it 'returns nil if the user was not providing a custom Org name' do
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           @funder_custom_params[:org_autocomplete][:funder_not_in_list] = '0'
           @controller.stubs(:org_selectable_params).returns(@funder_custom_params)
           expect(@controller.process_org!(user: @use, namespace: 'funder')).to be_nil
         end
 
         it 'creates a new Org if no matches were found and this is allowed' do
-          Rails.configuration.x.application.restrict_orgs = false
+          Rails.configuration.x.dmproadmap.application_restrict_orgs = false
           @controller.stubs(:org_selectable_params).returns(@funder_custom_params)
           org = @controller.process_org!(user: @user, namespace: 'funder')
           expect(org.name).to eql(@funder_custom_params[:org_autocomplete][:funder_user_entered_name])
@@ -595,7 +595,7 @@ RSpec.describe OrgSelectable do
       it 'uses the :helpdesk_email if org.contact_email is nil' do
         @org.contact_email = nil
         result = @controller.send(:org_to_attributes, org: @org)[:org_attributes]
-        expect(result[:contact_email]).to eql(Rails.configuration.x.organisation.helpdesk_email)
+        expect(result[:contact_email]).to eql(Rails.configuration.x.dmproadmap.organisation_helpdesk_email)
       end
 
       it 'uses the Application name if org.contact_name is nil' do
@@ -615,8 +615,8 @@ RSpec.describe OrgSelectable do
       it 'creates a new Org' do
         contact_email = Faker::Internet.email
         app = Faker::Lorem.word
-        Rails.configuration.x.organisation.helpdesk_email = contact_email
-        Rails.configuration.x.application.name = app
+        Rails.configuration.x.dmproadmap.organisation_helpdesk_email = contact_email
+        Rails.configuration.x.dmproadmap.application_name = app
 
         new_name = Faker::Movies::StarWars.unique.character.split.last
         result = @controller.send(:create_org!, name: new_name)

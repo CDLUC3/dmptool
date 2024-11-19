@@ -1,17 +1,21 @@
 @use '../variables/bootstrap' as *;
+
 /* For dark (inverse) navbars */
 .inverse-dropdown {
-  background-color: $dropdown-inverse-bg !important;
-  border-color: $dropdown-inverse-border !important;
-  & > li > a {
-    color: $dropdown-inverse-text !important;
+  background-color: var(--dropdown-inverse-bg) !important;
+  border-color: var(--dropdown-inverse-border) !important;
+
+  &>li>a {
+    color: var(--dropdown-inverse-text) !important;
+
     &:hover {
-      color: $dropdown-inverse-text-hoover !important;
-      background-color: $dropdown-inverse-bg-hoover !important;
+      color: var(--dropdown-inverse-text-hoover) !important;
+      background-color: var(--dropdown-inverse-bg-hoover) !important;
     }
   }
+
   .active a {
-    color: $dropdown-inverse-text-hoover !important;
-    background-color: $dropdown-inverse-bg-hoover !important;
+    color: var(--dropdown-inverse-text-hoover) !important;
+    background-color: var(--dropdown-inverse-bg-hoover) !important;
   }
 }

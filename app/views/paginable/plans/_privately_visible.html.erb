@@ -71,7 +71,7 @@
               <ul class="dropdown-menu" aria-labelledby="plan-<%= plan.id %>-actions">
               <% if plan.editable_by?(current_user.id) then %>
                 <% if plan.administerable_by?(current_user.id) %>
-                  <% if Rails.configuration.x.show_collaborators_on_share_tab %>
+                  <% if Rails.configuration.x.dmproadmap.application_show_collaborators_on_share_tab %>
                     <li><%= link_to _('Share'), plan_contributors_path(plan), aria: { label: "Share #{plan.title}"} %></li>
                   <% else %>
                     <li><%= link_to _('Publish'), publish_plan_path(plan), aria: { label: "Publish #{plan.title}"} %></li>

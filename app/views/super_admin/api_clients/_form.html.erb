@@ -113,7 +113,7 @@ scopes_tooltip = _("Specify the types of access we allow for this API Client.")
   <div class="row">
     <div class="form-group col-xs-2">
       <%= f.label :callback_method, _('Callback method'), class: 'control-label' %>
-      <% http_methods = ApiClient.callback_methods.map { |k, _v| [k.humanize, k] } %>
+      <% http_methods = ApiClient::CALLBACK_METHODS.map { |k, _v| [k.humanize, k] } %>
       <%= f.select :callback_method, options_for_select(http_methods, f.object.callback_method),
                    { selected: f.object.callback_method || 0 }, { class: "form-control" } %>
     </div>

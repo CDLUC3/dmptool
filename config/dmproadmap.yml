@@ -46,7 +46,7 @@ default: &default
   #   an ENV variable (`DMPROADMAP_VARIABLE_NAME`)
 
   # ============================
-  # = Base Rails configuration =
+  #: Base Rails configuration =
   # ============================
 
   # See https://guides.rubyonrails.org/v5.0/configuring.html
@@ -58,25 +58,24 @@ default: &default
   rails_max_threads: 5
   rails_serve_static_files: true
 
+  # Placeholder for the DMPTool version number. This gets updated when Capistrano deploys
+  dmptool_version: "v5"
+
   # Determines how long to cache results for OrgSelection::SearchService
-  cache_org_selection_expiration: "86_400"
+  cache_org_selection_expiration: 86_400
   # Determines how long to cache results for the ResearchProjectsController
-  cache_research_projects_expiration: "86_400"
+  cache_research_projects_expiration: 86_400
 
   # ==========================
-  # = Database configuration =
+  #: Database configuration =
   # ==========================
 
   # See https://guides.rubyonrails.org/v5.0/configuring.html#configuring-a-database
   database_adapter: "mysql2"
-  database_name: "my_app"
-  database_host: "localhost"
   database_pool_size: 16
-  database_username: "root"
-  database_password:
 
   # =========================
-  # = Locales configuration =
+  #: Locales configuration =
   # =========================
 
   locales_default: "en-US"
@@ -84,7 +83,7 @@ default: &default
   locales_gettext_join_character: "_"
 
   # ===================================
-  # = Security configuration (Devise) =
+  #: Security configuration (Devise) =
   # ===================================
 
   # Security configuration used by the Devise gem to encrypt/decrypt passwords
@@ -93,7 +92,7 @@ default: &default
   devise_pepper:
 
   # ==========================================
-  # = Image upload configuration (Dragonfly) =
+  #: Image upload configuration (Dragonfly) =
   # ==========================================
 
   # Org logo store configuration.
@@ -107,39 +106,115 @@ default: &default
   dragonfly_url_scheme: "s3"
 
   # ======================================
-  # = External Api service configuration =
+  #: External Api service configuration =
   # ======================================
+  # Used by DMPRoadmap NOT DMPTool (we use the DMPHub instead which is defined below)
+  doi_active: false
+  doi_landing_page_url: 'https://my.doi.org/'
+  doi_api_base_url: 'https://my.doi.org/api/'
+  doi_auth_path: 'auth_path'
+  doi_heartbeat_path: 'heartbeat'
+  doi_mint_path: 'doi'
 
   # DataCite (populate if you're using them as your DOI registrar)
   datacite_active: false
   datacite_shoulder: "10.1234"
   datacite_api_base_url: "https://api.test.datacite.org/"
   datacite_landing_page_url: "https://doi.org/"
-  # You should also check the config/initializers/external_apis/datacite.rb config
+  # The following 2 values are used to tie the service to its IdentifierScheme. Make sure the :name if lowercase
+  dmproadmap.datacite_name: "datacite"
+  datacite_description: "The DataCite REST API: https://support.datacite_org/docs/api-create-dois"
+  # Credentials for minting DMP IDs via DataCite. To disable this feature, simply set 'active' to false
+  datacite_mint_path: "dois"
+  datacite_update_path: "dois/"
+  dmproadmap.datacite_delete_path: "dois/"
+  # Define your organization as the hosting institution for the DataCite record. Datacite defines this as:
+  #    "Typically, the organisation allowing the resource to be available on the
+  #     internet through the provision of its hardware/software/operating support."
+  datacite_hosting_institution: "My Curation Centre (MCC)"
+  datacite_hosting_institution_identifier: "https://ror.org/12345"
+  # The following should be defined in the credentials file for security
+  datacite_repository_id: "1234567890"
+  datacite_password: "abcd1234"
+  datacite_shoulder: "12.12345/12"
 
   # DMPHub is a DMP metadata repository that will mint DMP IDs and provide a landing page for them.
   # See https://github.com/CDLUC3/dmphub
   dmphub_active: true
-  dmphub_url: "https://api.dmphub.uc3prd.cdlib.net/"
-  dmphub_landing_page_url: "https://dmphub.uc3prd.cdlib.net/dmps/"
-  dmphub_auth_url: 'https://auth.dmphub.uc3prd.cdlib.net/'
-  # You should also check the config/initializers/external_apis/dmphub.rb config
+  dmphub_url: "https://api.dmphub.uc3dev.cdlib.net/"
+  dmphub_api_base_url: "https://api.dmphub.uc3dev.cdlib.net/"
+  dmphub_landing_page_url: "https://dmphub.uc3dev.cdlib.net/dmps/"
+  dmphub_auth_url: 'https://auth.dmphub.uc3dev.cdlib.net/'
+  dmphub_name: 'dmphub'
+  dmphub_description: 'A DMPHub based DOI minting service: https://github.com/CDLUC3/dmphub'
+  # Credentials for minting DOIs via a DMPHub system: https://github.com/CDLUC3/dmphub
+  # To disable this feature, simply set 'active' to false
+  dmphub_token_path: 'oauth2/token'
+  dmphub_fetch_path: 'dmps/%{dmp_id}'
+  dmphub_mint_path: 'dmps'
+  dmphub_update_path: 'dmps/%{dmp_id}'
+  dmphub_delete_path: 'dmps/%{dmp_id}'
+  dmphub_narrative_path: 'narratives?dmp_id=%{dmp_id}'
+  dmphub_citation_path: 'citations'
+  dmphub_callback_path: 'dmps/%{dmp_id}'
+  dmphub_callback_method: 'patch'
+
+  # These configuration settings are used to communicate with the Open Aire Research Project Registry API.
+  # For more information about the API and to verify that your configuration settings are correct.
+  open_aire_active: false
+  open_aire_api_base_url: 'https://api.openaire.eu/'
+  # The api_url should contain `%s. This is where the funder is appended!
+  open_aire_search_path: 'projects/dspace/%s/ALL/ALL'
+  open_aire_default_funder: 'H2020'
+
+  # Credentials for RDA Metadata Standards Catalog (RDAMSC). To disable this feature, simply set 'active' to false
+  rdamsc_active: true
+  rdamsc_landing_page_url: 'http://rdamsc.bath.ac.uk'
+  rdamsc_api_base_url: 'https://rdamsc.bath.ac.uk/'
+  rdamsc_schemes_path: 'api2/m'
+  rdamsc_thesaurus_path: 'api2/thesaurus/concepts'
+
+  # Credentials for minting DOIs via re3data. To disable this feature, simply set 'active' to false
+  re3data_active: true
+  re3data_landing_page_url: 'https://www.re3data.org/'
+  re3data_api_base_url: 'https://www.re3data.org/api/v1/'
+  re3data_list_path: 'repositories'
+  re3data_repository_path: 'repository/'
+
+  # These configuration settings are used to communicate with the Research Organization Registry (ROR) API.
+  # For more information about the API and to verify that your configuration settings are correct,
+  # please refer to: https://github.com/ror-community/ror-api
+  ror_active: true
+  ror_api_base_url: 'https://api.ror.org/'
+  ror_download_url: 'https://zenodo.org/api/communities/ror-data/records?q=&sort=newest'
+  ror_heartbeat_path: 'heartbeat'
+  ror_landing_page_url: 'https://ror.org/'
+  ror_max_pages: 2
+  ror_max_redirects: 3
+  ror_max_results_per_page: 20
+  ror_search_path: 'organizations'
+
+  # These configuration settings are used to communicate with the SPDX License repository.
+  # Licenses are loaded via a Rake task and stored in the local :licenses DB table.
+  # Please refer to: http://spdx.org/licenses/
+  spdx_active: true
+  spdx_landing_page_url: 'http://spdx.org/licenses/'
+  spdx_api_base_url: 'https://raw.githubusercontent.com/spdx/license-list-data/'
+  spdx_list_path: 'master/json/licenses.json'
 
   # Matomo tracking
   enable_matomo: true
   matomo_url: 'matomo.my.org'
   matomo_sit_id: 1
 
-  # The OpenAire API is used to retrieve grant ids on the Project Details page
-  openaire_active: false
-
-  # The re3data API is used to retrieve repositories for selection on the Research Outputs page
-  re3data_active: true
-
-  # The SPDX License API is used to license information for selection on the Research Outputs page
-  spdx_active: true
-
   # ORCID provides identifiers for people.
+  orcid_active: true
+  # The following value is used to tie the service to its IdentifierScheme. Make sure the :name if lowercase
+  orcid_name: 'orcid'
+  # Credentials for the ORCID member API are pulled in from the Devise omniauth config
+  # To disable this feature, simply set 'active' to false
+  orcid_work_path: '%{id}/work/'
+  orcid_callback_path: 'work/%{put_code}'
   # See the public api docs https://info.orcid.org/documentation/features/public-api/
   # Or the member api docs https://info.orcid.org/documentation/features/member-api/
   orcid_sandbox: true
@@ -163,7 +238,7 @@ default: &default
 
   # Whether or not to restrict Org selection to the ones in the `orgs` table (Meaning not allowing
   # users to search/select from the org_indices table)
-  restrict_orgs: false
+  application_restrict_orgs: false
 
   # Translation IO can be used to help failitate translating your custom code.Translations for the
   # core DMPRoadmap codebase are handled by the development team (DEV only)
@@ -176,7 +251,7 @@ default: &default
   usersnap_key:
 
   # ============================
-  # = Shibboleth configuration =
+  #: Shibboleth configuration =
   # ============================
 
   # Enable shibboleth as an alternative authentication method
@@ -197,7 +272,7 @@ default: &default
   shibboleth_use_filtered_discovery_service: false
 
   # ===================
-  # = Sign in options =
+  #: Sign in options =
   # ===================
 
   # The order in which to display the sign in options (e.g. Shib first, then email + password)
@@ -206,23 +281,23 @@ default: &default
     - "shared/authentication/sign_in_form"
 
   # ==================================
-  # = Base application configuration =
+  #: Base application configuration =
   # ==================================
 
   # This name is used throughout the system to identify your application. (e.g. in
   # email communications, API calls to external systems, etc.)
   # NOTE - This name must match the Google Analytics Tracker in this file!
-  name: "MyApp"
+  application_name: "MyApp"
   # The :from email address used in emails sent by the application
-  do_not_reply_email: "do-not-reply-my-app-dev@cdlib.org"
+  application_do_not_reply_email: "do-not-reply-my-app-dev@cdlib.org"
   # The helpdesk email
-  helpdesk_email: "help@example.org"
+  application_helpdesk_email: "help@example.org"
   # Used as the default domain when 'archiving' (aka anonymizing) a user account
   # for example `jane.doe@uni.edu` becomes `1234@removed_accounts-example.org`
-  archived_accounts_email_suffix: "@removed_accounts_dmproadmap.org"
+  application_archived_accounts_email_suffix: "@removed_accounts_dmproadmap.org"
 
   # Available CSV separators, the default is ','
-  csv_separators: [",", "|", "#"]
+  application_csv_separators: [",", "|", "#"]
 
   # Determines the number of links a funder is allowed to add to their template
   max_number_links_funder: 5
@@ -237,12 +312,12 @@ default: &default
   results_per_page: 10
 
   # =================================
-  # = Contact us page configuration =
+  #: Contact us page configuration =
   # =================================
 
   # Uncomment the following line if you want to redirect your users to an
   # organisational contact/help page instead of using the built-in contact_us form
-  # contact_us_url: "https//example.org/default_contact_us_page"
+  contact_us_url: "https//example.org/default_contact_us_page"
 
   # Your organisation name, used in various places throught the application
   organisation_name: "My institution's name"
@@ -252,8 +327,10 @@ default: &default
   organisation_url: "https://example.org/"
   # Your organisation's legal (official) name - used in the copyright portion of the footer
   organisation_copywrite_name: "My institution's official name"
-  # Your organisation's helpdesk email
-  email_from_address: "my.organization@email.edu"
+  # Your organisation's help desk email
+  organisation_helpdesk_email: "helpdesk@email.edu"
+  # Your organisation's do not reply email
+  organisation_do_not_reply_email: "do-not-reply@email.edu"
 
   # Your organisation's telephone number - used on the contact us page. This can be left blank.
   organisation_phone: "My institution's phone number"
@@ -275,23 +352,23 @@ default: &default
   organisation_google_maps_link:
 
   # =====================
-  # = API configuration =
+  #: API configuration =
   # =====================
 
   # The largest page size allowed in requests to the API (all versions)
-  api_max_page_size: 100
+  application_api_max_page_size: 100
 
   # The link to the API documentation - used in emails about the API.
-  api_documentation_urls:
+  application_api_documentation_urls:
     v0: "https://github.com/CDLUC3/dmptool/wiki/api-v0-documentation"
     v1: "https://github.com/CDLUC3/dmptool/wiki/api-v1-documentation"
     v2: "https://github.com/CDLUC3/dmptool/wiki/api-v2-documentation"
 
   # The current landing page for API documentation
-  api_documentation_overview_url: "https://github.com/CDLUC3/dmptool/wiki/API-Overview"
+  application_api_documentation_overview_url: "https://github.com/CDLUC3/dmptool/wiki/API-Overview"
 
   # =============================
-  # = Static page configuration =
+  #: Static page configuration =
   # =============================
 
   # The link to your release notes
@@ -301,14 +378,14 @@ default: &default
   # The link to your Listserv
   user_group_subscription_url: ""
   # The link to your blog
-  blog_rss: "https://blog.dmptool.org/feed" # "https://example.org/feed"
+  application_blog_rss: "https://blog.dmptool.org/feed" # "https://example.org/feed"
 
 
   # The links that appear on the home page. Add any number of links
-  welcome_links: []
+  application_welcome_links: []
 
   # =================
-  # = Plan defaults =
+  #: Plan defaults =
   # =================
 
   # The default visibility a plan receives when it is created.
@@ -337,22 +414,27 @@ default: &default
   # are displayed on the 'Share' tab.
   # If true: The 'Share' tab appears with Plan Visibility and Collaborators
   # If false: It appears on the Contributors tab and the 'Share' tab becomes 'Publish'
-  show_collaborators_on_share_tab: false
+  application_show_collaborators_on_share_tab: false
+
+  # Whether or not the guidance/comments section on the Write Plan page can be collapsed/expanded
+  application_guidance_comments_toggleable: true
+  # Whether or not the guidance/comments section is expanded when the page loads
+  application_guidance_comments_opened_by_default: true
 
   # Whether or not the coversheet checkbox should be checked by default
-  download_coversheet_tickbox_checked: false
+  plans_download_coversheet_tickbox_checked: false
 
   # Whether or not to include the footer in the PDF downloads
-  include_footer_in_pdfs: false
+  application_include_footer_in_pdfs: false
 
   # ======================================= #
-  # = maDMP / Networked DMP functionality = #
+  #: maDMP / Networked DMP functionality: #
   # ======================================= #
 
   # Whether or not to require contributor names and/or emails.
   # Note that at least one is required!
-  require_contributor_email: false
-  require_contributor_name: true
+  application_require_contributor_email: false
+  application_require_contributor_name: true
 
   # Enable/disable functionality on the Project Details tab
   enable_ethical_issues: false
@@ -404,7 +486,7 @@ default: &default
   enable_orcid_publication: true
 
   # ============================
-  # = User preference defaults =
+  #: User preference defaults =
   # ============================
 
   # The default user email preferences used when a new account is created

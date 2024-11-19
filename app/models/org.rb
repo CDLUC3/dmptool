@@ -82,7 +82,7 @@ class Org < ApplicationRecord
   # The links are validated against custom validator allocated at
   # validators/template_links_validator.rb
   attribute :links, :text, default: -> { { org: [] } }
-  serialize :links, JSON
+  serialize :links, type: Hash, coder: JSON
 
   # ================
   # = Associations =
@@ -204,7 +204,7 @@ class Org < ApplicationRecord
   # The default Org is the one whose guidance is auto-attached to
   # plans when a plan is created
   def self.default_orgs
-    where(abbreviation: Rails.configuration.x.organisation.abbreviation)
+    where(abbreviation: Rails.configuration.x.dmproadmap.organisation_abbreviation)
   end
 
   # The managed flag is set by a Super Admin. A managed org typically has
@@ -314,7 +314,7 @@ class Org < ApplicationRecord
   def org_admin_plans
     combined_plan_ids = (native_plan_ids + affiliated_plan_ids).flatten.uniq
 
-    if Rails.configuration.x.plans.org_admins_read_all
+    if Rails.configuration.x.dmproadmap.plans_org_admins_read_all
       Plan.includes(:template, :phases, :roles, :users).where(id: combined_plan_ids)
           .where(roles: { active: true })
     else

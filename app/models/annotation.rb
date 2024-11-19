@@ -28,7 +28,7 @@ class Annotation < ApplicationRecord
   # I liked type as the name for the enum so overriding inheritance column
   self.inheritance_column = nil
 
-  enum type: { example_answer: 0, guidance: 1 }
+  enum :type, { example_answer: 0, guidance: 1 }
 
   # ================
   # = Associations =

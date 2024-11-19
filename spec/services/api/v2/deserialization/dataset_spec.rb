@@ -9,7 +9,7 @@ RSpec.describe Api::V2::Deserialization::Dataset do
     @research_output = create(:research_output, plan: @plan)
 
     @json = {
-      type: ResearchOutput.output_types.keys.sample,
+      type: ResearchOutput::DEFAULT_OUTPUT_TYPES.sample,
       title: @research_output.title,
       description: Faker::Lorem.paragraph,
       personal_data: %w[yes no unknown].sample,
@@ -98,7 +98,7 @@ RSpec.describe Api::V2::Deserialization::Dataset do
 
       it 'does not change the :output_type of an existing ResearchOutput' do
         Api::V2::DeserializationService.stubs(:dmp_id?).returns(false)
-        @json[:type] = ResearchOutput.output_types.keys.reject do |key|
+        @json[:type] = ResearchOutput::DEFAULT_OUTPUT_TYPES.reject do |key|
           key == @research_output.research_output_type
         end.sample
         result = described_class.send(:find_by_identifier, plan: @plan, json: @json[:dataset_id])
@@ -123,7 +123,7 @@ RSpec.describe Api::V2::Deserialization::Dataset do
       end
 
       it 'does not change the :output_type of an existing ResearchOutput' do
-        @json[:type] = ResearchOutput.output_types.keys.reject do |key|
+        @json[:type] = ResearchOutput::DEFAULT_OUTPUT_TYPES.reject do |key|
           key == @research_output.research_output_type
         end.sample
         result = described_class.send(:find_or_initialize, plan: @plan, json: @json)

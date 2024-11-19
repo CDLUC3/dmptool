@@ -1,6 +1,7 @@
 @use '../variables/colours' as *;
+
 .modal-search-block {
-  border: 1px solid $color-grey;
+  border: 1px solid var(--color-grey);
   margin-bottom: 10px;
   padding: 10px 5px;
 }
@@ -10,6 +11,7 @@
   width: 80%;
   // height: 80%;
 }
+
 .modal-search .modal-body {
   /* 100% = dialog height, 50px = header (27.5px) + footer (21px) */
   // max-height: calc(80% - 50px);
@@ -30,14 +32,15 @@
     font-weight: 500;
   }
 
-  .tags > .tag {
+  .tags>.tag {
     display: inline-block;
     margin: 5px 2px;
   }
+
   .tags .facet {
-    background-color: $color-white;
-    color: $color-blue;
-    border: 1px solid $color-blue;
+    background-color: var(--color-white);
+    color: var(--color-blue);
+    border: 1px solid var(--color-blue);
     border-radius: 25px;
     padding: 2px 5px;
   }
@@ -56,23 +59,25 @@
 }
 
 .modal-search-results .modal-search-result {
-  border-bottom: 1px solid $color-grey;
+  border-bottom: 1px solid var(--color-grey);
 }
 
 /* the 'Select' button displayed in the modal dialog */
 .modal-search-result .modal-search-result-selector,
 .modal-search-result .modal-search-result-unselector {
   display: inline-block;
-  background-color: $color-white;
+  background-color: var(--color-white);
   border-radius: 25px;
   padding: 2px 5px;
   font-size: 1.3rem;
 }
+
 .modal-search-result .modal-search-result-selector {
-  background-color: $color-green;
-  color: $color-white;
+  background-color: var(--color-green);
+  color: var(--color-white);
 }
+
 .modal-search-result .modal-search-result-unselector {
-  border: 1px solid $color-red;
-  color: $color-red;
+  border: 1px solid var(--color-red);
+  color: var(--color-red);
 }

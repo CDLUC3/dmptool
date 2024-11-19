@@ -5,6 +5,7 @@
 .*-env
 .env.dev
 env.dev*
+.env.master
 .set_env.sh
 # Ignore init Rake task used by Docker
 lib/tasks/init.rake

@@ -145,7 +145,7 @@ namespace :v3 do
       scheme_name = DoiService.scheme_name
       api_client = ApiClient.find_or_initialize_by(name: scheme_name)
       api_client.contact_name = "#{ApplicationService.application_name} helpdesk" if api_client.new_record?
-      api_client.contact_email = Rails.configuration.x.organisation.helpdesk_email if api_client.new_record?
+      api_client.contact_email = Rails.configuration.x.dmproadmap.organisation_helpdesk_email if api_client.new_record?
       api_client.save if api_client.new_record?
 
       scheme = IdentifierScheme.find_by(name: scheme_name)

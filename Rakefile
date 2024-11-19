@@ -6,7 +6,7 @@
 # require 'rake/testtask'
 # require File.expand_path('../config/application', __FILE__)
 
-# DMPRoadmap::Application.load_tasks
+# DmpRoadmap::Application.load_tasks
 
 # task default: :test
 
@@ -17,6 +17,6 @@ require_relative 'config/application'
 # require 'resque/tasks'
 # require 'your/app'
 
-DMPRoadmap::Application.load_tasks
+DmpRoadmap::Application.load_tasks
 
 task default: :test

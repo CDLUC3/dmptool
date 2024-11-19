@@ -10,43 +10,43 @@ module ExternalApis
     class << self
       # Retrieve the config settings from the initializer
       def landing_page_url
-        Rails.configuration.x.ror&.landing_page_url || super
+        Rails.configuration.x.dmproadmap.ror_landing_page_url || super
       end
 
       def api_base_url
-        Rails.configuration.x.ror&.api_base_url || super
+        Rails.configuration.x.dmproadmap.ror_api_base_url || super
       end
 
       def download_url
-        Rails.configuration.x.ror&.download_url
+        Rails.configuration.x.dmproadmap.ror_download_url
       end
 
       def full_catalog_file
-        Rails.configuration.x.ror&.full_catalog_file
+        Rails.root.join('tmp', 'ror', 'ror.json')
       end
 
       def file_dir
-        Rails.configuration.x.ror&.file_dir
+        Rails.root.join('tmp', 'ror')
       end
 
       def checksum_file
-        Rails.configuration.x.ror&.checksum_file
+        Rails.root.join('tmp', 'ror', 'checksum.txt')
       end
 
       def zip_file
-        Rails.configuration.x.ror&.zip_file
+        Rails.root.join('tmp', 'ror', 'latest-ror-data.zip')
       end
 
       def active?
-        Rails.configuration.x.ror&.active || super
+        Rails.configuration.x.dmproadmap.ror_active || super
       end
 
       def heartbeat_path
-        Rails.configuration.x.ror&.heartbeat_path
+        Rails.configuration.x.dmproadmap.ror_heartbeat_path
       end
 
       def search_path
-        Rails.configuration.x.ror&.search_path
+        Rails.configuration.x.dmproadmap.ror_search_path
       end
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

@@ -7,7 +7,7 @@
   <% if all_themes.length > 0 %>
     <%
       cntr = 0
-      per_col = Rails.configuration.x.max_number_themes_per_column
+      per_col = Rails.configuration.x.dmproadmap.max_number_themes_per_column
       nbr_of_cols = (all_themes.length.to_f / per_col.to_f).ceil
       col_size = (12 / (nbr_of_cols > 4 ? 3 : nbr_of_cols)).round
     %>

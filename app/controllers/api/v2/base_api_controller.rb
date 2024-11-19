@@ -98,7 +98,7 @@ module Api
       # Retrieve the requested pagination params or use defaults
       # only allow 100 per page as the max
       def pagination_params
-        max_per_page = Rails.configuration.x.application.api_max_page_size
+        max_per_page = Rails.configuration.x.dmproadmap.application_api_max_page_size
         @page = params.fetch('page', 1).to_i
         @per_page = params.fetch('per_page', max_per_page).to_i
         @per_page = max_per_page if @per_page > max_per_page

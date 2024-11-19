@@ -11,8 +11,6 @@
 #  description             :text
 #  display_order           :integer
 #  is_default              :boolean
-#  output_type             :integer          default("dataset"), not null
-#  output_type_description :string
 #  personal_data           :boolean
 #  release_date            :datetime
 #  sensitive_data          :boolean
@@ -21,12 +19,12 @@
 #  updated_at              :datetime         not null
 #  license_id              :bigint
 #  plan_id                 :integer
-#  research_outputs        :string
+#  research_output_type    :string           default("dataset"), not null
 #
 # Indexes
 #
 #  index_research_outputs_on_license_id   (license_id)
-#  index_research_outputs_on_output_type  (output_type)
+#  index_research_outputs_on_output_type  (research_output_type)
 #
 # Foreign Keys
 #
@@ -42,11 +40,7 @@ class ResearchOutput < ApplicationRecord
   DEFAULT_OUTPUT_TYPES = %w[audiovisual collection data_paper dataset event image interactive_resource
                             model_representation physical_object service software sound text workflow].freeze
 
-  enum output_type: { audiovisual: 0, collection: 1, data_paper: 2, dataset: 3, event: 4, image: 5,
-                      interactive_resource: 6, model_representation: 7, physical_object: 8,
-                      service: 9, software: 10, sound: 11, text: 12, workflow: 13, other: 14 }
-
-  enum access: { open: 0, embargoed: 1, restricted: 2, closed: 3 }
+  enum :access, { open: 0, embargoed: 1, restricted: 2, closed: 3 }
 
   # ================
   # = Associations =
@@ -81,15 +75,15 @@ class ResearchOutput < ApplicationRecord
 
   # Helper method to convert selected repository form params into Repository objects
   def repositories_attributes=(params)
-    params.each do |_i, repository_params|
-      repositories << Repository.find_by(id: repository_params[:id])
+    params.each do |entry|
+      repositories << Repository.find_by(id: entry["id"])
     end
   end
 
   # Helper method to convert selected metadata standard form params into MetadataStandard objects
   def metadata_standards_attributes=(params)
-    params.each do |_i, metadata_standard_params|
-      metadata_standards << MetadataStandard.find_by(id: metadata_standard_params[:id])
+    params.each do |entry|
+      metadata_standards << MetadataStandard.find_by(id: entry["id"])
     end
   end
 

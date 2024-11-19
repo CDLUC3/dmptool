@@ -12,12 +12,12 @@ module Dmptool
     class_methods do
       # Determine if DMP ID registration has been enabled
       def registration_enabled?
-        Rails.configuration.x.madmp.enable_dmp_id_registration
+        Rails.configuration.x.dmproadmap.enable_dmp_id_registration
       end
 
       # Determine whether ORCID publication has been enabled and an IdentifierScheme has been defined
       def orcid_publication_enabled?
-        Rails.configuration.x.madmp.enable_orcid_publication && !IdentifierScheme.where(name: 'orcid').first.nil?
+        Rails.configuration.x.dmproadmap.enable_orcid_publication && !IdentifierScheme.where(name: 'orcid').first.nil?
       end
     end
 

@@ -10,30 +10,31 @@ li.selectable_item {
 
 span.selectable_item_label {
   padding: 4px;
-  border: thin solid $color-black;
-  border-radius: 5px; margin: 3px;
+  border: thin solid var(--color-black);
+  border-radius: 5px;
+  margin: 3px;
   display: inline-block;
 }
 
 button.selectable_item_button {
-  color: $color-secondary-text;
-  background-color: $color-secondary-background;
+  color: var(--color-secondary-text);
+  background-color: var(--color-secondary-background);
   padding-right: 4px;
   border: none;
 }
 
 li.selectable_item .standard {
-  color: $color-secondary-text;
-  background-color: $color-secondary-background;
+  color: var(--color-secondary-text);
+  background-color: var(--color-secondary-background);
 }
 
 li.selectable_item .custom {
-  color: $color-primary-text;
-  background-color: $color-primary-background;
+  color: var(--color-primary-text);
+  background-color: var(--color-primary-background);
 }
 
 fieldset.selectable_items {
-  border: thin solid $color-black;
+  border: thin solid var(--color-black);
   padding: 10px;
   border-radius: 5px;
 }
@@ -43,13 +44,14 @@ div.selectable_items {
 }
 
 div.selectable_items input {
-  border-color: $color-black;
+  border-color: var(--color-black);
 }
 
 fieldset.user-guidance {
   padding: 4px;
-  border: thin solid $color-black;
-  border-radius: 5px; margin: 3px;
+  border: thin solid var(--color-black);
+  border-radius: 5px;
+  margin: 3px;
 }
 
 #new_license {

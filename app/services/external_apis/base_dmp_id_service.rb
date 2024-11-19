@@ -9,7 +9,7 @@ module ExternalApis
   #     existing ones as reference.
   #   - Create a new service in this directory that inherits from this class.
   #     Then define use the service's API documentation to build mint/update/delete functions
-  #   - Also make sure that the `madmp.enable_dmp_id_registration` is set to true in
+  #   - Also make sure that the `enable_dmp_id_registration` is set to true in
   #     config/initializers/_dmproadmap.rb
   class BaseDmpIdService < BaseService
     class << self

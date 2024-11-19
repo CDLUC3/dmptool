@@ -10,20 +10,20 @@ module Helpers
     end
 
     def create_dmp_id(plan:, val: random_doi)
-      Rails.configuration.x.madmp.enable_dmp_id_registration = true
+      Rails.configuration.x.dmproadmap.enable_dmp_id_registration = true
       scheme = dmp_id_scheme
       val = append_prefix(scheme: scheme, val: val)
       create(:identifier, identifiable: plan, identifier_scheme: scheme, value: val)
     end
 
     def create_shibboleth_eppn(user:, val: Faker::Internet.unique.email)
-      Rails.configuration.x.shibboleth.enabled = true
+      Rails.configuration.x.dmproadmap.shibboleth_enabled = true
       scheme = shibboleth_scheme
       create(:identifier, identifiable: user, identifier_scheme: scheme, value: val)
     end
 
     def create_shibboleth_entity_id(org:, val: Faker::Internet.unique.url)
-      Rails.configuration.x.shibboleth.enabled = true
+      Rails.configuration.x.dmproadmap.shibboleth_enabled = true
       scheme = shibboleth_scheme
       create(:identifier, identifiable: org, identifier_scheme: scheme, value: val)
     end
@@ -39,8 +39,8 @@ module Helpers
     end
 
     def orcid_scheme
-      name = Rails.configuration.x.orcid.name || 'orcid'
-      landing_page = Rails.configuration.x.orcid.landing_page_url || 'https://orcid.org/'
+      name = Rails.configuration.x.dmproadmap.orcid_name || 'orcid'
+      landing_page = Rails.configuration.x.dmproadmap.orcid_landing_page_url || 'https://orcid.org/'
       scheme = IdentifierScheme.find_by(name: name)
       scheme.update(identifier_prefix: landing_page) if scheme.present?
       return scheme if scheme.present?
@@ -126,7 +126,7 @@ module Helpers
 
     def landing_page_for(scheme:)
       url = scheme.identifier_prefix
-      url = Rails.configuration.x.send(:"#{scheme.name.downcase}")&.landing_page_url if url.blank?
+      url = Rails.configuration.x.dmproadmap.send(:"#{scheme.name.downcase}")&.landing_page_url if url.blank?
       return nil if url.blank?
 
       %w[/ : & ?].include?(url.last) ? url : "#{url}/"

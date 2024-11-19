@@ -31,8 +31,8 @@ json.data do
     contributors = data_management_plan.contributors.to_a
     contributors << data_management_plan.org
     contributors << {
-      name: Rails.configuration.x.datacite.hosting_institution,
-      ror: Rails.configuration.x.datacite.hosting_institution_identifier
+      name: Rails.configuration.x.dmproadmap.datacite_hosting_institution,
+      ror: Rails.configuration.x.dmproadmap.datacite_hosting_institution_identifier
     }
 
     json.contributors contributors do |contributor|

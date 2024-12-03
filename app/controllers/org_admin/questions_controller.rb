@@ -232,8 +232,6 @@ module OrgAdmin
       return {} if param_conditions.empty?
 
       res = {}
-      hash_of_hashes = param_conditions[0]
-
       param_conditions.each do |cond_id, cond_hash|
         sanitized_hash = {}
         cond_hash.each do |k, v|
@@ -241,7 +239,6 @@ module OrgAdmin
         end
         res[cond_id] = sanitized_hash
       end
-
       res
     end
 

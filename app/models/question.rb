@@ -213,28 +213,6 @@ class Question < ApplicationRecord
     end
   end
 
-
-  {"0"=>{
-    "question_option"=>["3366"],
-    "action_type"=>"remove",
-    "remove_question_id"=>["13450"],
-    "number"=>"0",
-    "webhook-name"=>"",
-    "webhook-email"=>"",
-    "webhook-subject"=>"",
-    "webhook-message"=>""
-    },
-  "1"=>{
-    "question_option"=>["3365"],
-    "action_type"=>"add_webhook",
-    "number"=>"1",
-    "webhook-name"=>"ME",
-    "webhook-email"=>"riley.bri@gmail.com",
-    "webhook-subject"=>"Testing conditional logic",
-    "webhook-message"=>"Testing conditional logic"
-  }}
-
-
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def save_condition(value, opt_map, question_id_map)
     c = conditions.build

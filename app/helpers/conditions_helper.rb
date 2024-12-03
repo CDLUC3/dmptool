@@ -32,7 +32,7 @@ module ConditionsHelper
           rems = cond.remove_data.map(&:to_i)
           id_list += rems
         elsif !user.nil?
-          UserMailer.question_answered(JSON.parse(cond.webhook_data), user, answer,
+          UserMailer.question_answered(cond.webhook_data, user, answer,
                                        chosen.join(' and ')).deliver_now
         end
       end
@@ -57,7 +57,7 @@ module ConditionsHelper
       chosen = answer.question_option_ids.sort
       next unless chosen == opts
 
-      email_list << JSON.parse(cond.webhook_data)['email'] if action == 'add_webhook'
+      email_list << cond.webhook_data['email'] if action == 'add_webhook'
     end
     # uniq because could get same remove id from diff conds
     email_list.uniq.join(',')
@@ -191,7 +191,7 @@ module ConditionsHelper
       return_string += "<dd>#{_('Answering')} "
       return_string += opts.join(' and ')
       if cond.action_type == 'add_webhook'
-        subject_string = text_formatted(JSON.parse(cond.webhook_data)['subject'])
+        subject_string = text_formatted(cond.webhook_data['subject'])
         return_string += format(_(' will <b>send an email</b> with subject %{subject_name}'),
                                 subject_name: subject_string)
       else

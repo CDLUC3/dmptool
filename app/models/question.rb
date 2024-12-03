@@ -220,6 +220,7 @@ class Question < ApplicationRecord
     c.number = value['number']
     # question options may have changed so rewrite them
     c.option_list = value['question_option']
+
     if opt_map.present?
       new_question_options = []
       c.option_list.each do |qopt|
@@ -243,7 +244,7 @@ class Question < ApplicationRecord
         email: value['webhook-email'],
         subject: value['webhook-subject'],
         message: value['webhook-message']
-      }.to_json
+      }
     end
     c.save
   end

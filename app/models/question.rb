@@ -213,6 +213,28 @@ class Question < ApplicationRecord
     end
   end
 
+
+  {"0"=>{
+    "question_option"=>["3366"],
+    "action_type"=>"remove",
+    "remove_question_id"=>["13450"],
+    "number"=>"0",
+    "webhook-name"=>"",
+    "webhook-email"=>"",
+    "webhook-subject"=>"",
+    "webhook-message"=>""
+    },
+  "1"=>{
+    "question_option"=>["3365"],
+    "action_type"=>"add_webhook",
+    "number"=>"1",
+    "webhook-name"=>"ME",
+    "webhook-email"=>"riley.bri@gmail.com",
+    "webhook-subject"=>"Testing conditional logic",
+    "webhook-message"=>"Testing conditional logic"
+  }}
+
+
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def save_condition(value, opt_map, question_id_map)
     c = conditions.build
@@ -220,6 +242,7 @@ class Question < ApplicationRecord
     c.number = value['number']
     # question options may have changed so rewrite them
     c.option_list = value['question_option']
+
     if opt_map.present?
       new_question_options = []
       c.option_list.each do |qopt|
@@ -243,7 +266,7 @@ class Question < ApplicationRecord
         email: value['webhook-email'],
         subject: value['webhook-subject'],
         message: value['webhook-message']
-      }.to_json
+      }
     end
     c.save
   end

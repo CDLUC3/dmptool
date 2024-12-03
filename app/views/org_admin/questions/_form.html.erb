@@ -46,7 +46,8 @@
         <!--display for selecting comment box when multiple choice is being used-->
       </div>
       <% if question.id != nil && question.question_options[0].text != nil %>
-        <%= link_to _('Add Conditions'), org_admin_question_open_conditions_path(question_id: question.id, conditions: conditions), class: "add-logic btn btn-default", 'data-loaded': (conditions.size > 0).to_s, remote: true %>
+        <% cond_lbl = (!conditions.nil? && conditions.any?) ? 'Edit Conditions' : 'Add Conditions' %>
+        <%= link_to cond_lbl, org_admin_question_open_conditions_path(question_id: question.id, conditions: conditions), class: "add-logic btn btn-default", 'data-loaded': (conditions.size > 0).to_s, remote: true %>
         <div id="content" class="col-md-offset-2">
           <p>
             <%= render partial: 'org_admin/conditions/container', locals: { f: f, question: question, conditions: conditions } %>

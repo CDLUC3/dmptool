@@ -161,6 +161,9 @@ app/javascript/dmp-hub-ui/src/tmp.js
 # Ignore ActiveStorage content
 storage/
 
+# Ignore yarn.lock - package.json has specific version info and having it sometimes breaks build!
+yarn.lock
+
 # Ignore environment specific credentials and master keys
 /config/credentials/stage.key
 /config/credentials/stage.yaml.enc

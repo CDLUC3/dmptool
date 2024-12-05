@@ -14,7 +14,7 @@ import 'regenerator-runtime/runtime';
 
 // Pull in Bootstrap JS functionality
 import 'bootstrap';
-import 'bootstrap-3-typeahead';
+// import 'bootstrap-3-typeahead';
 import 'bootstrap-select';
 
 // Uncomment to copy all static images under ../images to the output folder and reference

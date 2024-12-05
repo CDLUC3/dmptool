@@ -287,7 +287,7 @@ default: &default
   # This name is used throughout the system to identify your application. (e.g. in
   # email communications, API calls to external systems, etc.)
   # NOTE - This name must match the Google Analytics Tracker in this file!
-  application_name: "MyApp"
+  application_name: "DMPTool"
   # The :from email address used in emails sent by the application
   application_do_not_reply_email: "do-not-reply-my-app-dev@cdlib.org"
   # The helpdesk email

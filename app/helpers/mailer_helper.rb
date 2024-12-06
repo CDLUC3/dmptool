@@ -5,7 +5,7 @@ module MailerHelper
   include PermsHelper
 
   def tool_name
-    @tool_name ||= ApplicationService.application_name
+    @tool_name ||= Rails.configuration.x.dmproadmap.application_name
   end
 
   def helpdesk_email(org: nil)

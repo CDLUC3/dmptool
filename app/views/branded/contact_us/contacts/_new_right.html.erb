@@ -17,12 +17,14 @@ if telephone.present? %>
   <!-- <strong><%#= "#{_('Helpline')} #{telephone}" %></strong> -->
 <%# end %>
 <%
-email=Rails.configuration.x.dmproadmap.organisation_helpdesk_email
 if email.present? %>
   <address>
-    <strong><%= _('Email') %></strong>
-      <a href="<%= "mailto:#{email}" %>"><%= email %></a>
-    </address>
+    <% if user_signed_in? %>
+      <strong><%= _('Email') %></strong> <a href="<%= "mailto:#{email}" %>"><%= email %></a>
+    <% else %>
+      <strong><%= _('Email') %></strong> <%= masked_email %>
+    <% end %>
+  </address>
 <% end %>
 <%
 link=Rails.configuration.x.dmproadmap.organisation_google_maps_link

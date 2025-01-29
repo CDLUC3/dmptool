@@ -8,7 +8,7 @@ Rails.application.configure do
   config.lograge.custom_payload do |controller|
     {
       host: controller.request.host,
-      user_id: controller.current_user.try(:id)
+      user_id: controller.current_user.try(:id),
       params: controller.params
     }
   end

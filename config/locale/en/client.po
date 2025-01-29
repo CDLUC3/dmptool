@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app 1.0\n"
 "Report-Msgid-Bugs-To: contact@translation.io\n"
-"POT-Creation-Date: 2025-01-29 23:45+0000\n"
-"PO-Revision-Date: 2025-01-29 23:45+0000\n"
+"POT-Creation-Date: 2025-01-29 23:58+0000\n"
+"PO-Revision-Date: 2025-01-29 23:58+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -90,11 +90,11 @@ msgid "Submit"
 msgstr "Submit"
 
 #: ../../app/views/branded/contact_us/contacts/new.html.erb:2
-#: ../../app/views/branded/contact_us/contacts/new.html.erb:10
+#: ../../app/views/branded/contact_us/contacts/new.html.erb:16
 msgid "Contact Us"
 msgstr "Contact Us"
 
-#: ../../app/views/branded/contact_us/contacts/new.html.erb:16
+#: ../../app/views/branded/contact_us/contacts/new.html.erb:8
 msgid ""
 "%{application_name} is provided by the %{organisation_name}.<br /> You can fin"
 "d out more about us on our <a href=\"%{organisation_url}\" class=\"has-new-window"
@@ -110,16 +110,28 @@ msgstr ""
 "would like to contact us about %{application_name}, please fill out the form b"
 "elow."
 
-#: ../../app/views/branded/contact_us/contacts/new.html.erb:20
+#: ../../app/views/branded/contact_us/contacts/new.html.erb:10
+msgid ""
+"%{application_name} is provided by the %{organisation_name}.<br /> You can fin"
+"d out more about us on our <a href=\"%{organisation_url}\" class=\"has-new-window"
+"-popup-info\" target=\"_blank\">website <em class=\"sr-only\">(new window)</em><spa"
+"n class=\"new-window-popup-info\">%{open_in_new_window_text}</span></a>. If you "
+"would like to contact us about %{application_name}, please email our helpdesk:"
+" %{helpdesk_email}."
+msgstr ""
+"%{application_name} is provided by the %{organisation_name}.<br /> You can fin"
+"d out more about us on our <a href=\"%{organisation_url}\" class=\"has-new-window"
+"-popup-info\" target=\"_blank\">website <em class=\"sr-only\">(new window)</em><spa"
+"n class=\"new-window-popup-info\">%{open_in_new_window_text}</span></a>. If you "
+"would like to contact us about %{application_name}, please email our helpdesk:"
+" %{helpdesk_email}."
+
+#: ../../app/views/branded/contact_us/contacts/new.html.erb:27
 #: ../../app/views/branded/paginable/plans/_organisationally_or_publicly_visible.html.erb:51
 #: ../../app/views/branded/paginable/templates/_organisational.html.erb:95
 #: ../../app/views/branded/paginable/templates/_publicly_visible.html.erb:36
 msgid "Opens in new window"
 msgstr "Opens in new window"
-
-#: ../../app/views/branded/contact_us/contacts/new.html.erb:28
-msgid "Please email our helpdesk, %{helpdesk_email}, if you have an inquiry."
-msgstr "Please email our helpdesk, %{helpdesk_email}, if you have an inquiry."
 
 #: ../../app/views/branded/contributors/_form.html.erb:4
 msgid "Phone numbers should only include numbers and dashes ('-')."

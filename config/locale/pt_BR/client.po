@@ -28,6 +28,11 @@ msgstr "Seus Padrões Selecionados:"
 msgid "Add Standard"
 msgstr "Adicione um Padrão"
 
+#: ../../app/views/branded/contact_us/contacts/new.html.erb
+msgid "Please email our helpdesk, %{helpdesk_email}, if you have an inquiry."
+msgstr "Por favor, envie um e-mail para nosso suporte técnico, %{helpdesk_email}, se você tiver alguma dúvida."
+
+
 #: ../../app/views/branded/answers/_new_edit.html.erb:21
 #: ../../app/views/branded/research_outputs/identifiers/_openaire.html.erb:14
 msgid "Please select a subject"

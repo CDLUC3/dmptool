@@ -28,6 +28,10 @@ msgstr ""
 msgid "Add Standard"
 msgstr ""
 
+#: ../../app/views/branded/contact_us/contacts/new.html.erb
+msgid "Please email our helpdesk, %{helpdesk_email}, if you have an inquiry."
+msgstr "Please email our helpdesk, %{helpdesk_email}, if you have an inquiry."
+
 #: ../../app/views/branded/answers/_new_edit.html.erb:21
 #: ../../app/views/branded/research_outputs/identifiers/_openaire.html.erb:14
 msgid "Please select a subject"

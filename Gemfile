@@ -279,6 +279,13 @@ gem 'active_storage_validations'
 # See: https://github.com/roidrage/lograge
 gem 'lograge'
 
+# Logstash is part of the Elastic Stack along with Beats, Elasticsearch and Kibana. Logstash
+# is a server-side data processing pipeline that ingests data from a multitude of sources
+# simultaneously, transforms it, and then sends it to your favorite "stash."
+#
+# See: https://github.com/elastic/logstash
+gem 'logstash-event'
+
 # ================================= #
 # ENVIRONMENT SPECIFIC DEPENDENCIES #
 # ================================= #

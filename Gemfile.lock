@@ -386,6 +386,7 @@ GEM
       activesupport (>= 4)
       railties (>= 4)
       request_store (~> 1.0)
+    logstash-event (1.2.02)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -775,6 +776,7 @@ DEPENDENCIES
   ledermann-rails-settings
   listen
   lograge
+  logstash-event
   mail
   mimemagic
   mocha

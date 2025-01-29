@@ -1,7 +1,7 @@
 Rails.application.configure do
   config.lograge.enabled = true
 
-  # Use the LogStash format
+  # Use the LogStash format to get JSON instead of the standard Lograge one-liners
   config.lograge.formatter = Lograge::Formatters::Logstash.new
 
   # Include controller info in the available log payload
@@ -9,23 +9,15 @@ Rails.application.configure do
     {
       host: controller.request.host,
       user_id: controller.current_user.try(:id),
-      params: controller.params
     }
   end
 
   # Include the custom info from the event and payload
   config.lograge.custom_options = lambda do |event|
-    param_exceptions = %w(controller action format id)
+    params_to_skip = %w[_method action authenticity_token commit controller format id]
 
     {
-      # Timestamp
-      time: event.time,
-      # Controller params
-      params: event.payload[:params].except(*param_exceptions),
-      # The current user
-      user: event.payload[:user_id],
-      # Caller
-      host: event.payload[:host]
+      params: event.payload[:params].except(*params_to_skip)
     }
   end
 

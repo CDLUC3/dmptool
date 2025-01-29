@@ -23,7 +23,7 @@ masked_email = email.gsub('@', ' [at] ').gsub('.', ' [dot] ')
     <% if user_signed_in? %>
       <%= render :partial => "contact_us/contacts/new_left" %>
     <% else %>
-      <%= _('Please email our helpdesk, %{helpdesk_email}, if you have an inquiry.') %>
+      <%= _('Please email our helpdesk, %{helpdesk_email}, if you have an inquiry.') % { helpdesk_email: masked_email } %>
     <% end %>
   </div><!-- Left column container -->
   <div class="col-md-6"><!-- Right column container -->

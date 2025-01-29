@@ -273,6 +273,19 @@ gem 'daemons'
 # See: https://github.com/igorkasyanchuk/active_storage_validations
 gem 'active_storage_validations'
 
+# Lograge is an attempt to bring sanity to Rails' noisy and unusable, unparsable and, in the
+# context of running multiple processes and servers, unreadable default logging output.
+#
+# See: https://github.com/roidrage/lograge
+gem 'lograge'
+
+# Logstash is part of the Elastic Stack along with Beats, Elasticsearch and Kibana. Logstash
+# is a server-side data processing pipeline that ingests data from a multitude of sources
+# simultaneously, transforms it, and then sends it to your favorite "stash."
+#
+# See: https://github.com/elastic/logstash
+gem 'logstash-event'
+
 # ================================= #
 # ENVIRONMENT SPECIFIC DEPENDENCIES #
 # ================================= #

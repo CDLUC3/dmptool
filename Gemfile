@@ -273,6 +273,12 @@ gem 'daemons'
 # See: https://github.com/igorkasyanchuk/active_storage_validations
 gem 'active_storage_validations'
 
+# Lograge is an attempt to bring sanity to Rails' noisy and unusable, unparsable and, in the
+# context of running multiple processes and servers, unreadable default logging output.
+#
+# See: https://github.com/roidrage/lograge
+gem 'lograge'
+
 # ================================= #
 # ENVIRONMENT SPECIFIC DEPENDENCIES #
 # ================================= #

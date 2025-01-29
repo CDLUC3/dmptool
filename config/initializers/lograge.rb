@@ -7,16 +7,21 @@ Rails.application.configure do
   # Include controller info in the available log payload
   config.lograge.custom_payload do |controller|
     {
-      host: controller.request.host,
+      # host: controller.request.host,
+      ip: controller.request.ip,
       user_id: controller.current_user.try(:id),
     }
   end
+
+  # Skip the Home page because the load balancer pings it every other second and it's noisy
+  config.lograge.ignore_actions = ['HomeController#index']
 
   # Include the custom info from the event and payload
   config.lograge.custom_options = lambda do |event|
     params_to_skip = %w[_method action authenticity_token commit controller format id]
 
     {
+      time: event.time,
       params: event.payload[:params].except(*params_to_skip)
     }
   end

@@ -1,0 +1,41 @@
+<%
+title _('Contact Us')
+
+email = Rails.configuration.x.dmproadmap.organisation_helpdesk_email
+masked_email = email.gsub('@', ' [at] ').gsub('.', ' [dot] ')
+
+if user_signed_in?
+  instructions = _('%{application_name} is provided by the %{organisation_name}.<br /> You can find out more about us on our <a href="%{organisation_url}" class="has-new-window-popup-info" target="_blank">website</a>. If you would like to contact us about the %{application_name}, please fill out the form below.')
+else
+  instructions = _('%{application_name} is provided by the %{organisation_name}.<br /> You can find out more about us on our <a href="%{organisation_url}" class="has-new-window-popup-info" target="_blank">website</a>. <p>If you would like to learn more about the %{application_name}, would like to become a participating organization, or are having difficulty accessing your account, please email our helpdesk: %{helpdesk_email}.</p>')
+end
+%>
+
+<div class="row">
+  <div class="col-md-12">
+    <h1><%= _("Contact Us") %></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6"><!-- Left column container -->
+    <p>
+      <%= sanitize instructions % {
+        organisation_name: Rails.configuration.x.dmproadmap.organisation_name,
+        organisation_url: Rails.configuration.x.dmproadmap.organisation_url,
+        application_name: ApplicationService.application_name,
+        helpdesk_email: masked_email,
+        open_in_new_window_text: _('Opens in new window') },
+        tags: %w( a br span em p ) %>
+    </p>
+
+    <% if user_signed_in? %>
+      <%= render :partial => "contact_us/contacts/new_left" %>
+    <% end %>
+  </div><!-- Left column container -->
+  <div class="col-md-6"><!-- Right column container -->
+    <div class="pull-right">
+      <%= render :partial => "contact_us/contacts/new_right",
+                 locals: { masked_email: masked_email, email: email } %>
+    </div>
+ </div><!-- Right column container -->
+</div>

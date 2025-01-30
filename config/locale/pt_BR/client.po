@@ -1,14 +1,14 @@
-# Portuguese translations for dmptool package.
-# Copyright (C) 2024 dmptool
-# This file is distributed under the same license as the dmptool package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+# Portuguese translations for app package.
+# Copyright (C) 2025 app
+# This file is distributed under the same license as the app package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dmptool 1.0\n"
+"Project-Id-Version: app 1.0\n"
 "Report-Msgid-Bugs-To: contact@translation.io\n"
-"POT-Creation-Date: 2024-05-22 15:18-0700\n"
-"PO-Revision-Date: 2024-05-23 00:18+0200\n"
+"POT-Creation-Date: 2025-01-30 00:28+0000\n"
+"PO-Revision-Date: 2025-01-30 01:28+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_BR\n"
@@ -69,6 +69,7 @@ msgstr "Nome"
 
 #: ../../app/views/branded/contact_us/contacts/_new_left.html.erb:13
 #: ../../app/views/branded/contact_us/contacts/_new_right.html.erb:23
+#: ../../app/views/branded/contact_us/contacts/_new_right.html.erb:25
 #: ../../app/views/branded/contributors/_form.html.erb:19
 #: ../../app/views/branded/plans/_collaborator_form.html.erb:74
 msgid "Email"
@@ -87,6 +88,46 @@ msgstr "Mensagem"
 #: ../../app/views/branded/plans/_collaborator_form.html.erb:113
 msgid "Submit"
 msgstr "Submeter"
+
+#: ../../app/views/branded/contact_us/contacts/new.html.erb:2
+#: ../../app/views/branded/contact_us/contacts/new.html.erb:16
+msgid "Contact Us"
+msgstr "Contate-nos"
+
+#: ../../app/views/branded/contact_us/contacts/new.html.erb:8
+msgid ""
+"%{application_name} is provided by the %{organisation_name}.<br /> You can fin"
+"d out more about us on our <a href=\"%{organisation_url}\" class=\"has-new-window"
+"-popup-info\" target=\"_blank\">website</a>. If you would like to contact us abou"
+"t the %{application_name}, please fill out the form below."
+msgstr ""
+"%{application_name} é fornecido por %{organisation_name}.<br /> Você pode desc"
+"obrir mais sobre nós em nosso <a href=\"%{organisation_url}\" class=\"has-new-win"
+"dow-popup-info\" target=\"_blank\">site</a> . Se você gostaria de nos contatar so"
+"bre o %{application_name}, preencha o formulário abaixo."
+
+#: ../../app/views/branded/contact_us/contacts/new.html.erb:10
+msgid ""
+"%{application_name} is provided by the %{organisation_name}.<br /> You can fin"
+"d out more about us on our <a href=\"%{organisation_url}\" class=\"has-new-window"
+"-popup-info\" target=\"_blank\">website</a>. <p>If you would like to learn more a"
+"bout the %{application_name}, would like to become a participating organizatio"
+"n, or are having difficulty accessing your account, please email our helpdesk:"
+" %{helpdesk_email}.</p>"
+msgstr ""
+"%{application_name} é fornecido por %{organisation_name}.<br /> Você pode desc"
+"obrir mais sobre nós em nosso <a href=\"%{organisation_url}\" class=\"has-new-win"
+"dow-popup-info\" target=\"_blank\">site</a> .<p> Se você quiser saber mais sobre "
+"o %{application_name}, quiser se tornar uma organização participante ou estive"
+"r com dificuldades para acessar sua conta, envie um e-mail para nosso helpdesk"
+": %{helpdesk_email}.</p>"
+
+#: ../../app/views/branded/contact_us/contacts/new.html.erb:27
+#: ../../app/views/branded/paginable/plans/_organisationally_or_publicly_visible.html.erb:51
+#: ../../app/views/branded/paginable/templates/_organisational.html.erb:95
+#: ../../app/views/branded/paginable/templates/_publicly_visible.html.erb:36
+msgid "Opens in new window"
+msgstr "Abre em uma nova janela"
 
 #: ../../app/views/branded/contributors/_form.html.erb:4
 msgid "Phone numbers should only include numbers and dashes ('-')."
@@ -1442,13 +1483,6 @@ msgstr "Baixar"
 #: ../../app/views/branded/paginable/templates/_organisational.html.erb:94
 msgid "(new window)"
 msgstr "(nova janela)"
-
-#:
-#: ../../app/views/branded/paginable/plans/_organisationally_or_publicly_visible.html.erb:51
-#: ../../app/views/branded/paginable/templates/_organisational.html.erb:95
-#: ../../app/views/branded/paginable/templates/_publicly_visible.html.erb:36
-msgid "Opens in new window"
-msgstr "Abre em uma nova janela"
 
 #: ../../app/views/branded/paginable/plans/_privately_visible.html.erb:9
 msgid "Edited"

@@ -9,10 +9,9 @@
     document.getElementsByTagName('head')[0].appendChild(script);
   </script>
 <% end %>
-
 <% if Rails.env.production? && Rails.configuration.x.dmproadmap.enable_matomo %>
   <!-- MatomoAnalytics -->
-  <script>
+  <script type="text/plain" data-type="application/javascript" data-name="matomo-tracking">
     var _paq = window._paq = window._paq || [];
     /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
     _paq.push(['trackPageView']);

@@ -95,6 +95,10 @@ import './src/superAdmin/notifications/edit';
 import './src/superAdmin/themes/newEdit';
 import './src/superAdmin/users/edit';
 
+// Add Klaro consent manager imports
+import 'klaro-ui/dist/js/klaro-config.js';
+import 'klaro-ui/dist/css/klaro-ui.css';
+
 // ==========================
 // = DMPTool customizations =
 // ==========================
@@ -130,6 +134,7 @@ window.toggleSpinner = toggleSpinner;
 window.Tinymce = Tinymce;
 window.initAutoComplete = initAutoComplete;
 window.togglisePasswords = togglisePasswords;
+
 
 window.addEventListener('load', () => {
   // Initialize any org autocompletes

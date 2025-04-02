@@ -15,7 +15,15 @@ module.exports = {
         options: { presets: ['@babel/env', '@babel/preset-react'] },
       },
       {
-        test: /\.(sa|sc|c)ss$/,
+        // Rule for .css files
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          "css-loader",
+        ],
+      },
+      {
+        test: /\.(sa|sc|)ss$/,
         use: [
           "style-loader",
           "css-loader",

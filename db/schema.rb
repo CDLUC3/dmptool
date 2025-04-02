@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
-  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
@@ -135,7 +135,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
     t.index ["roles"], name: "index_contributors_on_roles"
   end
 
-  create_table "delayed_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "delayed_jobs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
@@ -159,7 +159,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
     t.index ["org_id"], name: "index_departments_on_org_id"
   end
 
-  create_table "drafts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "drafts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "draft_id"
     t.json "metadata", null: false
     t.integer "user_id"
@@ -213,7 +213,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
     t.index ["guidance_group_id"], name: "index_guidances_on_guidance_group_id"
   end
 
-  create_table "hidden_dmps", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "hidden_dmps", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "dmp_id", null: false
     t.datetime "created_at", null: false
@@ -243,7 +243,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
     t.string "identifiable_type"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-    t.datetime "last_sync_at", precision: nil
     t.index ["identifiable_type", "identifiable_id"], name: "index_identifiers_on_identifiable_type_and_identifiable_id"
     t.index ["identifier_scheme_id", "identifiable_id", "identifiable_type"], name: "index_identifiers_on_scheme_and_type_and_id"
     t.index ["identifier_scheme_id", "value"], name: "index_identifiers_on_identifier_scheme_id_and_value"
@@ -549,7 +548,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
     t.integer "super_region_id"
   end
 
-  create_table "registry_orgs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "registry_orgs", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "org_id"
     t.string "ror_id"
     t.string "fundref_id"
@@ -707,27 +706,27 @@ ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
     t.index ["subscriber_id", "subscriber_type", "plan_id"], name: "index_subscribers_on_identifiable_and_plan_id"
   end
 
-  create_table "template_licenses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "template_licenses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "template_id"
     t.bigint "license_id"
     t.index ["license_id"], name: "index_template_licenses_on_license_id"
     t.index ["template_id"], name: "index_template_licenses_on_template_id"
   end
 
-  create_table "template_metadata_standards", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "template_metadata_standards", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "template_id"
     t.bigint "metadata_standard_id"
     t.index ["metadata_standard_id"], name: "index_template_metadata_standards_on_metadata_standard_id"
     t.index ["template_id"], name: "index_template_metadata_standards_on_template_id"
   end
 
-  create_table "template_output_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "template_output_types", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "template_id"
     t.string "research_output_type"
     t.index ["template_id"], name: "index_template_output_types_on_template_id"
   end
 
-  create_table "template_repositories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "template_repositories", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "template_id"
     t.bigint "repository_id"
     t.index ["repository_id"], name: "index_template_repositories_on_repository_id"
@@ -850,6 +849,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_06_21_160500) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "annotations", "orgs"
+  add_foreign_key "annotations", "questions"
   add_foreign_key "answers", "plans"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"

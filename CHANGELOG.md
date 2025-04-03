@@ -3,6 +3,8 @@
 ## DMPTool Releases
 
 ### v5.40
+- Patched bug with adding published DMP-IDs to the owner's ORCID works (missing config attr `orcid_active`)
+- Patched bug with viewing 3rd party connection that has no logo
 - Patched issue with `application_record.domain_for` logic so that it catches both `www` and `www[?]`
 - Added Klaro Consent Manager to app, which works with Matamo. Resource(https://github.com/cdlib/klaro-ui) [#705]
 

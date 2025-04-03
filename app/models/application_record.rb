@@ -28,7 +28,7 @@ class ApplicationRecord < ActiveRecord::Base
     # Attempts to extract the domain from the string
     # Used by the `from_email_domain` method on Org and RegistryOrg
     def domain_for(url:)
-      URI.parse(url).host.gsub('www', '')
+      URI.parse(url).host.gsub(/www[0-9a-zA-Z]?/, '')
     rescue URI::InvalidURIError
       url
     end

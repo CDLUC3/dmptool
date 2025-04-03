@@ -50,7 +50,8 @@ module ExternalApis
         # Fail if the user doesn't have an orcid or an acess token
         return false unless orcid.present? && token.present?
 
-        target = "#{api_base_url}#{format(work_path, id: orcid.value.gsub(landing_page_url, ''))}"
+        orcid_id = orcid.value.gsub(/https?:\/\/(sandbox.)?orcid.org\//, '')
+        target = "#{api_base_url}#{format(work_path, id: orcid_id)}"
 
         hdrs = {
           'Content-type': 'application/vnd.orcid+xml',

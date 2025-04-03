@@ -4,6 +4,7 @@
 
 ### v5.40
 - Patched issue with `application_record.domain_for` logic so that it catches both `www` and `www[?]`
+- Added Klaro Consent Manager to app, which works with Matamo. Resource(https://github.com/cdlib/klaro-ui) [#705]
 
 ### v4.1.6
 - Fixed a bug that was causing content to be excluded from .docx exports. Updated clean_html_for_docx_creation function [#647]

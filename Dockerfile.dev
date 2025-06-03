@@ -8,7 +8,7 @@ RUN groupadd -g 1000 dmpt && useradd -u 1000 -g 1000 dmpt
 RUN set -ex \
     && RUN_DEPS=" \
     apt-transport-https autoconf automake build-essential ca-certificates chromium curl \
-    dumb-init fonts-liberation gawk g++ gconf-service git imagemagick \
+    dumb-init fonts-liberation gawk g++ gconf-service git openssh-client imagemagick \
     libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libcurl4-gnutls-dev \
     libdbus-1-3 libexpat1 libffi-dev libfontconfig1 libgdbm-dev libgbm1 libgcc1 \
     libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libmariadb-dev \
@@ -47,16 +47,14 @@ WORKDIR $INSTALL_PATH
 ENV RAILS_ENV development
 RUN rm -rf node_modules vendor .cache
 
+# Make sure Git isn't going to try to use SSH (for klaro dependency)
+RUN git config --global --unset-all url."ssh://git@github.com/".insteadOf || true
+
 # Install bundler foreman and then build Bundle and Yarn
 RUN gem install bundler -v 2.5
 RUN gem install foreman
 RUN bundle config without pgsql rollbar
 RUN bundle install
-
-# Install parcel watcher locally so that it has the correct build
-# RUN npm i -g node-gyp
-# RUN yarn add @parcel/watcher --save-dev
-# RUN yarn add @parcel/watcher-linux-arm64-glibc --save-dev
 RUN yarn install
 
 # Install the fonts needed by Puppeteer to generate PDFs

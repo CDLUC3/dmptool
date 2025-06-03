@@ -5,16 +5,23 @@
 #
 # Do not use this compose file in a live environment.
 
+networks:
+  dmptool-network:
+    driver: bridge
+
 services:
   db:
+    container_name: mysql
     restart: always
     command: --default-authentication-plugin=caching_sha2_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     image: mysql/mysql-server:latest
-    container_name: mysql
     ports:
-      - "3307:3306"
+      - "3308:3306"
+      - "3306:3306"
     expose:
-      - "3307"
+      - "3308"
+    networks:
+      - dmptool-network
     environment:
       MYSQL_DATABASE: 'dmp'
       MYSQL_ROOT_PASSWORD: 'dockerSecret'
@@ -24,6 +31,7 @@ services:
       - "./docker/mysql:/var/lib/mysql"
 
   dmptool:
+    container_name: dmptool
     depends_on:
       - db
     build:
@@ -37,6 +45,8 @@ services:
       - "3000:3000"
     expose:
       - "3000"
+    networks:
+      - dmptool-network
     environment:
       - RAILS_ENV=development
       - DMPROADMAP_DATABASE_HOST=mysql
@@ -52,6 +62,3 @@ services:
       - .env.dev
     volumes:
       - ./:/opt/app
-      # The following is to prevent the mysql data folder to be mounted due
-      # to the mount above.
-      # - /opt/app/share/mysql

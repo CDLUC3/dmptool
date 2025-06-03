@@ -10,7 +10,7 @@ if [ -z $FIRST_TIME ]; then
   export DB_CMD="bin/rails db:migrate"
 else
   echo "FIRST TIME! Will initialize the database before startup."
-  export DB_CMD="bin/rails db:create && bin/rails db:schema:load"
+  export DB_CMD="bin/rails db:schema:load"
 
   # TROUBLESHOOTING:
   # -------------------------

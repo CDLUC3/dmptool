@@ -3,6 +3,8 @@
 module Dmptool
   # DMPTool specific mailers
   module Mailer
+    include MailerHelper
+
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     def invitation(inviter, invitee, plan)
       @invitee = invitee
@@ -90,6 +92,16 @@ module Dmptool
       @sender = sender
       I18n.with_locale I18n.default_locale do
         mail(to: recipient.email, cc: sender.email, subject: subject)
+      end
+    end
+
+    # Sends a Rake failure to the helpdesk email
+    def rake_failure(subj:, err:)
+      @subj = subj || 'Rake task failure'
+      @err = err || StandardError.new('Something went wrong!')
+
+      I18n.with_locale I18n.default_locale do
+        mail(to: helpdesk_email, subject: subj)
       end
     end
   end

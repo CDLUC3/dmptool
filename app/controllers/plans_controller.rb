@@ -242,7 +242,19 @@ class PlansController < ApplicationController
 
   # GET /plans/:id/publish
   def publish
-    @plan = Plan.find(params[:id])
+    @plan = Plan.includes(template: :phases).find(params[:id])
+
+    nquestions = 0
+    nanswers = 0
+    @plan.template.phases.each do |phase|
+      next unless phase.present?
+
+      nquestions += phase.num_questions_not_removed(@plan)
+      nanswers += phase.num_answers_not_removed(@plan)
+    end
+    
+    @complete = nquestions.positive? && nanswers.positive? ? (nanswers.to_f/nquestions*100).round(2) > 50.0 : false
+
     if @plan.present?
       authorize @plan
       @plan_roles = @plan.roles.where(active: true)

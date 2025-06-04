@@ -1,4 +1,4 @@
-<%# locals: plan, orcid_access_token %>
+<%# locals: plan, orcid_access_token, complete %>
 
 <%
 dmp_id = plan.dmp_id
@@ -13,8 +13,7 @@ project_details_link = link_to(_('Project Details'), plan_path(plan.id))
 dmp_id_url = 'https://github.com/CDLUC3/dmptool/wiki/DMP-IDs-and-Networked-Data-Management-Plans-(maDMPs)#why-are-ids-for-dmps-important'
 
 # Minting is only allowed if the plan is 'complete', it is not a test, has a funder and the user can administer
-allow_minting = plan.administerable_by?(current_user.id) && plan.complete? && plan.funder_id.present? &&
-                !plan.is_test?
+allow_minting = plan.administerable_by?(current_user.id) && @complete && plan.funder_id.present? && !plan.is_test?
 # If ORCID updates are enabled then check that the user has authorized it!
 allow_minting = orcid.present? && orcid_access_token.present? if allow_minting && Rails.configuration.x.dmproadmap.enable_orcid_publication
 %>
@@ -42,7 +41,7 @@ allow_minting = orcid.present? && orcid_access_token.present? if allow_minting &
             <%= (_('only the creator of the plan may register a DMP ID.')) %>
           </li>
           <li>
-            <% if plan.complete? %><span class="fa fa-check green"><span class="sr-only">Complete: </span></span><% else %><span class="fa fa-times red"><span class="sr-only">Incomplete: </span></span><% end %>
+            <% if @complete %><span class="fa fa-check green"><span class="sr-only">Complete: </span></span><% else %><span class="fa fa-times red"><span class="sr-only">Incomplete: </span></span><% end %>
             <%= (_("have answered at least %{percentage}%% of questions on the %{write_plan_link} panel") % { percentage: Rails.configuration.x.dmproadmap.plans_default_percentage_answered, write_plan_link: link_to(_('Write Plan'), edit_plan_path(plan.id, phase: plan.phases&.first&.id)) }).html_safe %>
           </li>
           <li>

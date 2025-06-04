@@ -253,7 +253,7 @@ class PlansController < ApplicationController
       nanswers += phase.num_answers_not_removed(@plan)
     end
     
-    @complete = nquestions.positive? && nanswers.positive? ? (nanswers.to_f/nquestions*100).round(2) > 50.0 : false
+    @complete = nquestions.positive? && nanswers.positive? ? (nanswers.to_f/nquestions*100).round(2) >= 50.0 : false
 
     if @plan.present?
       authorize @plan

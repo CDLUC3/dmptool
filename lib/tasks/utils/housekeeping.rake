@@ -3,6 +3,17 @@
 require 'text'
 require 'httparty'
 
+# Error handling to log in more detail and also send an email
+def handle_error(subj:, err:)
+  puts ''
+  puts err.message
+  puts err.backtrace
+
+  UserMailer.rake_failure(subj:, err:).deliver_now
+
+  puts ''
+end
+
 namespace :housekeeping do
   desc 'Clear the cache'
   task clear_cache: :environment do
@@ -13,25 +24,53 @@ namespace :housekeeping do
   task monthly_maintenance: :environment do
     p '----------------------------------'
     p 'Step 1 of 7 - Purging old OAuth tokens and grants'
-    Rake::Task['housekeeping:cleanup_oauth'].execute
+    begin
+      Rake::Task['housekeeping:cleanup_oauth'].execute
+    rescue StandardError => e
+      handle_error(subj: 'Purge old OAuth artifacts', err: e)
+    end
     p '----------------------------------'
     p 'Step 2 of 7 - Purging old External API tokens'
-    Rake::Task['housekeeping:cleanup_external_api_access_tokens'].execute
+    begin
+      Rake::Task['housekeeping:cleanup_external_api_access_tokens'].execute
+    rescue StandardError => e
+      handle_error(subj: 'Purge old External API tokens', err: e)
+    end
     p '----------------------------------'
     p 'Step 3 of 7 - Generating monthly usage statistics'
-    Rake::Task['stat:build_last_month_parallel'].execute
+    begin
+      Rake::Task['stat:build_last_month_parallel'].execute
+    rescue StandardError => e
+      handle_error(subj: 'Generating monthly usage stats', err: e)
+    end
     p '----------------------------------'
     p 'Step 4 of 7 - Fetching latest data from RDA Metadata standard catalog'
-    Rake::Task['external_api:load_rdamsc_standards'].execute
+    begin
+      Rake::Task['external_api:load_rdamsc_standards'].execute
+    rescue StandardError => e
+      handle_error(subj: 'Fetching latest Metadata Standards from RDA', err: e)
+    end
     p '----------------------------------'
     p 'Step 5 of 7 - Fetching latest data from SPX license database'
-    Rake::Task['external_api:load_spdx_licenses'].execute
+    begin
+      Rake::Task['external_api:load_spdx_licenses'].execute
+    rescue StandardError => e
+      handle_error(subj: 'Fetching latest Licenses from SPDX', err: e)
+    end
     p '----------------------------------'
     p 'Step 6 of 7 - Fetching latest data from the re3data repository'
-    Rake::Task['external_api:load_re3data_repos'].execute
+    begin
+      Rake::Task['external_api:load_re3data_repos'].execute
+    rescue StandardError => e
+      handle_error(subj: 'Fetching latest Repositories from re3data', err: e)
+    end
     p '----------------------------------'
     p 'Step 7 of 7 - Fetching latest data from the ROR API'
-    Rake::Task['external_api:sync_registry_orgs'].execute
+    begin
+      Rake::Task['external_api:sync_registry_orgs'].execute
+    rescue StandardError => e
+      handle_error(subj: 'Fetching latest Orgs from ROR', err: e)
+    end
   end
 
   desc 'Sync DMP metadata with the DMP ID minting authority'
@@ -79,7 +118,6 @@ namespace :housekeeping do
   task cleanup_oauth: :environment do
     # Removing expired Access Tokens and Grants to help prune the DB
     #   - Note that expiration values are stored in seconds!
-
     Doorkeeper::AccessGrant.all.each do |grant|
       expiry = grant.created_at + grant.expires_in.seconds
       grant.destroy if Time.zone.now >= expiry

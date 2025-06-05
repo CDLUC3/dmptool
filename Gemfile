@@ -95,7 +95,7 @@ gem 'mysql2'
 
 # Pg is the Ruby interface to the {PostgreSQL
 # RDBMS}[http://www.postgresql.org/](https://bitbucket.org/ged/ruby-pg)
-gem 'pg', group: :pgsql, require: false
+# gem 'pg', group: :pgsql, require: false
 
 # Bit fields for ActiveRecord (https://github.com/pboling/flag_shih_tzu)
 gem 'flag_shih_tzu'

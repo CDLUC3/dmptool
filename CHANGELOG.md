@@ -2,6 +2,9 @@
 
 ## DMPTool Releases
 
+### v5.41
+- Update klaro styles to use `klaro-ui-light` to try and fix missing background button color
+
 ### v5.40
 - Patched bug with adding published DMP-IDs to the owner's ORCID works (missing config attr `orcid_active`)
 - Patched bug with viewing 3rd party connection that has no logo

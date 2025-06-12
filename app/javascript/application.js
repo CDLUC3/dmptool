@@ -97,7 +97,7 @@ import './src/superAdmin/users/edit';
 
 // Add Klaro consent manager imports
 import 'klaro-ui/dist/js/klaro-config.js';
-import 'klaro-ui/dist/css/klaro-ui.css';
+import 'klaro-ui/dist/css/klaro-ui-light.css';
 
 // ==========================
 // = DMPTool customizations =

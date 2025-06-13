@@ -11,8 +11,8 @@ RUN echo $(apt-cache search magick)
 # Add NodeJS and Yarn repositories to apt-get
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-# Installing Node 16.x
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+# Installing Node 20.x
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
 
 # Install packages
 RUN apt-get clean

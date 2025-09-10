@@ -48,15 +48,33 @@ module Dmptool
       end
       # rubocop:enable Metrics/AbcSize
 
+      # Hardcoded list of email domains that need special handling because the email domain
+      # does not match the organization's domain
+      def intercept_from_email_domain(email_domain)
+        case email_domain.downcase
+        when "childrens.harvard.edu"
+          matches = ::RegistryOrg.where("home_page LIKE '%childrenshospital.org'")
+          return nil if matches.empty? || matches.first.org_id.nil?
+
+          ::Org.find_by(id: matches.first.org_id)
+        else
+          nil
+        end
+      end
+
       # Attempt to determine the Org (or RegistryOrg) based on the email's domain
       # rubocop:disable Metrics/AbcSize
       def from_email_domain(email_domain:)
         return nil if email_domain.blank?
         return nil if ignored_email_domains.include?(email_domain.downcase)
 
-        org = ::RegistryOrg.from_email_domain(email_domain: email_domain)
+        # First see if the email domain requires special handling
+        org = intercept_from_email_domain(email_domain)
+        # If it did not, then try to find it by matching the email domain to RegistryOrg home_page
+        org = ::RegistryOrg.from_email_domain(email_domain: email_domain) unless org.present?
         return org if org.present?
 
+        # Nothing was found, so try to see what others with that email domain belong to
         hash = ::User.where('email LIKE ?', "%@#{email_domain.downcase}").group(:org_id).count
         return nil if hash.blank?
 

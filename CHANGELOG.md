@@ -2,6 +2,11 @@
 
 ## DMPTool Releases
 
+### v5.43
+- Add logic to provide special handling for certain Org's SSO #734
+- Update all gem dependencies
+- Lock JS dependencies to known good versions
+
 ### v5.41
 - Update klaro styles to use `klaro-ui-light` to try and fix missing background button color
 

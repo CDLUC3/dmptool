@@ -1,11 +1,10 @@
 version: 2
 
 updates:
-  # Target non-default branch
-  - target-branch: "v5"
-
   # Enable version updates for bundler
   - package ecosystem: "bundler"
+    # Target non-default branch
+    target-branch: "v5"
     # Look for `Gemfile.lock` in the `root` directory
     directory: "/"
     # Check for updates once a week
@@ -14,6 +13,8 @@ updates:
 
   # Enable version updates for npm
   - package-ecosystem: "npm"
+    # Target non-default branch
+    target-branch: "v5"
     # Look for `package.json` and `lock` files in the `root` directory
     directory: "/"
     # Check the npm registry for updates once a week
@@ -22,6 +23,8 @@ updates:
 
   # Enable version updates for Docker
   - package-ecosystem: "docker"
+    # Target non-default branch
+    target-branch: "v5"
     # Look for a `Dockerfile` in the `root` directory
     directory: "/"
     # Check for updates once a week

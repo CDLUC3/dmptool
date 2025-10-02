@@ -57,6 +57,11 @@ module Dmptool
           return nil if matches.empty? || matches.first.org_id.nil?
 
           ::Org.find_by(id: matches.first.org_id)
+        when "txst.edu", "txstate.edu"
+          matches = ::RegistryOrg.where("home_page LIKE '%txst.edu'")
+          return nil if matches.empty? || matches.first.org_id.nil?
+
+          ::Org.find_by(id: matches.first.org_id)
         else
           nil
         end

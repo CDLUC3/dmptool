@@ -2,6 +2,10 @@
 
 ## DMPTool Releases
 
+### v5.44
+- Add logic to provide special handling for certain Org's SSO #738
+- Update all gem dependencies
+
 ### v5.43
 - Add logic to provide special handling for certain Org's SSO #734
 - Update all gem dependencies

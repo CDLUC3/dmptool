@@ -62,7 +62,7 @@ module Dmptool
           return nil if matches.empty? || matches.first.org_id.nil?
 
           ::Org.find_by(id: matches.first.org_id)
-        when "ucdmc.ucdavis.edu", "ncst.ucdavis.edu", "health.ucdavis.edu", "vetmed.ucdavis.edu"
+        when "ucdmc.ucdavis.edu", "health.ucdavis.edu"
           matches = ::RegistryOrg.where("home_page LIKE '%www.ucdavis.edu'")
           return nil if matches.empty? || matches.first.org_id.nil?
 

@@ -2,6 +2,11 @@
 
 ## DMPTool Releases
 
+### v5.46
+- Upgrade to Ruby 3.3
+- Update all gem dependencies
+- Update JS dependencies
+
 ### v5.45
 - Add logic to provide special handling for certain Org's SSO #738, #739
 - Update all gem dependencies

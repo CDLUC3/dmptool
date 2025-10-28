@@ -1,4 +1,4 @@
-FROM ruby:3.2-slim-bookworm
+FROM ruby:3.3-slim-bookworm
 
 RUN groupadd -g 1000 dmpt && useradd -u 1000 -g 1000 dmpt
 

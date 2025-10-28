@@ -71,7 +71,7 @@
     "style-loader": "4.0.0",
     "timeago.js": "4.0.2",
     "tinymce": "7.9.1",
-    "web-vitals": "4.2.4",
+    "web-vitals": "5.1.0",
     "webpack": "5.101.3",
     "webpack-cli": "5.1.4"
   },

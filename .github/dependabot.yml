@@ -2,7 +2,7 @@ version: 2
 
 updates:
   # Enable version updates for bundler
-  - package ecosystem: "bundler"
+  - package-ecosystem: "bundler"
     # Target non-default branch
     target-branch: "v5"
     # Look for `Gemfile.lock` in the `root` directory

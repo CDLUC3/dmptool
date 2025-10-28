@@ -4,7 +4,7 @@
 # This Dockerfile is meant for running the application in an AWS ECS container. The required
 # Rails credentials and ENV variables are all defined by the CloudFormation template and passed
 # into the container on startup
-FROM ruby:3.0
+FROM ruby:3.3
 
 RUN echo $(apt-cache search magick)
 

@@ -190,15 +190,21 @@ module ExternalApis
       def unzip_file(zip_file:, destination:)
         return false unless zip_file.present? && File.exist?(zip_file)
 
-        Zip::File.open(zip_file) do |files|
-          files.each do |entry|
-            next if File.exist?(entry.name)
+        begin
+          Zip::File.open(zip_file) do |files|
+            files.each do |entry|
+              next if File.exist?(entry.name)
 
-            f_path = File.join(destination, entry.name)
-            FileUtils.mkdir_p(File.dirname(f_path))
-            files.extract(entry, f_path) unless File.exist?(f_path)
+              f_path = File.join(destination, entry.name)
+              FileUtils.mkdir_p(File.dirname(f_path))
+              entry.extract(destination_directory: File.dirname(f_path)) unless File.exist?(f_path)
+            end
           end
+        rescue StandardError => e
+          Rails.logger.send(error, "ZIP File (#{zip_file}) error: #{e.message}")
+          return false
         end
+
         true
       end
 

@@ -107,6 +107,7 @@ module ExternalApis
         # Fetch the latest ROR metadata from Zenodo (the query will place the most recent
         # version 1st)
         resp = http_get(uri: download_url, additional_headers: { host: 'zenodo.org' }, debug: false)
+
         unless resp.present? && resp.code == 200
           handle_http_failure(method: 'Fetching ROR metadata from Zenodo', http_response: resp)
           notify_administrators(obj: 'RorService', response: resp)
@@ -139,6 +140,7 @@ module ExternalApis
           'Content-Type': 'application/json',
           'User-Agent': "California Digital Library - dmptool.org (mailto:dmptool@ucop.edu)"
         }
+
         resp = http_get(uri: url, additional_headers: headers, debug: false)
 
         unless resp.present? && resp.code == 200

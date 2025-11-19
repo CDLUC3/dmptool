@@ -2,6 +2,11 @@
 
 ## DMPTool Releases
 
+### v5.47
+- Fix issue with ROR migration script
+- Update all gem dependencies
+- Update JS dependencies
+
 ### v5.46
 - Upgrade to Ruby 3.3
 - Update all gem dependencies

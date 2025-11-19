@@ -868,6 +868,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   ruby-progressbar
+  rubyzip
   sassc
   shoulda
   spring

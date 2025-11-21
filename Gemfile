@@ -66,6 +66,8 @@ gem 'bootsnap', require: false
 # (http://github.com/plataformatec/responders)
 # gem "responders"
 
+gem "rubyzip"
+
 # ============= #
 # CONFIGURATION #
 # ============= #

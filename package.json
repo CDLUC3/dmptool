@@ -41,7 +41,7 @@
     "@rails/ujs": "^6.0.3-1",
     "babel-loader": "^9.1.2",
     "babel-plugin-macros": "^3.1.0",
-    "bootstrap": "^3.4.1",
+    "bootstrap": "^5.0.0",
     "bootstrap-3-typeahead": "^4.0.2",
     "bootstrap-sass": "3.4.1",
     "bootstrap-select": "^1.13.18",
@@ -60,7 +60,7 @@
     "sass": "^1.57.1",
     "timeago.js": "^4.0.2",
     "tinymce": "^7.2.1",
-    "webpack": "^5.75.0",
+    "webpack": "^5.94.0",
     "webpack-cli": "^5.0.1"
   },
   "resolutions": {

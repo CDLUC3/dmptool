@@ -100,7 +100,7 @@ GEM
       bundler (>= 1.1)
     anyway_config (2.7.2)
       ruby-next-core (~> 1.0)
-    api-pagination (6.0.0)
+    api-pagination (7.0.0)
     ast (2.4.3)
     autoprefixer-rails (10.4.21.0)
       execjs (~> 2)

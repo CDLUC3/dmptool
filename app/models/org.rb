@@ -201,6 +201,27 @@ class Org < ApplicationRecord
             column: 'org_type',
             check_for_column: !Rails.env.test?
 
+  # -----------------------------------------------------
+  # Bitwise key
+  # -----------------------------------------------------
+  # 01 - institution
+  # 02 - funder
+  # 03 - institution + funder
+  # 04 - organisation
+  # 05 - institution + organisation
+  # 06 - funder + organisation
+  # 07 - institution + organisation + funder
+  # 08 - research_institute
+  # 09 - institution + research_institute
+  # 10 - funder + research_institute
+  # 11 - institution + funder + research_institute
+  # 12 - organisation + research_institute
+  # 13 - institution + organisation + research_institute
+  # 14 - funder + organisation + research_institute
+  # 15 - institution + funder + organisation + research_institute
+  # etc.
+
+
   # The default Org is the one whose guidance is auto-attached to
   # plans when a plan is created
   def self.default_orgs

@@ -2,6 +2,10 @@
 
 ## DMPTool Releases
 
+### v5.48
+- Update `template.customize?` method to allow any funder (instead of funder_only)
+- Added bitwise documentation to the `Org` model to help with debugging
+
 ### v5.47
 - Fix issue with ROR migration script
 - Update all gem dependencies

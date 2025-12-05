@@ -418,7 +418,7 @@ class Template < ApplicationRecord
   # Determines whether or not a customization for the customizing_org passed
   # should be generated
   def customize?(customizing_org)
-    if customizing_org.is_a?(Org) && (org.funder_only? || is_default)
+    if customizing_org.is_a?(Org) && (org.funder? || is_default)
       return !Template.unarchived.exists?(customization_of: family_id,
                                           org: customizing_org)
     end

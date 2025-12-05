@@ -12,7 +12,13 @@ module OrgAdmin
     def create
       @template = Template.find(params[:template_id])
       authorize(@template, :customize?)
+
+puts "AUTH CHECK COMPLETE"
+
       if @template.customize?(current_user.org)
+
+puts "PASSED"
+
         begin
           @customisation = @template.customize!(current_user.org)
           redirect_to org_admin_template_path(@customisation)
@@ -21,6 +27,9 @@ module OrgAdmin
           flash.now[:alert] = _('Unable to customize that template.')
         end
       else
+
+puts "FAILED"
+
         flash.now[:notice] = _('That template is not customizable.')
       end
       redirect_back(fallback_location: org_admin_templates_path)

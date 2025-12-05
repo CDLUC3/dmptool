@@ -418,13 +418,7 @@ class Template < ApplicationRecord
   # Determines whether or not a customization for the customizing_org passed
   # should be generated
   def customize?(customizing_org)
-
-puts "Is an Org? #{customizing_org.is_a?(Org)} AND (Is a funder? #{org.funder?} OR is default? #{is_default})"
-
     if customizing_org.is_a?(Org) && (org.funder? || is_default)
-
-puts "Found existing customization? #{!Template.unarchived.exists?(customization_of: family_id, org: customizing_org)}"
-
       return !Template.unarchived.exists?(customization_of: family_id,
                                           org: customizing_org)
     end
@@ -491,7 +485,7 @@ puts "Found existing customization? #{!Template.unarchived.exists?(customization
     raise ArgumentError, _('customize! requires an organisation target') unless customizing_org.is_a?(Org)
 
     # Assume self has org associated
-    raise ArgumentError, _('customize! requires a template from a funder') if !org.funder_only? && !is_default
+    raise ArgumentError, _('customize! requires a template from a funder') if !org.funder? && !is_default
 
     args = {
       attributes: {

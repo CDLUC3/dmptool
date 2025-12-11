@@ -40,8 +40,6 @@ Once that's complete you can send us your identity provider's `entityID` so that
 
 ## Testing
 
-**NOTE: The SSO test page will be down for maintenance starting on November 23rd 2025. We expect to have it back up by the end of the day on November 24th.**
-
 Once your institution's identity provider has been configured and SSO has been enabled for your institution within the DMPTool, you can visit our [SSO Test Page](https://dmptool.org/cgi-bin/PrintShibInfo.pl) to test the SSO handshake. Select your institution from the dropdown list and click the "Continue" button. This should bring you to your institution's login page if things were properly configured within the DMPTool. Once you login, you will be redirected back to a validation page that will display the attributes mentioned above.  If all has been properly configured within your identity provider, a Success message will be displayed.
 
 ## Troubleshooting

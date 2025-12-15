@@ -12,6 +12,7 @@ module OrgAdmin
     def create
       @template = Template.find(params[:template_id])
       authorize(@template, :customize?)
+
       if @template.customize?(current_user.org)
         begin
           @customisation = @template.customize!(current_user.org)

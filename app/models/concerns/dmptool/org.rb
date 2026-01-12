@@ -68,7 +68,7 @@ module Dmptool
 
           ::Org.find_by(id: matches.first.org_id)
 
-        when /\A(?:.+\.)?mit\.edu\z/
+        when "mit.edu"
           matches = ::RegistryOrg.where("home_page LIKE '%web.mit.edu'")
           return nil if matches.empty? || matches.first.org_id.nil?
 

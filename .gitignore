@@ -166,3 +166,4 @@ storage/
 /config/credentials/stage.yaml.enc
 /config/credentials/production.key
 /config/credentials/production.yaml.enc
+.nvmrc

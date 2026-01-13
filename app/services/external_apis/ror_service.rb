@@ -261,7 +261,12 @@ module ExternalApis
         return '' if name.blank?
 
         country = extract_country(item: item)&.fetch('country_name', '')
-        website = org_website(item: item)
+        
+        # Try to get the domain from the 'domains' array first
+        website = item.fetch('domains', []).first
+        # Fallback to extracting it from the website link
+        website = org_website(item: item) if website.blank?
+
         # If no website or country then just return the name
         return name unless website.present? || country.present?
 

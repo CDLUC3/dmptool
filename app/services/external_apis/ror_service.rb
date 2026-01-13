@@ -66,7 +66,7 @@ module ExternalApis
           if old_checksum_val == metadata[:checksum]
             log_message(method: method, message: 'There is no new ROR file to process.')
           else
-            download_file = download_file = metadata['key']
+            download_file = metadata['key']
             download_url = metadata.fetch('links', {}).fetch('download', metadata.fetch('links', {})['self'])
             log_message(method: method, message: "New ROR file detected - checksum #{metadata[:checksum]}")
             log_message(method: method, message: "Downloading #{download_file}")
@@ -174,7 +174,7 @@ module ExternalApis
 
               log_message(
                 method: method,
-                message: "Unable to process record for: '#{hash&.fetch('name', 'unknown')}'",
+                message: "Unable to process record for: '#{hash.fetch('names', []).first&.fetch('value', 'unknown')}'",
                 info: false
               )
             end
@@ -204,14 +204,16 @@ module ExternalApis
 
         registry_org = RegistryOrg.find_or_create_by(ror_id: record['id'])
         registry_org.name = safe_string(value: org_name(item: record))
-        registry_org.acronyms = record['acronyms']
-        registry_org.aliases = record['aliases']
-        registry_org.country = record['country']
+        registry_org.acronyms = extract_names(item: record, type: 'acronym')
+        registry_org.aliases = extract_names(item: record, type: 'alias')
+        registry_org.country = extract_country(item: record)
         registry_org.types = record['types']
         registry_org.language = org_language(item: record)
         registry_org.file_timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
         registry_org.fundref_id = fundref_id(item: record)
-        registry_org.home_page = safe_string(value: record.fetch('links', []).first)
+        
+        website = record.fetch('links', []).find { |l| l['type'] == 'website' }
+        registry_org.home_page = safe_string(value: website ? website['value'] : nil)
 
         # Attempt to find a matching Org record
         registry_org.org_id = check_for_org_association(registry_org: registry_org)
@@ -250,15 +252,21 @@ module ExternalApis
       #    "Example College (example.edu)"
       #    "Example College (Brazil)"
       def org_name(item:)
-        return '' unless item.present? && item['name'].present?
+        return '' unless item.present? && item['names'].present?
 
-        country = item.fetch('country', {}).fetch('country_name', '')
+        # Find ror_display name
+        name_obj = item['names'].find { |n| n['types']&.include?('ror_display') }
+        name = name_obj ? name_obj['value'] : item['names'].first['value']
+        
+        return '' if name.blank?
+
+        country = extract_country(item: item)&.fetch('country_name', '')
         website = org_website(item: item)
         # If no website or country then just return the name
-        return item['name'] unless website.present? || country.present?
+        return name unless website.present? || country.present?
 
         # Otherwise return the contextualized name
-        "#{item['name']} (#{website || country})"
+        "#{name} (#{website || country})"
       end
 
       # Extracts the org's ISO639 if available
@@ -266,38 +274,58 @@ module ExternalApis
         dflt = I18n.default_locale || 'en'
         return dflt if item.blank?
 
-        country = item.fetch('country', {}).fetch('country_code', '')
-        labels = case country
-                 when 'US'
-                   [{ iso639: 'en' }]
-                 else
-                   item.fetch('labels', [{ iso639: dflt }])
-                 end
-        labels.first&.fetch('iso639', I18n.default_locale) || dflt
+        # Try to get language from ror_display name
+        name_obj = item.fetch('names', []).find { |n| n['types']&.include?('ror_display') }
+        return name_obj['lang'] if name_obj.present? && name_obj['lang'].present?
+        
+        dflt
       end
 
       # Extracts the website domain from the item
       def org_website(item:)
         return nil unless item.present? && item.fetch('links', [])&.any?
-        return nil if item['links'].first.blank?
+        
+        website_obj = item['links'].find { |l| l['type'] == 'website' }
+        return nil unless website_obj.present? && website_obj['value'].present?
 
         # A website was found, so extract just the domain without the www
         domain_regex = %r{^(?:http://|www\.|https://)([^/]+)}
-        website = item['links'].first.scan(domain_regex).last.first
-        website.gsub('www.', '')
+        website = website_obj['value'].scan(domain_regex).last&.first
+        website&.gsub('www.', '')
       end
 
       # Extracts the FundRef Id if available
       def fundref_id(item:)
         return '' unless item.present? && item['external_ids'].present?
-        return '' unless item['external_ids'].fetch('FundRef', {}).any?
+        
+        fundref = item['external_ids'].find { |id| id['type'] == 'fundref' }
+        return '' unless fundref.present?
 
-        # If a preferred Id was specified then use it
-        ret = item['external_ids'].fetch('FundRef', {}).fetch('preferred', '')
-        return ret if ret.present?
+        return fundref['preferred'] if fundref['preferred'].present?
+        
+        fundref.fetch('all', []).first
+      end
 
-        # Otherwise take the first one listed
-        item['external_ids'].fetch('FundRef', {}).fetch('all', []).first
+      # Helper to extract names by type
+      def extract_names(item:, type:)
+        return [] unless item.present? && item['names'].present?
+        
+        item['names'].select { |n| n['types']&.include?(type) }.map { |n| n['value'] }
+      end
+
+      # Helper to extract country
+      def extract_country(item:)
+        return nil unless item.present? && item['locations'].present?
+        
+        # Assuming we take the first location
+        loc = item['locations'].first
+        return nil unless loc.present? && loc['geonames_details'].present?
+        
+        details = loc['geonames_details']
+        {
+          'country_name' => details['country_name'],
+          'country_code' => details['country_code']
+        }
       end
     end
   end

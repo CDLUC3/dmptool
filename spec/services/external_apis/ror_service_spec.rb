@@ -42,7 +42,7 @@ RSpec.describe ExternalApis::RorService do
       xit 'returns an empty array' do
         expect(described_class.search(term: @term)).to eql([])
       end
-      xit 'logs the response as an error' do
+      it 'logs the response as an error' do
         described_class.expects(:handle_http_failure).at_least(1)
         described_class.search(term: @term)
       end
@@ -70,28 +70,36 @@ RSpec.describe ExternalApis::RorService do
           items: [
             {
               id: 'https://ror.org/1234567890',
-              name: 'Example University',
+              names: [
+                { types: ['ror_display'], value: 'Example University' },
+                { types: ['alias'], value: 'Example' },
+                { types: ['acronym'], value: 'EU' }
+              ],
               types: ['Education'],
-              links: ['http://example.edu/'],
-              aliases: ['Example'],
-              acronyms: ['EU'],
+              links: [{ type: 'website', value: 'http://example.edu/' }],
               status: 'active',
-              country: { country_name: 'United States', country_code: 'US' },
-              external_ids: {
-                GRID: { preferred: 'grid.12345.1', all: 'grid.12345.1' }
-              }
+              locations: [
+                { geonames_details: { country_name: 'United States', country_code: 'US' } }
+              ],
+              external_ids: [
+                { type: 'grid', preferred: 'grid.12345.1', all: ['grid.12345.1'] }
+              ]
             }, {
               id: 'https://ror.org/0987654321',
-              name: 'Universidade de Example',
+              names: [
+                { types: ['ror_display'], value: 'Universidade de Example' },
+                { types: ['alias'], value: 'Example' },
+                { types: ['acronym'], value: 'EU' }
+              ],
               types: ['Education'],
               links: [],
-              aliases: ['Example'],
-              acronyms: ['EU'],
               status: 'active',
-              country: { country_name: 'Mexico', country_code: 'MX' },
-              external_ids: {
-                GRID: { preferred: 'grid.98765.8', all: 'grid.98765.8' }
-              }
+              locations: [
+                { geonames_details: { country_name: 'Mexico', country_code: 'MX' } }
+              ],
+              external_ids: [
+                { type: 'grid', preferred: 'grid.98765.8', all: ['grid.98765.8'] }
+              ]
             }
           ]
         }
@@ -132,8 +140,8 @@ RSpec.describe ExternalApis::RorService do
           time_taken: 5,
           items: [{
             id: Faker::Internet.url,
-            name: Faker::Lorem.word,
-            country: { country_name: Faker::Lorem.word }
+            names: [{ types: ['ror_display'], value: Faker::Lorem.word }],
+            locations: [{ geonames_details: { country_name: Faker::Lorem.word } }]
           }]
         }
         @term = Faker::Lorem.word
@@ -206,8 +214,8 @@ RSpec.describe ExternalApis::RorService do
         items = Array.new(4).map do
           {
             id: Faker::Internet.unique.url,
-            name: Faker::Lorem.word,
-            country: { country_name: Faker::Lorem.word }
+            names: [{ types: ['ror_display'], value: Faker::Lorem.word }],
+            locations: [{ geonames_details: { country_name: Faker::Lorem.word } }]
           }
         end
         results1 = { number_of_results: 4, items: items }
@@ -225,8 +233,8 @@ RSpec.describe ExternalApis::RorService do
         items = Array.new(7).map do
           {
             id: Faker::Internet.unique.url,
-            name: Faker::Lorem.word,
-            country: { country_name: Faker::Lorem.word }
+            names: [{ types: ['ror_display'], value: Faker::Lorem.word }],
+            locations: [{ geonames_details: { country_name: Faker::Lorem.word } }]
           }
         end
         results1 = { number_of_results: 7, items: items[0..4] }
@@ -247,8 +255,8 @@ RSpec.describe ExternalApis::RorService do
         items = Array.new(12).map do
           {
             id: Faker::Internet.unique.url,
-            name: Faker::Lorem.word,
-            country: { country_name: Faker::Lorem.word }
+            names: [{ types: ['ror_display'], value: Faker::Lorem.word }],
+            locations: [{ geonames_details: { country_name: Faker::Lorem.word } }]
           }
         end
         results1 = { number_of_results: 12, items: items[0..4] }
@@ -273,17 +281,17 @@ RSpec.describe ExternalApis::RorService do
       end
       xit 'ignores items with no name or id' do
         json = { items: [
-          { id: Faker::Internet.url, name: Faker::Lorem.word },
+          { id: Faker::Internet.url, names: [{ types: ['ror_display'], value: Faker::Lorem.word }] },
           { id: Faker::Internet.url },
-          { name: Faker::Lorem.word }
+          { names: [{ types: ['ror_display'], value: Faker::Lorem.word }] }
         ] }.to_json
         items = described_class.send(:parse_results, json: JSON.parse(json))
         expect(items.length).to eql(1)
       end
       xit 'returns the correct number of results' do
         json = { items: [
-          { id: Faker::Internet.url, name: Faker::Lorem.word },
-          { id: Faker::Internet.url, name: Faker::Lorem.word }
+          { id: Faker::Internet.url, names: [{ types: ['ror_display'], value: Faker::Lorem.word }] },
+          { id: Faker::Internet.url, names: [{ types: ['ror_display'], value: Faker::Lorem.word }] }
         ] }.to_json
         items = described_class.send(:parse_results, json: JSON.parse(json))
         expect(items.length).to eql(2)
@@ -292,31 +300,31 @@ RSpec.describe ExternalApis::RorService do
 
     describe '#org_name' do
       xit 'returns nil if there is no name' do
-        json = { country: { country_name: 'Nowhere' } }.to_json
+        json = { locations: [{ geonames_details: { country_name: 'Nowhere' } }] }.to_json
         expect(described_class.send(:org_name, item: JSON.parse(json))).to eql('')
       end
       xit 'properly appends the website if available' do
         json = {
-          name: 'Example College',
-          links: ['https://example.edu'],
-          country: { country_name: 'Nowhere' }
+          names: [{ types: ['ror_display'], value: 'Example College' }],
+          links: [{ type: 'website', value: 'https://example.edu' }],
+          locations: [{ geonames_details: { country_name: 'Nowhere' } }]
         }.to_json
         expected = 'Example College (example.edu)'
         expect(described_class.send(:org_name, item: JSON.parse(json))).to eql(expected)
       end
-      xit 'properly appends the country if available and no website is available' do
+      it 'properly appends the country if available and no website is available' do
         json = {
-          name: 'Example College',
-          country: { country_name: 'Nowhere' }
+          names: [{ types: ['ror_display'], value: 'Example College' }],
+          locations: [{ geonames_details: { country_name: 'Nowhere' } }]
         }.to_json
         expected = 'Example College (Nowhere)'
         expect(described_class.send(:org_name, item: JSON.parse(json))).to eql(expected)
       end
       xit 'properly handles an item with no website or country' do
         json = {
-          name: 'Example College',
+          names: [{ types: ['ror_display'], value: 'Example College' }],
           links: [],
-          country: {}
+          locations: []
         }.to_json
         expected = 'Example College'
         expect(described_class.send(:org_name, item: JSON.parse(json))).to eql(expected)
@@ -332,35 +340,35 @@ RSpec.describe ExternalApis::RorService do
         expect(described_class.send(:org_website, item: nil)).to eql(nil)
       end
       xit 'returns the domain only' do
-        item = JSON.parse({ links: ['https://example.org/path?a=b'] }.to_json)
+        item = JSON.parse({ links: [{ type: 'website', value: 'https://example.org/path?a=b' }] }.to_json)
         expect(described_class.send(:org_website, item: item)).to eql('example.org')
       end
       xit 'removes the www prefix' do
-        item = JSON.parse({ links: ['www.example.org'] }.to_json)
+        item = JSON.parse({ links: [{ type: 'website', value: 'www.example.org' }] }.to_json)
         expect(described_class.send(:org_website, item: item)).to eql('example.org')
       end
     end
 
     describe '#fundref_id' do
       before(:each) do
-        @hash = { external_ids: {} }
+        @hash = { external_ids: [] }
       end
       xit 'returns a blank if no external_ids are present' do
         json = JSON.parse(@hash.to_json)
         expect(described_class.send(:fundref_id, item: json)).to eql('')
       end
       xit 'returns a blank if no FundRef ids are present' do
-        @hash['external_ids'] = { FundRef: {} }
+        @hash['external_ids'] = [{ type: 'grid', preferred: '1', all: %w[2 1] }]
         json = JSON.parse(@hash.to_json)
         expect(described_class.send(:fundref_id, item: json)).to eql('')
       end
       xit 'returns the preferred id when specified' do
-        @hash['external_ids'] = { FundRef: { preferred: '1', all: %w[2 1] } }
+        @hash['external_ids'] = [{ type: 'fundref', preferred: '1', all: %w[2 1] }]
         json = JSON.parse(@hash.to_json)
         expect(described_class.send(:fundref_id, item: json)).to eql('1')
       end
       xit 'returns the firstid if no preferred is specified' do
-        @hash['external_ids'] = { FundRef: { preferred: nil, all: %w[2 1] } }
+        @hash['external_ids'] = [{ type: 'fundref', preferred: nil, all: %w[2 1] }]
         json = JSON.parse(@hash.to_json)
         expect(described_class.send(:fundref_id, item: json)).to eql('2')
       end

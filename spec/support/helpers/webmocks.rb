@@ -49,12 +49,12 @@ module Helpers
       10.times.each do
         body[:items] << {
           id: Faker::Internet.url(host: 'ror.org'),
-          name: Faker::Company.unique.name,
-          links: [[Faker::Internet.url, nil].sample],
-          country: { country_name: Faker::Books::Dune.planet },
-          external_ids: {
-            FundRef: { preferred: nil, all: [Faker::Number.number(digits: 6)] }
-          }
+          names: [{ types: ['ror_display'], value: Faker::Company.unique.name }],
+          links: [{ type: 'website', value: Faker::Internet.url }],
+          locations: [{ geonames_details: { country_name: Faker::Books::Dune.planet } }],
+          external_ids: [
+            { type: 'fundref', preferred: nil, all: [Faker::Number.number(digits: 6)] }
+          ]
         }
       end
       body.to_json

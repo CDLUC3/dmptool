@@ -125,3 +125,172 @@ Total web pages: 82
   - `/users/refresh_token`
   - `/users/third_party_apps`
 
+# Application Sitemap
+
+Generated on: 2026-01-14T16:13:41-08:00
+
+Total web pages: 123
+
+## Page Hierarchy
+
+- `/about_us`
+- `/auth`
+- `/dashboard`
+  - `/dashboard/*all`
+- `/editorial_board`
+- `/faq`
+- `/general_guidance`
+- `/get_started`
+- `/help`
+- `/join_us`
+- `/news_media`
+- `/oauth`
+  - `/oauth/authorize`
+    - `/oauth/authorize/native`
+  - `/oauth/token`
+    - `/oauth/token/info`
+- `/org`
+  - `/org/admin`
+    - `/org/admin/:id`
+      - `/org/admin/:id/admin_edit`
+    - `/org/admin/:org_id`
+      - `/org/admin/:org_id/departments`
+        - `/org/admin/:org_id/departments/:id`
+          - `/org/admin/:org_id/departments/:id/edit`
+        - `/org/admin/:org_id/departments/new`
+    - `/org/admin/guidance`
+      - `/org/admin/guidance/:id`
+        - `/org/admin/guidance/:id/admin_edit`
+        - `/org/admin/guidance/:id/admin_index`
+        - `/org/admin/guidance/:id/admin_new`
+    - `/org/admin/guidancegroup`
+      - `/org/admin/guidancegroup/:id`
+        - `/org/admin/guidancegroup/:id/admin_edit`
+        - `/org/admin/guidancegroup/:id/admin_new`
+        - `/org/admin/guidancegroup/:id/admin_show`
+    - `/org/admin/users`
+      - `/org/admin/users/:id`
+        - `/org/admin/users/:id/admin_grant_permissions`
+      - `/org/admin/users/admin_index`
+- `/org_admin`
+  - `/org_admin/download_plans`
+  - `/org_admin/plans`
+    - `/org_admin/plans/:id`
+      - `/org_admin/plans/:id/feedback_complete`
+  - `/org_admin/questions`
+    - `/org_admin/questions/:question_id`
+      - `/org_admin/questions/:question_id/conditions`
+        - `/org_admin/questions/:question_id/conditions/:id`
+        - `/org_admin/questions/:question_id/conditions/new`
+      - `/org_admin/questions/:question_id/open_conditions`
+  - `/org_admin/templates`
+    - `/org_admin/templates/:id`
+      - `/org_admin/templates/:id/edit`
+      - `/org_admin/templates/:id/email`
+      - `/org_admin/templates/:id/history`
+      - `/org_admin/templates/:id/metadata_standard_search`
+      - `/org_admin/templates/:id/preferences`
+      - `/org_admin/templates/:id/repository_search`
+      - `/org_admin/templates/:id/template_export`
+    - `/org_admin/templates/:template_id`
+      - `/org_admin/templates/:template_id/phases`
+        - `/org_admin/templates/:template_id/phases/:id`
+          - `/org_admin/templates/:template_id/phases/:id/edit`
+          - `/org_admin/templates/:template_id/phases/:id/preview`
+        - `/org_admin/templates/:template_id/phases/:phase_id`
+          - `/org_admin/templates/:template_id/phases/:phase_id/sections`
+            - `/org_admin/templates/:template_id/phases/:phase_id/sections/:id`
+              - `/org_admin/templates/:template_id/phases/:phase_id/sections/:id/edit`
+            - `/org_admin/templates/:template_id/phases/:phase_id/sections/:section_id`
+              - `/org_admin/templates/:template_id/phases/:phase_id/sections/:section_id/questions`
+                - `/org_admin/templates/:template_id/phases/:phase_id/sections/:section_id/questions/:id`
+                  - `/org_admin/templates/:template_id/phases/:phase_id/sections/:section_id/questions/:id/edit`
+                - `/org_admin/templates/:template_id/phases/:phase_id/sections/:section_id/questions/new`
+        - `/org_admin/templates/:template_id/phases/new`
+    - `/org_admin/templates/customisable`
+    - `/org_admin/templates/new`
+    - `/org_admin/templates/organisational`
+  - `/org_admin/users`
+    - `/org_admin/users/:id`
+      - `/org_admin/users/:id/edit`
+      - `/org_admin/users/:id/user_plans`
+- `/org_logos`
+  - `/org_logos/:id`
+- `/orgs`
+  - `/orgs/search`
+- `/plan_from_funder_requirements`
+- `/plans`
+  - `/plans/:id`
+    - `/plans/:id/add_orcid_work`
+    - `/plans/:id/answer`
+    - `/plans/:id/download`
+    - `/plans/:id/edit`
+    - `/plans/:id/follow_up`
+    - `/plans/:id/mint`
+    - `/plans/:id/overview`
+    - `/plans/:id/publish`
+    - `/plans/:id/request_feedback`
+  - `/plans/:plan_id`
+    - `/plans/:plan_id/contributors`
+      - `/plans/:plan_id/contributors/:id`
+        - `/plans/:plan_id/contributors/:id/edit`
+      - `/plans/:plan_id/contributors/new`
+    - `/plans/:plan_id/export`
+    - `/plans/:plan_id/license_selection`
+    - `/plans/:plan_id/metadata_standard_search`
+    - `/plans/:plan_id/output_type_selection`
+    - `/plans/:plan_id/repository_search`
+    - `/plans/:plan_id/research_outputs`
+      - `/plans/:plan_id/research_outputs/:id`
+        - `/plans/:plan_id/research_outputs/:id/edit`
+      - `/plans/:plan_id/research_outputs/new`
+  - `/plans/new`
+- `/privacy`
+- `/promote`
+- `/public_orgs`
+- `/public_plans`
+- `/public_templates`
+- `/question_formats`
+  - `/question_formats/rda_api_address`
+- `/quick_start_guide`
+- `/recede_historical_location`
+- `/refresh_historical_location`
+- `/research_projects`
+  - `/research_projects/search`
+- `/research_projects(`
+  - `/research_projects(/:type)`
+- `/researchers`
+- `/resume_historical_location`
+- `/sitemap`
+- `/sso_error`
+- `/super_admin`
+  - `/super_admin/api_clients`
+    - `/super_admin/api_clients/:id`
+      - `/super_admin/api_clients/:id/edit`
+      - `/super_admin/api_clients/:id/email_credentials`
+      - `/super_admin/api_clients/:id/refresh_credentials`
+    - `/super_admin/api_clients/new`
+  - `/super_admin/api_logs`
+  - `/super_admin/notifications`
+    - `/super_admin/notifications/:id`
+      - `/super_admin/notifications/:id/edit`
+    - `/super_admin/notifications/new`
+  - `/super_admin/orgs`
+    - `/super_admin/orgs/new`
+  - `/super_admin/themes`
+    - `/super_admin/themes/:id`
+      - `/super_admin/themes/:id/edit`
+    - `/super_admin/themes/new`
+  - `/super_admin/users`
+    - `/super_admin/users/:id`
+      - `/super_admin/users/:id/edit`
+      - `/super_admin/users/:id/search`
+- `/terms`
+- `/usage`
+- `/users`
+  - `/users/:id`
+    - `/users/:id/refresh_token`
+  - `/users/edit`
+  - `/users/sign_in`
+  - `/users/sign_up`
+

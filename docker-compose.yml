@@ -10,8 +10,8 @@ networks:
     driver: bridge
 
 services:
-  db:
-    container_name: mysql
+  mysql:
+    container_name: dmptool-mysql
     restart: always
     command: --default-authentication-plugin=caching_sha2_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     image: mysql/mysql-server:latest
@@ -33,14 +33,14 @@ services:
   dmptool:
     container_name: dmptool
     depends_on:
-      - db
+      - mysql
     build:
       context: .
       dockerfile: Dockerfile.dev
     command: bash -c "rm -f ./tmp/pids/server.pid && rm -f ./tmp/pids/delayed_job.pid && ./bin/dev"
-    user: "1000:1000"
-    links:
-      - db
+    # user: "1000:1000"
+    # links:
+    #   - db
     ports:
       - "3000:3000"
     expose:
@@ -48,16 +48,16 @@ services:
     networks:
       - dmptool-network
     environment:
-      - RAILS_ENV=development
-      - DMPROADMAP_DATABASE_HOST=mysql
-      - DMPROADMAP_DATABASE_PORT=3306
-      - DMPROADMAP_DATABASE_USERNAME=dmpuser
-      - DMPROADMAP_DATABASE_PASSWORD=abcdefghij
-      - DMPROADMAP_DATABASE_NAME=dmp
+      - "RAILS_ENV=development"
+      - "DMPROADMAP_DATABASE_HOST=dmptool-mysql"
+      - "DMPROADMAP_DATABASE_PORT=3306"
+      - "DMPROADMAP_DATABASE_USERNAME=dmpuser"
+      - "DMPROADMAP_DATABASE_PASSWORD=abcdefghij"
+      - "DMPROADMAP_DATABASE_NAME=dmp"
       # The first time you startup these docker containers, you will need to uncomment the
       # following FIRST_TIME variable so the MySQL database is properly initialized.
       #
-      # - FIRST_TIME=true
+      # - "FIRST_TIME=true"
     env_file:
       - .env.dev
     volumes:

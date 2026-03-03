@@ -7,7 +7,7 @@
     <%= render partial: 'branded/shared/export/plan_styling',
                locals: {
                  font_face: font_face,
-                 font_size: "#{font_size}pt",
+                 font_size: "#{font_size == 11 ? 11.001 : font_size}pt",
                  margin: "#{margin_top}px #{margin_right}px #{margin_bottom}px #{margin_left}px"
                } %>
   </head>

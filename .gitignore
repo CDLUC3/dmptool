@@ -36,6 +36,7 @@ app/assets/images/homepage
 
 # Ignore all logfiles, tempfiles, public assets,
 /log/*.log
+/log/*.log.*
 /tmp
 
 # Ignore webpack generate images in public folder

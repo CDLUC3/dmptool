@@ -97,7 +97,7 @@ class PlanExportsController < ApplicationController
   private
 
   def show_html
-    render layout: false
+    render layout: false, locals: { export_format: 'html' }
   end
 
   def show_csv
@@ -131,7 +131,7 @@ class PlanExportsController < ApplicationController
       redirect_to rails_blob_path(@plan.narrative, disposition: "attachment") and return if @plan.narrative.present? &&
                                                                                             @from_public_plans_page
 
-      html = render_to_string(partial: '/shared/export/plan')
+      html = render_to_string(partial: '/shared/export/plan', locals: { export_format: 'pdf' })
 
       grover_options = {
         margin:  {

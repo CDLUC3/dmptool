@@ -26,6 +26,18 @@ def margin_mm_to_px(val)
   return crosswalk[val.to_s.to_sym] || crosswalk[:'25']
 end
 
+def pt_to_px(val)
+  # Strips "pt" suffix if present, converts to px for consistent Chromium print rendering
+  # e.g. "11pt" → "14.67px", "12pt" → "16.0px"
+  if val.to_s =~ /^([\d.]+)pt$/
+    px = ($1.to_f * 96.0 / 72.0).round(2)
+    "#{px}px"
+  else
+    val  # already px, em, or unknown — pass through unchanged
+  end
+end
+
+
 # The Grover PDF top and bottom margins do not match the WkHtmlToPdf margins, so reduce them down a bit
 margin_top = (margin_top.to_s =~ /[\d]+/) == 0 ? (margin_top.to_s.to_i - 4).to_s : '20'
 margin_bottom = (margin_bottom.to_s =~ /[\d]+/) == 0 ? (margin_bottom.to_s.to_i - 4).to_s : '20'
@@ -40,7 +52,7 @@ margin_bottom = (margin_bottom.to_s =~ /[\d]+/) == 0 ? (margin_bottom.to_s.to_i 
   }
   body {
     font-family: <%= font_face %>;
-    font-size: <%= font_size %>;
+    font-size: <%= (export_format == 'pdf' || export_format.nil?) ? pt_to_px(font_size) : font_size %>;  <%# Convert pt to px for PDF, keep as pt for DOCX/HTML %>
     line-height: 120%;
   }
   .break-after {

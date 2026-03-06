@@ -22,7 +22,10 @@
       <% if @hash[:all_phases] || (@selected_phase.present? && phase[:title] == @selected_phase.title) %>
         <%# Page break before each phase %>
         <div style="page-break-before:always;"></div>
-        <h1><%= download_plan_page_title(@plan, phase, @hash) %></h1>
+        <%# Skip H1 for DOCX - Pandoc converts HTML <title> to Word Title style, making H1 redundant %>
+        <% unless local_assigns[:export_format] == 'docx' %>
+          <h1><%= download_plan_page_title(@plan, phase, @hash) %></h1>
+        <% end %>
         <% phase[:sections].each do |section| %>
           <% if display_section?(@hash[:customization], section, @show_custom_sections) && num_section_questions(@plan, section, phase) > 0 %>
             <% if @show_sections %>
@@ -42,7 +45,8 @@
 
                 <% if @show_questions %>
                   <% if (@show_unanswered && blank) || !blank %>
-                    <h3><%=  sanitize question[:text].to_s, scrubber: TableFreeScrubber.new %></h3>
+                    <%# Strip <p> tags to prevent invalid HTML structure (<h3><p>...</p></h3>) %>
+                    <h3><%=  sanitize(question[:text].to_s, scrubber: TableFreeScrubber.new).gsub(/<\/?p>/, '').html_safe %></h3>
                   <% end %>
                 <% end %>
 

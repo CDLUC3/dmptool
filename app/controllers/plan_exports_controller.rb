@@ -117,40 +117,10 @@ class PlanExportsController < ApplicationController
   end
 
   def show_docx
-    # Use Pandoc for better HTML->DOCX conversion (handles CSS font-size correctly)
-    begin
-      html = render_to_string(partial: 'shared/export/plan', locals: { export_format: 'docx' })
-      
-      docx_path = Rails.root.join('tmp', "#{file_name}.docx")
-      html_path = Rails.root.join('tmp', "#{file_name}.html")
-      
-      # Write HTML to temp file for Pandoc
-      File.write(html_path, html)
-      
-      # Convert using Pandoc with reference document for styling
-      reference_doc = Rails.root.join('lib', 'templates', 'pandoc_reference.docx')
-      result = system('pandoc', '-f', 'html', '-t', 'docx', 
-                      "--reference-doc=#{reference_doc}", 
-                      '-o', docx_path.to_s, html_path.to_s)
-
-      if result && File.exist?(docx_path)
-        send_data File.read(docx_path, mode: 'rb'),
-                  filename: "#{file_name}.docx",
-                  type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      else
-        raise "Pandoc conversion failed"
-      end
-    rescue StandardError => e
-      Rails.logger.error("Unable to generate DOCX with Pandoc: #{e.message}")
-      # Fallback to htmltoword method if pandoc fails for any reason
-      render docx: "#{file_name}.docx",
-             content: clean_html_for_docx_creation(render_to_string(partial: 'shared/export/plan',
-                                                                    locals: { export_format: 'docx' }))
-    ensure
-      # Cleanup temp files
-      File.delete(html_path) if File.exist?(html_path)
-      File.delete(docx_path) if File.exist?(docx_path)
-    end
+    # Using and optional locals_assign export_format
+    render docx: "#{file_name}.docx",
+           content: clean_html_for_docx_creation(render_to_string(partial: 'shared/export/plan',
+                                                                  locals: { export_format: 'docx' }))
   end
 
   def show_pdf

@@ -20,6 +20,7 @@ RUN apt-get -qqy update \
     && apt-get install -y vim \
                           build-essential \
                           git \
+                          ssh \
                           curl \
                           locales \
                           libreadline-dev \
@@ -66,18 +67,17 @@ RUN mkdir pid
 # Copy the credentials that CodeBuild created and placed in the ./docker directory
 COPY docker/credentials.yml.enc ./config/
 
-# Copy over the upgrade script and run the tasks (db migration, rake tasks, etc.)
-# COPY --chown=755 docker/upgrade.sh ./upgrade.sh
-# RUN ./upgrade.sh
+# Add GitHub's public key to known_hosts to avoid the 'verification failed' prompt
+RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-# Rails requires the Spring preloader to run migrations and to compile our assets, so run
-# those tasks in development mode
-# ENV RAILS_ENV=development
-# RUN bundle config set without 'pgsql thin rollbar test'
-# RUN bundle install --jobs 20 --retry 5
+# Use the --mount=type=ssh flag to allow Yarn to use your host's SSH agent
+RUN --mount=type=ssh yarn --frozen-lockfile --production && \
+    --mount=type=ssh yarn install \
 
-# RUN bin/rails assets:clobber
-# RUN bin/rails assets:precompile
+# Instruct git to use https instead of ssh for klaro-ui
+git config --global url."git@github.com:".insteadOf https://github.com/
+git config --global url."git://".insteadOf https://
+git config --global url."https://github.com/".insteadOf ssh://git@github.com
 
 # Now that we're done with the migrations, asset compilation and upgrade tasks, we can rebuild the
 # bundle for production

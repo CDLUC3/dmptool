@@ -56,6 +56,9 @@ RUN gem install bundler -v 2.5
 RUN gem install foreman
 RUN bundle config without pgsql rollbar
 RUN bundle install
+
+# Force git to use HTTPS instead of SSH because of klaro-ui dependency
+RUN git config --global url."https://github.com/".insteadOf ssh://git@github.com/
 RUN yarn install
 
 # Install the fonts needed by Puppeteer to generate PDFs

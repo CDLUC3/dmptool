@@ -41,7 +41,8 @@ RUN apt-get -qqy update \
                           shared-mime-info \
 		                  nodejs -qqy \
                           chromium \
-    && rm -rf /var/lib/apt/lists/*
+                      pandoc \
+  && rm -rf /var/lib/apt/lists/*
 
 # Always run Node in Production for the ECS hosted environments
 ENV NODE_ENV=production

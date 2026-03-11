@@ -4,15 +4,15 @@
 # This Dockerfile is meant for running the application in an AWS ECS container. The required
 # Rails credentials and ENV variables are all defined by the CloudFormation template and passed
 # into the container on startup
-FROM ruby:3.3
+FROM ruby:3.4
 
 RUN echo $(apt-cache search magick)
 
 # Add NodeJS and Yarn repositories to apt-get
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-# Installing Node 20.x
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
+# Installing Node 22.x
+RUN curl -sL https://deb.nodesource.com/setup_22.x | bash
 
 # Install packages
 RUN apt-get clean

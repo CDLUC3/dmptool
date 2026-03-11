@@ -1,4 +1,4 @@
-FROM ruby:3.3-slim-bookworm
+FROM ruby:3.4-slim-bookworm
 
 RUN groupadd -g 1000 dmpt && useradd -u 1000 -g 1000 dmpt
 
@@ -27,7 +27,7 @@ RUN set -ex \
     && rm -rf /var/lib/apt/lists/*
 
 # Install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_22.x | bash -
 RUN apt-get install -y nodejs
 
 # Install yarn

@@ -116,10 +116,118 @@ class PlanExportsController < ApplicationController
               filename: "#{file_name}.txt"
   end
 
+  # Pandoc does not support converting inline CSS text-align styles (e.g. style="text-align:right")
+  # or HTML align attributes to DOCX paragraph alignment (w:jc) during HTML->DOCX conversion.
+  # It simply ignores them and defaults everything to left-aligned.
+  #
+  # To work around this, we use a two-step approach:
+  #   1. preprocess_alignment: Before passing HTML to Pandoc, we detect aligned paragraphs and
+  #      embed invisible Unicode Private Use Area characters (U+E001, U+E002, U+E003) as markers
+  #      at the start of the paragraph text. Pandoc preserves text content faithfully, so these
+  #      markers survive the conversion.
+  #   2. fix_docx_alignment: After Pandoc generates the DOCX, we unzip it, parse the Word XML
+  #      directly using Nokogiri, find paragraphs containing our invisible markers, inject the
+  #      correct w:jc (justification) XML element into the paragraph properties, remove the
+  #      markers from the text, and rezip the DOCX.
+
+  # Maps alignment values to invisible Unicode Private Use Area characters used as paragraph markers.
+  # These characters are invisible in Word and won't appear in the final document output.
+  ALIGN_MARKERS = {
+    'right'   => "\uE001",
+    'center'  => "\uE002",
+    'justify' => "\uE003"
+  }
+
+  # Preprocesses HTML before passing it to Pandoc.
+  # Finds paragraphs wrapped in alignment divs (produced by the rich text editor and
+  # the preprocess step in show_docx) and embeds an invisible alignment marker character
+  # at the start of the paragraph text content.
+  #
+  # Example transformation:
+  #   Input:  <div style="text-align:right;"><p>Hello</p></div>
+  #   Output: <p>"\uE001"Hello</p>
+  #
+  # The marker character is later detected in fix_docx_alignment after Pandoc conversion.
+  def preprocess_alignment(html)
+    html.gsub(/<div style="text-align:(right|center|justify);"><p[^>]*>(.*?)<\/p><\/div>/im) do
+      align = $1
+      content = $2
+      marker = ALIGN_MARKERS[align]
+      "<p>#{marker}#{content}</p>"
+    end
+  end
+
+  # Post-processes a Pandoc-generated DOCX file to inject proper paragraph alignment.
+  # Since Pandoc ignores CSS text-align during HTML->DOCX conversion, this method:
+  #   1. Unzips the DOCX (which is a ZIP archive containing XML files)
+  #   2. Parses word/document.xml using Nokogiri
+  #   3. Finds paragraphs whose first text node starts with one of our invisible markers
+  #   4. Injects a <w:jc> (justification) element into the paragraph's <w:pPr> (paragraph
+  #      properties) block — this is the correct Word XML location for text alignment
+  #   5. Removes the invisible marker character from the text
+  #   6. Rewrites document.xml and rezips the DOCX
+  #
+  # Using Nokogiri for XML manipulation (rather than regex) is important here because
+  # regex-based XML manipulation risks corrupting other paragraph properties like
+  # spacing, style references, and font settings.
+  def fix_docx_alignment(docx_path)
+    require 'zip'
+    require 'nokogiri'
+
+    tmp_dir = Rails.root.join('tmp', "docx_fix_#{SecureRandom.hex}")
+    FileUtils.mkdir_p(tmp_dir)
+
+    begin
+      Zip::File.open(docx_path) do |zip|
+        zip.each do |entry|
+          path = tmp_dir.join(entry.name)
+          FileUtils.mkdir_p(File.dirname(path))
+          entry.extract(path) unless File.exist?(path)
+        end
+      end
+
+      doc_path = tmp_dir.join('word', 'document.xml')
+      doc = Nokogiri::XML(File.read(doc_path))
+      ns = { 'w' => 'http://schemas.openxmlformats.org/wordprocessingml/2006/main' }
+
+      ALIGN_MARKERS.each do |align, marker|
+        jc_val = align == 'justify' ? 'both' : align
+        doc.xpath('//w:p', ns).each do |para|
+          first_t = para.at_xpath('.//w:t', ns)
+          next unless first_t&.text&.start_with?(marker)
+
+          # Remove marker from text
+          first_t.content = first_t.text.sub(marker, '')
+
+          # Inject w:jc into w:pPr
+          ppr = para.at_xpath('w:pPr', ns)
+          unless ppr
+            ppr = Nokogiri::XML::Node.new('w:pPr', doc)
+            para.prepend_child(ppr)
+          end
+          ppr.add_child("<w:jc w:val=\"#{jc_val}\"/>")
+        end
+      end
+
+      File.write(doc_path, doc.to_xml)
+
+      File.delete(docx_path)
+      Zip::File.open(docx_path, Zip::File::CREATE) do |zip|
+        Dir.glob(tmp_dir.join('**', '*')).each do |file|
+          next if File.directory?(file)
+          zip.add(file.sub("#{tmp_dir}/", ''), file)
+        end
+      end
+    ensure
+      FileUtils.rm_rf(tmp_dir)
+    end
+  end
+
   def show_docx
     # Use Pandoc for better HTML->DOCX conversion (handles CSS font-size correctly)
     begin
       html = render_to_string(partial: 'shared/export/plan', locals: { export_format: 'docx' })
+      html = preprocess_alignment(html)
       
       docx_path = Rails.root.join('tmp', "#{file_name}.docx")
       html_path = Rails.root.join('tmp', "#{file_name}.html")
@@ -134,6 +242,7 @@ class PlanExportsController < ApplicationController
                       '-o', docx_path.to_s, html_path.to_s)
 
       if result && File.exist?(docx_path)
+        fix_docx_alignment(docx_path)
         send_data File.read(docx_path, mode: 'rb'),
                   filename: "#{file_name}.docx",
                   type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'

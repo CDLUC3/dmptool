@@ -29,7 +29,7 @@ end
 def pt_to_px(val)
   # Strips "pt" suffix if present, converts to px for consistent Chromium print rendering
   # e.g. "11pt" → "14.67px", "12pt" → "16.0px"
-  if val.to_s =~ /^([\d.]+)pt$/
+  if val.to_s =~ /^([\d.]+)(pt)?$/
     px = ($1.to_f * 96.0 / 72.0).round(2)
     "#{px}px"
   else

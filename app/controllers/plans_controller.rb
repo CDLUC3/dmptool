@@ -356,7 +356,19 @@ class PlansController < ApplicationController
     plan = Plan.find(params[:id])
     if plan.present?
       authorize plan
-      if plan.visibility_allowed?
+
+      nquestions = 0
+      nanswers = 0
+      plan.template.phases.each do |phase|
+        next unless phase.present?
+
+        nquestions += phase.num_questions_not_removed(plan)
+        nanswers += phase.num_answers_not_removed(plan)
+      end
+
+      complete = nquestions.positive? && nanswers.positive? ? (nanswers.to_f/nquestions*100).round(2) >= 50.0 : false
+
+      if complete
         plan.visibility = plan_params[:visibility]
         plan.accept_terms = plan_params[:visibility] == 'publicly_visible'
         if plan.save

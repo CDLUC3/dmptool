@@ -366,9 +366,9 @@ class PlansController < ApplicationController
         nanswers += phase.num_answers_not_removed(plan)
       end
 
-      complete = nquestions.positive? && nanswers.positive? ? (nanswers.to_f/nquestions*100).round(2) >= 50.0 : false
+      completed = nquestions.positive? && nanswers.positive? ? (nanswers.to_f/nquestions*100).round(2) >= 50.0 : false
 
-      if complete
+      if completed
         plan.visibility = plan_params[:visibility]
         plan.accept_terms = plan_params[:visibility] == 'publicly_visible'
         if plan.save

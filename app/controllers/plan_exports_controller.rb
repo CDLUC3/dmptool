@@ -132,9 +132,10 @@ class PlanExportsController < ApplicationController
       html = render_to_string(partial: 'shared/export/plan', locals: { export_format: 'docx' })
       html = preprocess_alignment(html)
 
-      docx_path     = File.join(Rails.root.to_s, 'tmp', "#{file_name}.docx")
-      html_path     = File.join(Rails.root.to_s, 'tmp', "#{file_name}.html")
-      reference_doc = File.join(Rails.root.to_s, 'lib', 'templates', 'pandoc_reference.docx')
+      docx_path     = Rails.root.join('tmp', "#{file_name}.docx").to_s
+      html_path     = Rails.root.join('tmp', "#{file_name}.html").to_s
+      reference_doc = Rails.root.join('lib', 'templates', 'pandoc_reference.docx').to_s
+
 
       File.write(html_path, html)
 

@@ -116,21 +116,31 @@ class PlanExportsController < ApplicationController
               filename: "#{file_name}.txt"
   end
 
+  # A method to preprocess the HTML content for better compatibility with Pandoc text alignment when converting to DOCX.
+  # Looks for 'text-align' styles in <p> tags and replaced them with custom styles which were created in pandoc_reference.docx.
+  def preprocess_alignment(html)
+  html.gsub(/<p style="text-align:(center|right|justify);">(.*?)<\/p>/im) do
+    align = $1.capitalize
+    content = $2
+    "<div custom-style=\"Align#{align}\"><p>#{content}</p></div>"
+    end
+  end
+
+
   def show_docx
-    # Use Pandoc for better HTML->DOCX conversion (handles CSS font-size correctly)
     begin
       html = render_to_string(partial: 'shared/export/plan', locals: { export_format: 'docx' })
-      
-      docx_path = Rails.root.join('tmp', "#{file_name}.docx")
-      html_path = Rails.root.join('tmp', "#{file_name}.html")
-      
-      # Write HTML to temp file for Pandoc
-      File.write(html_path, html)
-      
-      # Convert using Pandoc with reference document for styling
+      html = preprocess_alignment(html)
+
+      docx_path     = Rails.root.join('tmp', "#{file_name}.docx")
+      html_path     = Rails.root.join('tmp', "#{file_name}.html")
       reference_doc = Rails.root.join('lib', 'templates', 'pandoc_reference.docx')
-      result = system('pandoc', '-f', 'html', '-t', 'docx', 
-                      "--reference-doc=#{reference_doc}", 
+
+
+      File.write(html_path, html)
+
+      result = system('pandoc', '-f', 'html', '-t', 'docx',
+                      "--reference-doc=#{reference_doc}",
                       '-o', docx_path.to_s, html_path.to_s)
 
       if result && File.exist?(docx_path)
@@ -142,14 +152,12 @@ class PlanExportsController < ApplicationController
       end
     rescue StandardError => e
       Rails.logger.error("Unable to generate DOCX with Pandoc: #{e.message}")
-      # Fallback to htmltoword method if pandoc fails for any reason
       render docx: "#{file_name}.docx",
-             content: clean_html_for_docx_creation(render_to_string(partial: 'shared/export/plan',
+            content: clean_html_for_docx_creation(render_to_string(partial: 'shared/export/plan',
                                                                     locals: { export_format: 'docx' }))
     ensure
-      # Cleanup temp files
-      File.delete(html_path) if File.exist?(html_path)
-      File.delete(docx_path) if File.exist?(docx_path)
+      File.delete(html_path) if html_path.exist?
+      File.delete(docx_path) if docx_path && File.exist?(docx_path)
     end
   end
 

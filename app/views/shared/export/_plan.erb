@@ -22,11 +22,8 @@
       <% if @hash[:all_phases] || (@selected_phase.present? && phase[:title] == @selected_phase.title) %>
         <%# Page break before each phase %>
         <div style="page-break-before:always;"></div>
-        <%# Skip H1 for DOCX - Pandoc converts HTML <title> to Word Title style, making H1 redundant %>
-        <% unless local_assigns[:export_format] == 'docx' %>
-          <h1><%= download_plan_page_title(@plan, phase, @hash) %></h1>
-          <hr />
-        <% end %>
+        <h1><%= download_plan_page_title(@plan, phase, @hash) %></h1>
+        <hr />
         <% phase[:sections].each do |section| %>
           <% if display_section?(@hash[:customization], section, @show_custom_sections) && num_section_questions(@plan, section, phase) > 0 %>
             <% if @show_sections %>
@@ -44,12 +41,11 @@
                   <% blank = answer.present? ? answer.blank? : true %>
                   <% options = answer.present? ? answer.question_options : [] %>
                   <% if @show_unanswered %>
-                    <%# Strip <p> tags to prevent invalid HTML (<strong><p>...</p></strong> or <div><p>...</p></div>) %>
                     <%# Hack: for DOCX export - otherwise, bold highlighting of question inconsistent. %>
                     <% if local_assigns[:export_format] && export_format == 'docx' %>
-                      <strong><%=  sanitize(question[:text].to_s, scrubber: TableFreeScrubber.new).gsub(/<\/?p>/, '').html_safe %></strong>
+                      <strong><%=  sanitize question[:text].to_s, scrubber: TableFreeScrubber.new %></strong>
                     <% else %>
-                     <div class="bold"><%=  sanitize(question[:text].to_s, scrubber: TableFreeScrubber.new).gsub(/<\/?p>/, '').html_safe %></div>
+                     <div class="bold"><%=  sanitize question[:text].to_s, scrubber: TableFreeScrubber.new %></div>
                     <% end %>
                     <br>
                   <% end %>

@@ -46,7 +46,9 @@
     %>
     <div class="col-md-3">
       <%= qopt[:text]&.slice(0, 25) %>
-      <%= hidden_field_tag(name_start + "[question_option][]", condition[:question_option_id]) %>
+      <% condition[:question_option_id].each do |qoid| %>
+        <%= hidden_field_tag(name_start + "[question_option][]", qoid) %>
+      <% end %>
     </div>
     <div class="col-md-3">
       <%= condition[:action_type] == 'remove' ? 'Remove' : 'Email' %>

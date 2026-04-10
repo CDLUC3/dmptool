@@ -4,13 +4,16 @@ import { isObject } from '../../utils/isType';
 export default function updateConditions(id) {
   const parent = $(`#${id}.question_container`);
   const content = parent.find('#content');
-  content.html('');
   const addLogicButton = parent.find('a.add-logic[data-remote="true"]');
 
   // display conditions already saved
   if (addLogicButton.length > 0) {
     if (addLogicButton.attr('data-loaded').toString() === 'true') {
-      addLogicButton.trigger('click');
+      // Only wipe and reload via AJAX if the content wasn't already server-rendered
+      if (content.find('.condition-partial').length === 0) {
+        content.html('');
+        addLogicButton.trigger('click');
+      }
     }
   }
 

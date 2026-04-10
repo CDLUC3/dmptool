@@ -2,6 +2,9 @@
 
 ## DMPTool Releases
 
+### v5.55
+- Fixed bug where users could not expand their template sections because the `remove_data` field in the `conditions` table was inadvertently set to `[null]`
+
 ### v5.48
 - Update `template.customize?` method to allow any funder (instead of funder_only)
 - Added bitwise documentation to the `Org` model to help with debugging

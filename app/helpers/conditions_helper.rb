@@ -186,7 +186,7 @@ module ConditionsHelper
   def condition_to_text(conditions)
     return_string = ''
     conditions.each do |cond|
-      opts = cond.option_list.map { |opt| QuestionOption.find(opt).text }
+      opts = cond.option_list.filter_map { |opt| QuestionOption.find_by(id: opt)&.text }
       return_string += '</dd>' unless return_string.empty?
       return_string += "<dd>#{_('Answering')} "
       return_string += opts.join(' and ')
@@ -196,7 +196,7 @@ module ConditionsHelper
                                 subject_name: subject_string)
       else
         remove_data = cond.remove_data
-        rems = remove_data.map { |rem| "\"#{Question.find(rem).text}\"" }
+        rems = remove_data.filter_map { |rem| Question.find_by(id: rem)&.text&.then { |t| "\"#{t}\"" } }
 
         return_string += _(' will <b>remove</b> question ') if rems.length == 1
         return_string += _(' will <b>remove</b> questions ') if rems.length > 1
@@ -208,7 +208,7 @@ module ConditionsHelper
   # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def text_formatted(object)
-    text = Question.find(object).text if object.is_a?(Integer)
+    text = Question.find_by(id: object)&.text if object.is_a?(Integer)
     text = object if object.is_a?(String)
     return 'type error' if text.blank?
 

@@ -230,13 +230,13 @@ class Question < ApplicationRecord
     end
 
     if value['action_type'] == 'remove'
-      c.remove_data = value['remove_question_id']
+      c.remove_data = Array(value['remove_question_id']).reject(&:blank?)
       if question_id_map.present?
         new_question_ids = []
         c.remove_data.each do |qid|
           new_question_ids << question_id_map[qid]
         end
-        c.remove_data = new_question_ids
+        c.remove_data = new_question_ids.compact
       end
     else
       c.webhook_data = {

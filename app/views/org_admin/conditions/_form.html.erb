@@ -46,7 +46,9 @@
     %>
     <div class="col-md-3">
       <%= qopt[:text]&.slice(0, 25) %>
-      <%= hidden_field_tag(name_start + "[question_option][]", condition[:question_option_id]) %>
+      <% condition[:question_option_id].each do |qoid| %>
+        <%= hidden_field_tag(name_start + "[question_option][]", qoid) %>
+      <% end %>
     </div>
     <div class="col-md-3">
       <%= condition[:action_type] == 'remove' ? 'Remove' : 'Email' %>
@@ -55,7 +57,9 @@
     <div class="col-md-3">
       <% if condition[:remove_question_id].is_a?(Array) && condition[:remove_question_id].any? %>
         Question <%= rques[:number] %>: <%= rques.text.gsub(%r{</?p>}, '').slice(0, 50) %>
-        <%= hidden_field_tag(name_start + "[remove_question_id][]", condition[:remove_question_id]) %>
+        <% condition[:remove_question_id].each do |qid| %>
+          <%= hidden_field_tag(name_start + "[remove_question_id][]", qid) %>
+        <% end %>
       <% else %>
         <%
         hook_tip = "Name: #{condition[:webhook_data]['name']}\nEmail: #{condition[:webhook_data]['email']}\n"

@@ -39,7 +39,7 @@
     "@babel/plugin-transform-runtime": "7.28.3",
     "@babel/preset-env": "7.28.3",
     "@babel/preset-react": "7.27.1",
-    "@fortawesome/fontawesome-free": "6.7.2",
+    "@fortawesome/fontawesome-free": "7.1.0",
     "@hotwired/stimulus": "3.2.2",
     "@hotwired/turbo-rails": "8.0.16",
     "@rails/actioncable": "7.2",

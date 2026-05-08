@@ -2102,9 +2102,10 @@ kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
-"klaro-ui@https://github.com/cdlib/klaro-ui#v1.2.1":
-  version "1.2.1"
-  resolved "https://github.com/cdlib/klaro-ui#fcec43b7f80630a477c4f1beb3cefeb2a9d9a46c"
+"klaro-ui@https://github.com/cdlib/klaro-ui#v1.2.3":
+  version "1.2.3"
+  uid "4e9435523863e88f67efdb1ecf49494a525546a5"
+  resolved "https://github.com/cdlib/klaro-ui#4e9435523863e88f67efdb1ecf49494a525546a5"
   dependencies:
     klaro "^0.7.21"
 

@@ -81,5 +81,15 @@
   "optionalDependencies": {
     "@parcel/watcher-darwin-arm64": "^2.4.2-alpha.0",
     "@parcel/watcher-linux-arm64-glibc": "^2.4.2-alpha.0"
+  },
+  "supportedArchitectures": {
+    "os": [
+      "darwin",
+      "linux"
+    ],
+    "cpu": [
+      "arm64",
+      "x64"
+    ]
   }
 }

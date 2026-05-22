@@ -2,6 +2,14 @@
 
 ## DMPTool Releases
 
+### v5.56
+- Updated dependencies in `package.json` and `yarn.lock` to address security vulnerabilities.
+- Fixed a bug with adding Research Outputs under `Upload Plan` section, because validation was always requiring a `url`
+- Updated Dockerfiles to skip the download of `chrome-headless-shell` since we already install `chromium` via `apt-get`
+- Updated webpack.config to add an alias to resolve jquery use the same instance to prevent multiple versions loading.
+- Made small updates to `javscript/src/utils/accordion.js` and `views/phases/_guidances_notes.html.erb` due to package updates.
+- Fixed existing bug in `controllers/contributors_controller.rb` because after editing contributor info, the panel didn't change back to the table view.
+
 ### v5.55
 - Fixed bug where users could not expand their template sections because the `remove_data` field in the `conditions` table was inadvertently set to `[null]`
 

@@ -46,6 +46,8 @@ RUN apt-get -qqy update \
 
 # Always run Node in Production for the ECS hosted environments
 ENV NODE_ENV=production
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 RUN echo Using RAILS_ENV: ${RAILS_ENV}, NODE_ENV: ${NODE_ENV}
 

@@ -81,3 +81,12 @@
   border: 1px solid var(--color-red);
   color: var(--color-red);
 }
+
+// .modal.modal-search {
+//   z-index: 1055 !important;
+// }
+
+// Fix Bootstrap 3 .fade not working with Bootstrap 5 .show class
+.fade.show { opacity: 1 !important; }
+.modal-backdrop { z-index: 1050; }
+.modal { z-index: 1055; }

@@ -54,6 +54,12 @@ module.exports = {
     sourceMapFilename: '[file].map',
     path: path.resolve(__dirname, '..', '..', 'app/assets/builds'),
   },
+  resolve: {
+    // Ensure jquery-ui and app code share the same jQuery instance.
+    alias: {
+      jquery: path.resolve(__dirname, '..', '..', 'node_modules', 'jquery'),
+    },
+  },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,

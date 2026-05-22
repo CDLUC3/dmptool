@@ -1,4 +1,4 @@
-import 'bootstrap/js/popover';
+import 'bootstrap/js/dist/popover';
 
 $(() => {
   $('[data-toggle="popover"]').popover({

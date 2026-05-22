@@ -46,6 +46,8 @@ WORKDIR $INSTALL_PATH
 
 # Cleanup from build
 ENV RAILS_ENV development
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 RUN rm -rf node_modules vendor .cache
 
 # Make sure Git isn't going to try to use SSH (for klaro dependency)

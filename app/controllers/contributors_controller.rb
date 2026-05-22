@@ -67,8 +67,7 @@ class ContributorsController < ApplicationController
     args = process_orcid_for_update(hash: args)
 
     if @contributor.update(args)
-      redirect_to edit_plan_contributor_path(@plan, @contributor),
-                  notice: success_message(@contributor, _('saved'))
+      redirect_to plan_contributors_path(@plan), notice: success_message(@contributor, _('saved'))
     else
       flash.now[:alert] = failure_message(@contributor, _('save'))
       render :edit

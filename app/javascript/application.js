@@ -25,6 +25,7 @@ import 'bootstrap-select';
 // const imagePath = (name) => images(name, true)
 // Utilities
 import './src/utils/accordion';
+import './src/utils/bootstrapLegacyCompat';
 import './src/utils/autoComplete';
 import './src/utils/externalLink';
 import './src/utils/modalSearch';

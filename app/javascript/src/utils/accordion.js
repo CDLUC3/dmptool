@@ -46,7 +46,8 @@ $(() => {
         // Expands or collapses the panel according to the
         // direction passed (e.g. show --> expands, hide --> collapses)
         if (direction === 'show') {
-          if (!panelCollapse.find('.panel-body').attr('data-loaded') || !panelCollapse.hasClass('in')) {
+          if (!panelCollapse.find('.panel-body').attr('data-loaded')
+            || (!panelCollapse.hasClass('in') && !panelCollapse.hasClass('show'))) {
             panelCollapse.prev()[0].click();
           }
         } else {

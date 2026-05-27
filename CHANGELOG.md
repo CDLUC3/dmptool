@@ -2,6 +2,9 @@
 
 ## DMPTool Releases
 
+### v5.56
+- Updated gem dependencies
+
 ### v5.55
 - Fixed bug where users could not expand their template sections because the `remove_data` field in the `conditions` table was inadvertently set to `[null]`
 

@@ -1,19 +1,19 @@
 <%# locals: { plan, template, question, answer, guidance_presenter } %>
 <% guidances_active = guidance_presenter.any?(question: question) %>
 <% active_nav = nil %>
-<div id="plan-guidance-tab">
+<div id="plan-guidance-tab-<%= question.id %>">
   <!-- Nav tabs -->
   <ul class="nav nav-pills nav-justified mb-10" role="tablist">
       <% if guidances_active %>
           <li role="presentation" class="active">
-              <a href="#guidances-<%= question.id %>" aria-controls="guidances-<%= question.id %>" role="tab" data-toggle="pill">
+              <a class="nav-link active" href="#guidances-<%= question.id %>" aria-controls="guidances-<%= question.id %>" role="tab" data-toggle="pill">
                   <%= _('Guidance') %>
               </a>
           </li>
       <% end %>
       <% if plan.present? %>
           <li role="presentation" class="<%= 'active' if !guidances_active %>">
-              <a href="#notes-<%= question.id %>" aria-controls="notes-<%= question.id %>" role="tab" data-toggle="pill">
+              <a class="nav-link <%= 'active' if !guidances_active %>" href="#notes-<%= question.id %>" aria-controls="notes-<%= question.id %>" role="tab" data-toggle="pill">
                   <span id="notes-title-<%= question.id %>">
                       <%= render partial: '/notes/title', locals: { answer: answer } %>
                   </span>
@@ -24,18 +24,19 @@
   <div class="tab-content">
     <% if guidances_active %>
       <% tablist = guidance_presenter.tablist(question) %>
-      <div id="guidances-<%= question.id %>" role="tabpanel" class="tab-pane active">
+      <div id="guidances-<%= question.id %>" role="tabpanel" class="tab-pane <%= guidances_active ? 'show active' : '' %>">
         <ul class="nav nav-tabs" role="tablist">
           <% tablist.each_with_index do |tab, i| %>
             <% active_nav ||= tab[:name] %>
             <li role="presentation" <%= active_nav == tab[:name] ? "class=active" : "" %>>
               <a
+                href="<%= "#guidance_per_question_#{question.id}_#{i}" %>"
                 data-target="<%= "#guidance_per_question_#{question.id}_#{i}" %>"
                 aria-controls="<%= "#guidance_per_question_#{question.id}_#{i}" %>"
                 role="tab"
                 data-toggle="tab"
                 tabindex="0"
-                class="view-plan-guidance">
+                class="view-plan-guidance nav-link <%= active_nav == tab[:name] ? 'active' : '' %>">
                 <%= tab[:name] %>
               </a>
             </li>
@@ -43,7 +44,7 @@
         </ul>
         <div class="tab-content">
           <% tablist.each_with_index do |tab, i| %>
-            <div id="<%= "guidance_per_question_#{question.id}_#{i}" %>" role="tabpanel" class="tab-pane <%= active_nav == tab[:name] ? 'active' : '' %>">
+            <div id="<%= "guidance_per_question_#{question.id}_#{i}" %>" role="tabpanel" class="tab-pane <%= active_nav == tab[:name] ? 'show active' : '' %>">
                 <div class="panel panel-default">
                   <div class="panel-body">
                     <% if tab[:annotations].present? %>
@@ -73,7 +74,7 @@
     <% end %>
 
     <% if plan.present? %>
-      <div id="notes-<%= question.id %>" role="tabpanel" class="tab-pane <%= 'active' if !guidances_active %> notes">
+      <div id="notes-<%= question.id %>" role="tabpanel" class="tab-pane <%= 'show active' if !guidances_active %> notes">
         <%= render partial: '/notes/layout', locals: { plan: plan, question: question, answer: answer } %>
       </div>
     <% end %>

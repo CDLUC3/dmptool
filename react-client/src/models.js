@@ -291,12 +291,12 @@ export class DataObject extends Model {
   set sensitive(val) { this.setData("sensitive_data", val); }
   get isSensitive() { return (this.sensitive === "yes"); }
 
-  validateFields() {
+  // Only require repository url if 'Other' is selected
+  validateFields(otherField = false) {
     if (!this.title) this.errors.set("title", "Title is required");
     if (!this.type || this.type.toLowerCase() == "select one")
       this.errors.set("type", "Type is required");
-
-    if (!this.repository.url)
+    if (otherField && !this.repository.url)
       this.errors.set("repo", "Repository url is required");
   }
 

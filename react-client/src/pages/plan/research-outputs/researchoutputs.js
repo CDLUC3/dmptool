@@ -161,7 +161,7 @@ function ResearchOutputs() {
     // NOTE: Repository should already be set, because it's handled in the
     // handleChange() function.
 
-    if (newObj.isValid()) {
+    if (newObj.isValid(otherField)) {
       if (editIndex === null) {
         dmp.dataset.add(newObj);
       } else {
@@ -335,8 +335,16 @@ function ResearchOutputs() {
                       name="size"
                       id="id_size"
                       unitOptions={sizeUnits}
-                      initialValue={dataObj.repository.size.value}
-                      initialUnit={dataObj.repository.size.unit}
+                      initialValue={
+                        dataObj.repository.size?.value !== undefined && dataObj.repository.size?.value !== null && !isNaN(dataObj.repository.size.value)
+                          ? String(dataObj.repository.size.value)
+                          : ""
+                      }
+                      initialUnit={
+                        dataObj.repository.size?.unit && typeof dataObj.repository.size.unit === 'string'
+                          ? dataObj.repository.size.unit
+                          : Object.keys(sizeUnits)[0]
+                      }
                       onChange={handleSizeChanged}
                     />
                   </div>

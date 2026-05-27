@@ -3,6 +3,7 @@
 ## DMPTool Releases
 
 ### v5.56
+- Updated gem dependencies
 - Updated dependencies in `package.json` and `yarn.lock` to address security vulnerabilities.
 - Fixed a bug with adding Research Outputs under `Upload Plan` section, because validation was always requiring a `url`
 - Updated Dockerfiles to skip the download of `chrome-headless-shell` since we already install `chromium` via `apt-get`

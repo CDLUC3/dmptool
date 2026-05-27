@@ -2,6 +2,9 @@
 
 ## DMPTool Releases
 
+### v5.57
+- Fixed guidance/comment tabs for plan builder flow.
+
 ### v5.56
 - Updated gem dependencies
 - Updated dependencies in `package.json` and `yarn.lock` to address security vulnerabilities.

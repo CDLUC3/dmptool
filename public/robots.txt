@@ -7,3 +7,11 @@
 # Prevent spiders from downloading PDF files.
 User-agent: *
 Disallow: /pdf/
+Disallow: /rails/active_storage/
+
+User-agent: TurnitinBot
+Disallow: /rails/active_storage/
+
+User-agent: Turnitin
+Disallow: /rails/active_storage/
+

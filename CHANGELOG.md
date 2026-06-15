@@ -2,6 +2,9 @@
 
 ## DMPTool Releases
 
+### v5.57
+- Added active storage endpoint to robots.txt
+
 ### v5.56
 - Updated gem dependencies
 - Updated dependencies in `package.json` and `yarn.lock` to address security vulnerabilities.

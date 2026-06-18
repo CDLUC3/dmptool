@@ -9,6 +9,14 @@ User-agent: *
 Disallow: /pdf/
 Disallow: /rails/active_storage/
 
+User-Agent: Amazonbot
+Disallow: /pdf/
+Disallow: /rails/active_storage/
+
+User-Agent: Amzn-SearchBot
+Disallow: /pdf/
+Disallow: /rails/active_storage/
+
 User-agent: TurnitinBot
 Disallow: /rails/active_storage/
 

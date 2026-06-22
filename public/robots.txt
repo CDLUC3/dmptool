@@ -5,13 +5,25 @@
 # Disallow: /
 
 # Prevent spiders from downloading PDF files.
+
 User-agent: *
+Crawl-delay: 5
 Disallow: /pdf/
 Disallow: /rails/active_storage/
 
-User-agent: TurnitinBot
-Disallow: /rails/active_storage/
-
+User-agent: Amazonbot
+User-agent: Amzn-SearchBot
+User-agent: AmazonProductDiscoverybot
+User-agent: Bytespider
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ClaudeBot
+User-agent: CCBot
+User-agent: Googlebot
+User-agent: Meta-ExternalAgent
 User-agent: Turnitin
+User-agent: TurnitinBot
+Crawl-delay: 10
+Disallow: /pdf/
 Disallow: /rails/active_storage/
 

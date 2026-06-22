@@ -2,6 +2,9 @@
 
 ## DMPTool Releases
 
+### v5.58
+- Added custom override for `idsc.miami.edu` and `miami.edu`
+
 ### v5.57
 - Added active storage endpoint to robots.txt
 

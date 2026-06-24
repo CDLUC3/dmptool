@@ -2,6 +2,10 @@
 
 ## DMPTool Releases
 
+### v5.5.9
+- Updated Robots.txt 
+- Removed old Capistrano deploy step that was replacing robots.txt
+
 ### v5.58
 - Added custom override for `idsc.miami.edu` and `miami.edu`
 

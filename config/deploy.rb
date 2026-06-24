@@ -42,8 +42,6 @@ end
 namespace :deploy do
   before :compile_assets, 'deploy:retrieve_credentials'
 
-  after :deploy, 'dmptool_assets:copy_robots'
-
   after :deploy, 'git:version'
   after :deploy, 'cleanup:remove_example_configs'
   after :deploy, 'deploy:chrome_install'
@@ -111,13 +109,6 @@ namespace :dmptool_assets do
   task :recompile do
     on roles(:app), wait: 1 do
       execute "cd #{release_path} && bin/rails assets:clobber && bin/rails assets:precompile"
-    end
-  end
-
-  desc 'Copy over the robots.txt file'
-  task :copy_robots do
-    on roles(:app), wait: 1 do
-      execute "cp -r #{release_path}/config/robots.txt #{release_path}/public/robots.txt"
     end
   end
 end

@@ -2,6 +2,9 @@
 
 ## DMPTool Releases
 
+### v5.5.9
+- Updated config/robots.txt 
+
 ### v5.58
 - Added custom override for `idsc.miami.edu` and `miami.edu`
 

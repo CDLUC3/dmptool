@@ -2,7 +2,7 @@
 
 ## DMPTool Releases
 
-### v5.5.9
+### v5.59
 - Updated config/robots.txt 
 
 ### v5.58

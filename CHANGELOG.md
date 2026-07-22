@@ -2,6 +2,9 @@
 
 ## DMPTool Releases
 
+### v5.60
+- Fixed guidance tabs bug [#302]
+
 ### v5.59
 - Updated config/robots.txt 
 

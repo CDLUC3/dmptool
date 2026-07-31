@@ -11,7 +11,7 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules/@fortawes
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-Rails.application.config.assets.precompile += %w( admin.js admin.css )
+Rails.application.config.assets.precompile += %w[ admin.js admin.css ]
 
 # Bootstrap and TinyMCE expect their files to live in a specific place, so copy them over
 puts "Copying Bootstrap glyphicons to the public directory ..."

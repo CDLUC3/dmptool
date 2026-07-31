@@ -142,6 +142,7 @@ spec/examples.txt
 /public/packs
 /public/packs-test
 /node_modules
+.yarn/
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity

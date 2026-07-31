@@ -6,11 +6,11 @@
 # Read more: https://github.com/cyu/rack-cors
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  host = Rails.configuration.x.dmproadmap.server_host
-  host = "https://#{host}" unless host.start_with?('http')
-  localhost = 'http://localhost:3000'
-
   allow do
+    host = Rails.configuration.x.dmproadmap.server_host
+    host = "https://#{host}" unless host.start_with?('http')
+    localhost = 'http://localhost:3000'
+
     if Rails.env.production?
       origins host
     elsif Rails.env.stage?

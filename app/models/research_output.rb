@@ -52,7 +52,7 @@ class ResearchOutput < ApplicationRecord
   has_and_belongs_to_many :metadata_standards
   has_and_belongs_to_many :repositories
 
-  after_save :notify_plan_subscribers
+  after_commit :notify_plan_subscribers
 
   # ===============
   # = Validations =

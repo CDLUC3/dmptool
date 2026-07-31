@@ -2,6 +2,9 @@ require_relative "boot"
 
 require "rails/all"
 
+# ========================================================================
+# Start DMP Tool AnywayConfig initialization
+# ========================================================================
 # Question: is there a nicer way to do this require_relative?
 require_relative '../lib/ssm_config_loader'
 
@@ -9,17 +12,26 @@ require_relative '../lib/ssm_config_loader'
 invalid_ssm_settings = 'No ENV[\'SSM_ROOT_PATH\'] defined! If you want to skip SSM please set ENV[\'SSM_SKIP_RESOLUTION\']'
 raise StandardError, invalid_ssm_settings if !Rails.env.development? && !ENV.key?('SSM_ROOT_PATH') &&
                                              !ENV.key?('SSM_SKIP_RESOLUTION')
+# ========================================================================
+# End DMP Tool AnywayConfig initialization
+# ========================================================================
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# ========================================================================
+# Start DMP Tool AnywayConfig master key fetch from SSM
+# ========================================================================
 # Load master_key into ENV
 if ENV.key?('SSM_ROOT_PATH')
   # Ensure our custom config loader ssm_parameter_store is inserted into Anyway.loaders
   # prior to instantiating our custom Anyway::Config classes.
   Anyway.loaders.insert_before(:env, :ssm_parameter_store, SsmConfigLoader)
 end
+# ========================================================================
+# End DMP Tool AnywayConfig master key fetch from SSM
+# ========================================================================
 
 module DmpRoadmap
   class Application < Rails::Application
@@ -39,13 +51,9 @@ module DmpRoadmap
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # --------------------------------#
-    # OVERRIDES TO DEFAULT RAILS CONFIG #
-    # --------------------------------#
-    # CVE-2022-32224: add some compatibility with YAML.safe_load
-    # Rails 5,6,7 are using YAML.safe_load as the default YAML deserializer
-    config.active_record.yaml_column_permitted_classes = [ActiveSupport::HashWithIndifferentAccess, Symbol, Date, Time]
-
+    # ========================================================================
+    # DMP Tool custom config below
+    # ========================================================================
     # Have Zeitwerk skip generators because the generator templates are
     # incompatible with the Rails module/class naming conventions
     Rails.autoloaders.main.ignore(config.root.join('lib/generators'))

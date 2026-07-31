@@ -6,12 +6,15 @@ Rails.application.config.assets.version = "1.0"
 # Add additional assets to the asset load path.
 # Rails.application.config.assets.paths << Emoji.images_path
 
+# ======================================
+# DMP Tool custom asset handling below
+# ======================================
 Rails.application.config.assets.paths << Rails.root.join('node_modules/@fortawesome/fontawesome-free/webfonts')
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-Rails.application.config.assets.precompile += %w[ admin.js admin.css ]
+Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
 # Bootstrap and TinyMCE expect their files to live in a specific place, so copy them over
 puts "Copying Bootstrap glyphicons to the public directory ..."

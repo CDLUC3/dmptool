@@ -2,6 +2,10 @@
 
 ## DMPTool Releases
 
+### v5.61
+- Upgrade to Rails 8.1
+- Removed override of `yaml_column_permitted_classes` because it is no longer needed in 8.x
+
 ### v5.60
 - Fixed guidance tabs bug [#302]
 

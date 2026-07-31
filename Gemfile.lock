@@ -878,7 +878,7 @@ DEPENDENCIES
   rack-attack
   rack-cors
   rack-mini-profiler
-  rails (~> 8.0)
+  rails (~> 8.1)
   rails-controller-testing
   recaptcha
   rollbar

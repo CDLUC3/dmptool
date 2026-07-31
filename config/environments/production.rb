@@ -89,3 +89,6 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   config.hosts << ENV['DMPROADMAP_HOST'] if ENV['DMPROADMAP_HOST'].present?
 end
+
+# Used by Rails' routes url_helpers (typically when including a link in an email)
+Rails.application.routes.default_url_options[:host] = "https://#{Rails.configuration.x.dmproadmap.server_host}"

@@ -33,6 +33,10 @@ module Api
             @api_client = ApiClient.where(client_id: token[:client_id]).first
             return @api_client if @api_client.present?
 
+            # Return nil if the client_secret was omitted
+            if @client_secret.nil?
+              return nil
+            end
             # Valid if User is active, has permission to use the API and
             # the :client_secret matches the token
             usr = User.where(email: token[:client_id], active: true, api_token: @client_secret).first

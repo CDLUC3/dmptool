@@ -1,5 +1,13 @@
 #!/usr/bin/env sh
 
+# #!/usr/bin/env ruby
+# exec "./bin/rails", "server", *ARGV
+
+# ====================================================================================
+# DMP Tool custom dev script below (commented out core Rails server command above).
+# Also switched to BASH above instead of Ruby
+# ====================================================================================
+
 if ! gem list foreman -i --silent; then
   echo "Installing foreman..."
   gem install foreman

@@ -19,7 +19,7 @@ module Api
 
           private
 
-          # Lookup the Client bassed on the client_id embedded in the JWT
+          # Lookup the Client based on the client_id embedded in the JWT
           # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
           def client
             return @api_client if @api_client.present?
@@ -33,7 +33,14 @@ module Api
             @api_client = ApiClient.where(client_id: token[:client_id]).first
             return @api_client if @api_client.present?
 
-            @api_client = User.where(email: token[:client_id]).first
+            # Return nil if the client_secret was omitted
+            if @client_secret.nil?
+              return nil
+            end
+            # Valid if User is active, has permission to use the API and
+            # the :client_secret matches the token
+            usr = User.where(email: token[:client_id], active: true).first
+            @api_client = usr.present? && usr.can_use_api? ? usr : nil
           end
           # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 

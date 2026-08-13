@@ -2,6 +2,12 @@
 
 ## DMPTool Releases
 
+### v5.61
+- Upgrade to Rails 8.1
+- Removed override of `yaml_column_permitted_classes` because it is no longer needed in 8.x
+- Patched issue with API v1 authorization that was not verifying the user in the JWT is still active and authorized
+- Patched issue where deleting a contributor, answer or research output was not triggering `plan_notify_subscribers`
+
 ### v5.60
 - Fixed guidance tabs bug [#302]
 

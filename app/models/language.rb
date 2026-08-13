@@ -77,7 +77,7 @@ class Language < ApplicationRecord
   # ========================
 
   def self.many?
-    Rails.cache.fetch([model_name, 'many?'], expires_in: 1.hour) { all.many? }
+    Rails.cache.fetch([model_name, 'many?'], expires_in: 1.hour) { count > 1 }
   end
 
   def self.default

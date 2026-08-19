@@ -58,7 +58,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: ENV['DMPROADMAP_HOST'].present? ? ENV['DMPROADMAP_HOST'] : "example.com" }
+  config.action_mailer.default_url_options = { host: Rails.configuration.x.dmproadmap.server_host.present? ? Rails.configuration.x.dmproadmap.server_host : "example.com" }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
   # config.action_mailer.smtp_settings = {
@@ -87,7 +87,7 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-  config.hosts << ENV['DMPROADMAP_HOST'] if ENV['DMPROADMAP_HOST'].present?
+  config.hosts << Rails.configuration.x.dmproadmap.server_host if Rails.configuration.x.dmproadmap.server_host.present?
 end
 
 # Used by Rails' routes url_helpers (typically when including a link in an email)

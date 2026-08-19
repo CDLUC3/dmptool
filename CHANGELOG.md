@@ -3,7 +3,8 @@
 ## DMPTool Releases
 
 ### v5.62
-- Fix bug that was using old invalid env variable to set the hosts and mailer domains. Switched to use the AnywayConfig value instead
+- Fix bug that was using old invalid env variable to set the mailer domains. Switched to use the AnywayConfig value instead
+- Removed the old host rebinding config from environment files because the ENV variable was always nil
 
 ### v5.61
 - Upgrade to Rails 8.1

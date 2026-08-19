@@ -87,7 +87,7 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-  config.hosts << Rails.configuration.x.dmproadmap.server_host if Rails.configuration.x.dmproadmap.server_host.present?
+  # config.hosts << Rails.configuration.x.dmproadmap.server_host if Rails.configuration.x.dmproadmap.server_host.present?
 end
 
 # Used by Rails' routes url_helpers (typically when including a link in an email)

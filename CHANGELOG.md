@@ -2,8 +2,11 @@
 
 ## DMPTool Releases
 
+### v5.64
+- Updated changelog
+
 ### v5.63
-- Fixed vulnerability in contributors controller and research output controller [#802]
+- Fixed reported vulnerabilities
 
 ### v5.62
 - Fix bug that was using old invalid env variable to set the mailer domains. Switched to use the AnywayConfig value instead

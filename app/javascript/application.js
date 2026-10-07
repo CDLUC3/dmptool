@@ -54,7 +54,7 @@ import './src/answers/rdaMetadata';
 // DMPTool Customization. We have rewritten the org selection widget and the Devise forms so no need for
 // those JS files anymore, so commenting out below
 // ----------------------------------------------------------
-import './src/devise/passwords/edit';
+//import './src/devise/passwords/edit'; - totally identical to dmptool/users/passwords/edit.js, so commenting out
 import './src/devise/registrations/edit';
 // import './src/devise/registrations/new';
 import './src/guidances/newEdit';

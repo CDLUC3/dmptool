@@ -2,6 +2,9 @@
 
 ## DMPTool Releases
 
+### v5.65
+- Updated the `create` function in `sessions_controller.rb` to keep the User's existing Org if one could not be determined from the email domain. Also, fixed password show/hide toggle not working on reset password. Two identical files were loading and had the same calls to `togglisePasswords`. `./src/devise/passwords/edit` was commented out in `application.js`.
+
 ### v5.64
 - Updated changelog
 

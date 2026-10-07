@@ -9,18 +9,20 @@ module Dmptool
     extend ActiveSupport::Concern
 
     included do
+     # Not every including controller defines both :create and :update (e.g. SessionsController
+      # has no :update), so use a condition rather than `only:` to avoid Rails 7.1+ raising
+      # on missing callback actions
+      create_or_update = -> { %w[create update].include?(action_name) }
+
       # Modify/Set the incoming params befofe they're loaded into the Strong Params
-      before_action :ensure_language, only: %i[create update]
-      before_action :humanize_params, only: %i[create update]
+      before_action :ensure_language, if: create_or_update
+      before_action :humanize_params, if: create_or_update
 
       # Convert the selected (or user entered name) into Org params
-      before_action :ensure_org_param, only: %i[create update]
+      before_action :ensure_org_param, if: create_or_update
 
       # Determine who the user is based on the email provided
-      before_action :fetch_user, only: %i[create update]
-
-      # Assign the default instance variables used by the auth pages
-      before_action :assign_instance_variables
+      before_action :fetch_user, if: create_or_update
 
       # ==============
       # = PARAMETERS =

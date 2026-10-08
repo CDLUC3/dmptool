@@ -24,6 +24,9 @@ module Dmptool
       # Determine who the user is based on the email provided
       before_action :fetch_user, if: create_or_update
 
+      # Assign the default instance variables used by the auth pages
+      before_action :assign_instance_variables
+
       # ==============
       # = PARAMETERS =
       # ==============

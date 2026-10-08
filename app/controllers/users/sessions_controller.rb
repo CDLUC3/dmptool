@@ -54,7 +54,8 @@ module Users
         if active_invite
           resource.firstname = nil
           resource.surname = nil
-          resource.org = org_from_email_domain(email_domain: resource.email&.split('@')&.last)
+          # Keep the User's existing Org if one could not be determined from the email domain
+          resource.org = org_from_email_domain(email_domain: resource.email&.split('@')&.last) || resource.org
         end
 
         is_new_user = resource.new_record? || active_invite

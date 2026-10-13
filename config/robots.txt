@@ -22,6 +22,8 @@ User-agent: Meta-ExternalAgent
 User-Agent: PetalBot
 User-agent: Turnitin
 User-agent: TurnitinBot
+User-agent: AspiegelBot
+User-agent: HuaweiWebCatBot
 Crawl-delay: 10
 Disallow: /rails/active_storage/
 Disallow: /narratives/*.pdf

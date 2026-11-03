@@ -26,7 +26,13 @@ module OrgAdmin
       authorize @user
       @departments = @user.org.departments.order(:name)
       @plans = Plan.active(@user).page(1)
-      if @user.update(user_params)
+      # Reject a department that does not belong to this user's org. department_id
+      # is user-supplied, so without this check an org admin could assign a
+      # department from another organization to the user.
+      dept_id = user_params[:department_id]
+      if dept_id.present? && !@departments.exists?(id: dept_id)
+        flash.now[:alert] = failure_message(@user, _('update'))
+      elsif @user.update(user_params)
         flash.now[:notice] = success_message(@user, _('updated'))
       else
         flash.now[:alert] = failure_message(@user, _('update'))

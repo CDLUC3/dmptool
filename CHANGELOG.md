@@ -2,6 +2,10 @@
 
 ## DMPTool Releases
 
+
+### v5.65
+- Fixed reported vulnerability where org admins could manage and view users in other organizations
+
 ### v5.64
 - Updated changelog
 

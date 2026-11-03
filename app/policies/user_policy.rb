@@ -40,6 +40,19 @@ class UserPolicy < ApplicationPolicy
     @user.can_super_admin? || (@user.can_org_admin? && same_org?)
   end
 
+  # Super-admin-only variants of edit?/update?. The SuperAdmin::UsersController
+  # exposes a more privileged editor (email, name, org reassignment) and shares
+  # no org restriction. It must not reuse edit?/update?, because those also grant
+  # access to same-org org admins; that would let an org admin reach the
+  # super-admin user editor for users in their own org.
+  def super_admin_edit?
+    @user.can_super_admin?
+  end
+
+  def super_admin_update?
+    @user.can_super_admin?
+  end
+
   def update_email_preferences?
     true
   end

@@ -5,6 +5,7 @@
 
 ### v5.65
 - Fixed reported vulnerability where org admins could manage and view users in other organizations
+- Restricted the super admin user editor to super admins
 
 ### v5.64
 - Updated changelog

@@ -12,13 +12,11 @@ class UserPolicy < ApplicationPolicy
   end
 
   def admin_grant_permissions?
-    (@user.can_grant_permissions? && user.org_id == @user.org_id) ||
-      @user.can_super_admin?
+    @user.can_super_admin? || (@user.can_grant_permissions? && same_org?)
   end
 
   def admin_update_permissions?
-    (@user.can_grant_permissions? && user.org_id == @user.org_id) ||
-      @user.can_super_admin?
+    @user.can_super_admin? || (@user.can_grant_permissions? && same_org?)
   end
 
   # Allows the user to swap their org affiliation on the fly
@@ -31,15 +29,28 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    @user.can_super_admin? || @user.can_org_admin?
+    @user.can_super_admin? || (@user.can_org_admin? && same_org?)
   end
 
   def update?
-    @user.can_super_admin? || @user.can_org_admin?
+    @user.can_super_admin? || (@user.can_org_admin? && same_org?)
   end
 
   def user_plans?
-    @user.can_super_admin? || @user.can_org_admin?
+    @user.can_super_admin? || (@user.can_org_admin? && same_org?)
+  end
+
+  # Super-admin-only variants of edit?/update?. The SuperAdmin::UsersController
+  # exposes a more privileged editor (email, name, org reassignment) and shares
+  # no org restriction. It must not reuse edit?/update?, because those also grant
+  # access to same-org org admins; that would let an org admin reach the
+  # super-admin user editor for users in their own org.
+  def super_admin_edit?
+    @user.can_super_admin?
+  end
+
+  def super_admin_update?
+    @user.can_super_admin?
   end
 
   def update_email_preferences?
@@ -68,7 +79,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def org_admin_other_user?
-    @user.can_super_admin? || @user.can_org_admin?
+    @user.can_super_admin? || (@user.can_org_admin? && same_org?)
   end
 
   # DMPTool custom endpoints
@@ -99,5 +110,24 @@ class UserPolicy < ApplicationPolicy
     def resolve
       @scope.where(org_id: @user.org_id)
     end
+  end
+  
+  private
+
+  # The managed user (record) must belong to the same Org as the current user.
+  #
+  # Both `user`/`@user` and `record` are set by ApplicationPolicy#initialize, which
+  # Pundit calls as UserPolicy.new(current_user, target). So:
+  #   @user  => the caller (current_user) performing the action
+  #   record => the object being acted on (the user passed to `authorize`)
+  #
+  # The previous checks compared `user.org_id == @user.org_id`, but `user` is just
+  # the attr_reader for `@user`, so that compared the caller to itself and was
+  # always true. Comparing `record.org_id` instead enforces the real org boundary.
+  #
+  # `record.is_a?(User)` guards against callers that authorize the User class
+  # itself (e.g. `authorize User`), which has no org_id.
+  def same_org?
+    record.is_a?(User) && record.org_id.present? && record.org_id == @user.org_id
   end
 end

@@ -61,7 +61,11 @@ module Paginable
     # GET /paginable/users/:id/plans
     def index
       @user = User.find(params[:id])
-      authorize @user
+      # Explicitly authorize against :user_plans? so the policy's org check applies.
+      # Without the policy method, Pundit infers :index? (which only verifies the
+      # caller's own permissions), allowing an org admin to read any user's plans
+      # across organizations.
+      authorize @user, :user_plans?
       raise Pundit::NotAuthorizedError unless current_user.present? && current_user.can_org_admin? && @user.present?
 
       paginable_renderise(

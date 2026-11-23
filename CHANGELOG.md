@@ -2,6 +2,8 @@
 
 ## DMPTool Releases
 
+### v5.66
+- Upgrade gem and JS dependencies
 
 ### v5.65
 - Fixed reported vulnerability where org admins could manage and view users in other organizations
